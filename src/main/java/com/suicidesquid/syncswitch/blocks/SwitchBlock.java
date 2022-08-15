@@ -18,7 +18,9 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.DirectionalBlock;
 import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.FaceAttachedHorizontalDirectionalBlock;
 import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -26,7 +28,10 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.AttachFace;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
@@ -35,6 +40,10 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 public class SwitchBlock extends Block implements EntityBlock{
 
     private static final VoxelShape SHAPE = Shapes.box(0, .2, 0, 1, 1, 1);
+    public static final DirectionProperty FACING = DirectionalBlock.FACING;
+    public static final EnumProperty<AttachFace> FACE = FaceAttachedHorizontalDirectionalBlock.FACE;
+
+
 
     public SwitchBlock(Block.Properties properties) {
         super(properties.noCollission().noOcclusion());
@@ -42,18 +51,41 @@ public class SwitchBlock extends Block implements EntityBlock{
     }
 
     @Override
-    public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
+	public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
 
-        return Block.box(5, 0, 3, 11, 4, 13);
-        // return switch (state.getValue(BlockStateProperties.FACING)) {
-        //     default -> box(4, 0, 4, 12, 3, 12);
-        //     case NORTH -> box(4, 0, 4, 12, 3, 12);
-        //     case EAST -> box(4, 0, 4, 12, 3, 12);
-        //     case WEST -> box(4, 0, 4, 12, 3, 12);
-        //     case UP -> box(4, 4, 0, 12, 12, 3);
-        //     case DOWN -> box(4, 4, 13, 12, 12, 16);
-        // };
-    }
+		return switch (state.getValue(FACING)) {
+			default -> switch (state.getValue(FACE)) {
+				case FLOOR -> box(5, 0, 3, 11, 6, 13);
+				case WALL -> box(5, 3, 0, 11, 13, 6);
+				case CEILING -> box(5, 10, 3, 11, 16, 13);
+			};
+			case NORTH -> switch (state.getValue(FACE)) {
+				case FLOOR -> box(5, 0, 3, 11, 6, 13);
+				case WALL -> box(5, 3, 10, 11, 13, 16);
+				case CEILING -> box(5, 10, 3, 11, 16, 13);
+			};
+			case EAST -> switch (state.getValue(FACE)) {
+				case FLOOR -> box(3, 0, 5, 13, 6, 11);
+				case WALL -> box(0, 3, 5, 6, 13, 11);
+				case CEILING -> box(3, 10, 5, 13, 16, 11);
+			};
+			case WEST -> switch (state.getValue(FACE)) {
+				case FLOOR -> box(3, 0, 5, 13, 6, 11);
+				case WALL -> box(10, 3, 5, 16, 13, 11);
+				case CEILING -> box(3, 10, 5, 13, 16, 11);
+			};
+		};
+	}
+
+
+    @Override
+	public BlockState getStateForPlacement(BlockPlaceContext context) {
+		if (context.getClickedFace().getAxis() == Direction.Axis.Y)
+			return this.defaultBlockState()
+					.setValue(FACE, context.getClickedFace().getOpposite() == Direction.UP ? AttachFace.CEILING : AttachFace.FLOOR)
+					.setValue(FACING, context.getHorizontalDirection());
+		return this.defaultBlockState().setValue(FACE, AttachFace.WALL).setValue(FACING, context.getClickedFace());
+	}
 
     @Nullable
     @Override
@@ -117,13 +149,9 @@ public class SwitchBlock extends Block implements EntityBlock{
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
       builder.add(BlockStateProperties.POWERED);
-      builder.add(BlockStateProperties.FACING);
+      builder.add(FACING);
+      builder.add(FACE);
     }
-
-    @Override
-	public BlockState getStateForPlacement(BlockPlaceContext context) {
-		return this.defaultBlockState().setValue(BlockStateProperties.FACING, context.getClickedFace());
-	}
 
 	public BlockState rotate(BlockState state, Rotation rot) {
 		return state.setValue(BlockStateProperties.FACING, rot.rotate(state.getValue(BlockStateProperties.FACING)));
