@@ -1,0 +1,6 @@
+{
+    "itemGroup.syncswitch": "Sandbox Mod Items",
+
+    "block.syncswitch.switch_block": "Synchronous Switch",
+    "block.syncswitch.vanilla_switch_block": "Vanilla Synchronous Switch"
+}

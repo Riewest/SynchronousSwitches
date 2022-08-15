@@ -1,0 +1,10 @@
+{
+    "itemGroup.syncswitch": "Sandbox Mod Items",
+
+    "item.syncswitch.smile": "Smiley Face",
+    "item.syncswitch.teleport_linker": "Teleport Linker",
+    "block.syncswitch.counter_block": "Counter Block",
+    "block.syncswitch.switch_block": "Switch Block",
+    "block.syncswitch.smile_block": "Smiley Block",
+    "block.syncswitch.teleport_block": "Teleport Block"
+}
