@@ -1,7 +1,6 @@
 package com.suicidesquid.syncswitch.tiles;
 
 import com.suicidesquid.syncswitch.data.SwitchData;
-import com.suicidesquid.syncswitch.init.TileEntityInit;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -14,8 +13,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.AttachFace;
 
 public class BaseSwitchBlockTile extends BlockEntity{
+    public static final String NONE_CHANNEL = "none";
     private int timer = 0;
-    private String channel = "DEFAULT";
+    private String channel = NONE_CHANNEL;
     public BaseSwitchBlockTile(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
     }
@@ -41,6 +41,10 @@ public class BaseSwitchBlockTile extends BlockEntity{
         return this.channel;
     }
 
+    public boolean hasChannel(){
+        return !this.channel.toLowerCase().equals(NONE_CHANNEL);
+    }
+
     public static Direction getConnectedDirection(BlockState state) {
         switch ((AttachFace)state.getValue(LeverBlock.FACE)) {
            case CEILING:
@@ -53,7 +57,7 @@ public class BaseSwitchBlockTile extends BlockEntity{
      }
 
     private static void tickUpdate(Level level, BlockPos pos, BlockState state, BaseSwitchBlockTile tile){
-        if (!level.isClientSide()){
+        if (!level.isClientSide() && tile.hasChannel()){
             tile.timer++;
             if (tile.timer > 10){
                 tile.timer = 0;  
