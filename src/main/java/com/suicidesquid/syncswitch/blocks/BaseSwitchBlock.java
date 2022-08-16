@@ -20,6 +20,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.LeverBlock;
 import net.minecraft.world.level.block.Mirror;
+import net.minecraft.world.level.block.RedstoneLampBlock;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -50,7 +51,7 @@ public class BaseSwitchBlock extends LeverBlock{
                 BaseSwitchBlockTile switchtile = (BaseSwitchBlockTile) tile;
                 ItemStack held = player.getItemInHand(hand);
                 SwitchData switchData = SwitchData.get(world);
-                if (!switchtile.hasChannel() && !player.isShiftKeyDown()){
+                if (!switchtile.hasChannel() && held.isEmpty()){
                     return super.use(state, world, pos, player, hand, hit);
                 } else if (player.isShiftKeyDown()){
                     if(switchtile.hasChannel()){
