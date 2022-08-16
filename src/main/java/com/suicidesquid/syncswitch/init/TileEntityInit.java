@@ -5,9 +5,9 @@ import com.suicidesquid.syncswitch.tiles.SwitchBlockTile;
 import com.suicidesquid.syncswitch.tiles.VanillaSwitchBlockTile;
 
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraftforge.registries.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 
 public class TileEntityInit {
     public static final DeferredRegister<BlockEntityType<?>> TILE_ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, SynchronousSwitches.MODID);
