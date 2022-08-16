@@ -10,6 +10,8 @@ import com.suicidesquid.syncswitch.tiles.VanillaSwitchBlockTile;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -43,25 +45,6 @@ public class VanillaSwitchBlock extends LeverBlock implements EntityBlock{
         return TileEntityInit.VANILLA_SWITCH_BLOCK.get().create(pos, state);
     }
 
-    // @Override
-    // public boolean isSignalSource(BlockState p_60571_) {
-    //     return true;
-    // }
-
-    @Override
-    public int getSignal(BlockState state, BlockGetter world, BlockPos pos, Direction side) {
-        return this.getRedstoneOutput(state, world, pos, side);
-    }
-
-    @Override
-    public int getDirectSignal(BlockState state, BlockGetter world, BlockPos pos, Direction side) {
-        return this.getRedstoneOutput(state, world, pos, side);
-    }
-
-    // @Override
-    // public boolean canConnectRedstone(BlockState state, BlockGetter world, BlockPos pos, Direction side) {
-    //     return true;
-    // }
 
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
@@ -84,16 +67,19 @@ public class VanillaSwitchBlock extends LeverBlock implements EntityBlock{
                     switchtile.setChannel(channel);
                     player.sendSystemMessage(Component.literal("Setting Channel: " + channel));
                 } else {
+                    
+                    
                     boolean active = switchData.toggleActive(switchtile.getChannel());
+                    float f = active ? 0.6F : 0.5F;
+                    world.playSound((Player)null, pos, SoundEvents.LEVER_CLICK, SoundSource.BLOCKS, 0.3F, f);
                     world.setBlockAndUpdate(pos, state.setValue(POWERED, active));
+                    world.updateNeighborsAt(pos.relative(getConnectedDirection(state).getOpposite()), this);
                 }
                 
             }
                 
             return InteractionResult.CONSUME;
         }
-        
-
         return super.use(state, world, pos, player, hand, hit);
     }
 
