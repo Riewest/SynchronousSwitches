@@ -9,12 +9,13 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.LeverBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
-public class SwitchBlockTile extends BlockEntity{
+public class VanillaSwitchBlockTile extends BlockEntity{
     private int timer = 0;
     private String channel = "DEFAULT";
-    public SwitchBlockTile(BlockPos pos, BlockState state) {
-        super(TileEntityInit.SWITCH_BLOCK.get(), pos, state);
+    public VanillaSwitchBlockTile(BlockPos pos, BlockState state) {
+        super(TileEntityInit.VANILLA_SWITCH_BLOCK.get(), pos, state);
     }
     
     @Override
@@ -38,7 +39,10 @@ public class SwitchBlockTile extends BlockEntity{
         return this.channel;
     }
 
-    private static void tickUpdate(Level level, BlockPos pos, BlockState state, SwitchBlockTile tile){
+    
+
+    public static <T extends BlockEntity> void tick(Level level, BlockPos pos, BlockState state, T be){
+        VanillaSwitchBlockTile tile = (VanillaSwitchBlockTile) be;
         if (!level.isClientSide()){
             tile.timer++;
             if (tile.timer > 10){
@@ -51,10 +55,5 @@ public class SwitchBlockTile extends BlockEntity{
                 
             }
         }
-    }
-
-    public static <T extends BlockEntity> void tick(Level level, BlockPos pos, BlockState state, T be){
-        SwitchBlockTile tile = (SwitchBlockTile) be;
-        tickUpdate(level, pos, state, tile);
     }
 }

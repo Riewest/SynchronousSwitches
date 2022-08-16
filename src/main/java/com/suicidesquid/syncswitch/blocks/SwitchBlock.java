@@ -122,7 +122,6 @@ public class SwitchBlock extends Block implements EntityBlock{
     public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if (!world.isClientSide() && hand == InteractionHand.MAIN_HAND){
             BlockEntity tile = world.getBlockEntity(pos);
-            System.out.println("tile:" + tile);
             if (tile instanceof SwitchBlockTile){
                 SwitchBlockTile switchtile = (SwitchBlockTile) tile;
                 ItemStack held = player.getItemInHand(hand);

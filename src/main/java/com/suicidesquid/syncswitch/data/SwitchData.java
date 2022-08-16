@@ -34,11 +34,12 @@ public class SwitchData extends SavedData{
         return switchState.isActive();
     }
 
-    public void toggleActive(String channel){
+    public boolean toggleActive(String channel){
         SwitchState switchState = getSwitchState(channel);
         switchState.toggleActive();
         switchMap.put(channel, switchState);
         setDirty();
+        return switchState.isActive();
     }
 
     public SwitchData(){}
