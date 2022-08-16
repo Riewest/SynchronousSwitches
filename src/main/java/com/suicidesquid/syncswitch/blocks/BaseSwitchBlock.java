@@ -59,7 +59,7 @@ public class BaseSwitchBlock extends LeverBlock{
                         player.sendSystemMessage(Component.literal("No Channel"));
                     }
                 } else if (!held.isEmpty()){
-                    String channel = held.getDisplayName().getString();
+                    String channel = held.getDisplayName().getString().replace("[", "").replace("]","");
                     switchtile.setChannel(channel);
                     player.sendSystemMessage(Component.literal("Setting Channel: " + channel));
                 } else {
