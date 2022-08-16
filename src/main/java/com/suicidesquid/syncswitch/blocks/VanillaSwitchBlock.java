@@ -35,7 +35,7 @@ public class VanillaSwitchBlock extends LeverBlock implements EntityBlock{
 
 
     public VanillaSwitchBlock(Block.Properties properties) {
-        super(properties);
+        super(properties.noCollission().noOcclusion());
         // this.registerDefaultState(this.stateDefinition.any().setValue(BlockStateProperties.POWERED, Boolean.valueOf(false)));
     }
 
