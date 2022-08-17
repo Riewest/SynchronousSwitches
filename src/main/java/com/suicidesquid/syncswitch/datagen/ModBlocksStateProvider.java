@@ -35,7 +35,6 @@ public class ModBlocksStateProvider extends BlockStateProvider {
                     .modelFile(powered ? buttonPressed : button)
                     .rotationX(face == AttachFace.FLOOR ? 0 : (face == AttachFace.WALL ? 90 : 180))
                     .rotationY((int) (face == AttachFace.CEILING ? facing : facing.getOpposite()).toYRot())
-                    .uvLock(face == AttachFace.WALL)
                     .build();
         });
     }
