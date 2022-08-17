@@ -4,7 +4,7 @@ import javax.annotation.Nullable;
 
 import com.suicidesquid.syncswitch.data.SwitchData;
 import com.suicidesquid.syncswitch.init.TileEntityInit;
-import com.suicidesquid.syncswitch.tiles.BigButtonTile;
+import com.suicidesquid.syncswitch.tiles.EStopButtonTile;
 import com.suicidesquid.syncswitch.tiles.SwitchBlockTile;
 
 import net.minecraft.core.BlockPos;
@@ -19,14 +19,14 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class BigButtonBlock extends BaseSwitchBlock implements EntityBlock{
+public class EStopButtonBlock extends BaseSwitchBlock implements EntityBlock{
 
-    public BigButtonBlock(Block.Properties properties) {
+    public EStopButtonBlock(Block.Properties properties) {
         super(properties);
     }
 
-	private static final VoxelShape DEFAULT_SHAPE = Block.box(1, 0, 1, 15, 2, 15);
-	private static final VoxelShape DEFAULT_SHAPE_ON = Block.box(1, 0, 1, 15, 1, 15);
+	private static final VoxelShape DEFAULT_SHAPE = Block.box(3, 0, 3, 13, 3.5, 13);
+	private static final VoxelShape DEFAULT_SHAPE_ON = Block.box(3, 0, 3, 13, 4.5, 13);
 
 
     @Override
@@ -40,12 +40,12 @@ public class BigButtonBlock extends BaseSwitchBlock implements EntityBlock{
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return TileEntityInit.BIG_BUTTON_BLOCK.get().create(pos, state);
+        return TileEntityInit.ESTOP_BUTTON_BLOCK.get().create(pos, state);
     }
 
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-        return type == TileEntityInit.BIG_BUTTON_BLOCK.get() ? BigButtonTile::tick : null;
+        return type == TileEntityInit.ESTOP_BUTTON_BLOCK.get() ? EStopButtonTile::tick : null;
     }
 
 }
