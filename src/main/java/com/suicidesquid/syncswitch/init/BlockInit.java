@@ -2,8 +2,10 @@ package com.suicidesquid.syncswitch.init;
 
 import java.util.function.Supplier;
 
+import com.suicidesquid.syncswitch.blocks.BaseSwitchBlock;
 import com.suicidesquid.syncswitch.blocks.SwitchBlock;
 import com.suicidesquid.syncswitch.blocks.VanillaSwitchBlock;
+import com.suicidesquid.syncswitch.items.BaseSwitchBlockItem;
 import com.suicidesquid.syncswitch.SynchronousSwitches;
 
 import net.minecraft.world.item.BlockItem;
@@ -31,7 +33,7 @@ public class BlockInit {
             BLOCKS.getEntries().forEach( (blockRegistryObject) -> {
                 Block block = blockRegistryObject.get();
                 Item.Properties properties = new Item.Properties().tab(ItemInit.ModCreativeTab.instance);
-                Supplier<Item> blockItemFactory = () -> new BlockItem(block, properties);
+                Supplier<Item> blockItemFactory = () -> block instanceof BaseSwitchBlock ? new BaseSwitchBlockItem(block, properties) : new BlockItem(block, properties);
                 event.register(ForgeRegistries.Keys.ITEMS, blockRegistryObject.getId(), blockItemFactory);
             });
         }

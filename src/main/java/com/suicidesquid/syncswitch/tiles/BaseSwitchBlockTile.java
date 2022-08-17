@@ -20,6 +20,7 @@ public class BaseSwitchBlockTile extends BlockEntity{
     private int timer = 0;
     private String channel = NONE_CHANNEL;
     private boolean redacted = false;
+    private String player;
 
     public BaseSwitchBlockTile(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
@@ -30,6 +31,7 @@ public class BaseSwitchBlockTile extends BlockEntity{
         super.saveAdditional(nbt);
         nbt.putString("channel", this.channel);
         nbt.putBoolean("redacted", this.redacted);
+        nbt.putString("player", this.player);
     }
 
     @Override
@@ -37,6 +39,15 @@ public class BaseSwitchBlockTile extends BlockEntity{
         super.load(nbt);
         this.channel = nbt.getString("channel");
         this.redacted = nbt.getBoolean("redacted");
+        this.player = nbt.getString("player");
+    }
+
+    public void setPlayer(String uuid){
+        this.player = uuid;
+    }
+
+    public String getPlayer(){
+        return this.player;
     }
 
     public void setChannel(String channel){
@@ -44,7 +55,10 @@ public class BaseSwitchBlockTile extends BlockEntity{
         setChanged();
     }
 
-    public String getChannelDisplay(){
+    public String getChannelDisplay(String uuid){
+        if (uuid == this.player){
+            return this.channel;
+        }
         return this.redacted ? "REDACTED" : this.channel;
     }
 
