@@ -11,6 +11,7 @@ import com.suicidesquid.syncswitch.tiles.BaseSwitchBlockTile;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Direction.Axis;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
@@ -38,8 +39,11 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParam;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class BaseSwitchBlock extends LeverBlock{
+
+    private static final int SHAPE_SCALAR = 16;
 
     public BaseSwitchBlock(Block.Properties properties) {
         super(properties);
@@ -143,4 +147,61 @@ public class BaseSwitchBlock extends LeverBlock{
 		return state.rotate(mirrorIn.getRotation(state.getValue(BlockStateProperties.FACING)));
 	}
 
+
+    private VoxelShape translateAxis(VoxelShape shape, Axis axis, boolean positive){
+		double moveAmount;
+		if (positive)
+			moveAmount = 1 - shape.max(axis);
+		else
+			moveAmount = -shape.min(axis);
+		shape.move(0, moveAmount, 0);
+		return switch (axis) {
+			case X -> shape.move(moveAmount, 0, 0);
+			case Z -> shape.move(0, 0, moveAmount);
+			default -> shape.move(0, moveAmount, 0);
+		};
+	}
+
+	private VoxelShape rotateCardinal(VoxelShape shape){
+		return Block.box(SHAPE_SCALAR * shape.min(Axis.Z), SHAPE_SCALAR * shape.min(Axis.Y), SHAPE_SCALAR * shape.min(Axis.X), SHAPE_SCALAR * shape.max(Axis.Z), SHAPE_SCALAR * shape.max(Axis.Y), SHAPE_SCALAR * shape.max(Axis.X));
+	}
+
+	private VoxelShape rotateWall(VoxelShape shape, Direction direction){
+		VoxelShape returnShape;
+		switch (direction) {
+			case NORTH:
+			case SOUTH:
+				returnShape = Block.box(SHAPE_SCALAR * shape.min(Axis.X), SHAPE_SCALAR * shape.min(Axis.Z), SHAPE_SCALAR * shape.min(Axis.Y), SHAPE_SCALAR * shape.max(Axis.X), SHAPE_SCALAR * shape.max(Axis.Z), SHAPE_SCALAR * shape.max(Axis.Y));
+				if(direction == Direction.NORTH)
+					returnShape = translateAxis(returnShape, Axis.Z, true);
+				break;
+		
+			default:
+				returnShape = Block.box(SHAPE_SCALAR * shape.min(Axis.Y), SHAPE_SCALAR * shape.min(Axis.X), SHAPE_SCALAR * shape.min(Axis.Z), SHAPE_SCALAR * shape.max(Axis.Y), SHAPE_SCALAR * shape.max(Axis.X), SHAPE_SCALAR * shape.max(Axis.Z));
+				if (direction == Direction.WEST)
+					returnShape = translateAxis(returnShape, Axis.X, true);
+				break;
+		}
+
+		return returnShape;
+	}
+
+
+	protected VoxelShape determineShape(VoxelShape defaultShape, BlockState state){
+		Direction facing = state.getValue(FACING);
+		
+		return switch (state.getValue(FACING)) {
+			default -> switch (state.getValue(FACE)) {
+				case FLOOR -> defaultShape;
+				case WALL -> rotateWall(defaultShape, facing);
+				case CEILING -> translateAxis(defaultShape, Axis.Y, true);
+			};
+			case EAST, WEST -> switch (state.getValue(FACE)) {
+				case FLOOR -> rotateCardinal(defaultShape);
+				case WALL -> rotateWall(rotateCardinal(defaultShape), facing);
+				case CEILING -> translateAxis(rotateCardinal(defaultShape), Axis.Y, true);
+			};
+		};
+
+	}
 }
