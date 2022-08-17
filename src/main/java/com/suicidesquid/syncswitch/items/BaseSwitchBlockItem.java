@@ -2,12 +2,15 @@ package com.suicidesquid.syncswitch.items;
 
 import java.util.List;
 
+import com.suicidesquid.syncswitch.data.SwitchData;
 import com.suicidesquid.syncswitch.tiles.BaseSwitchBlockTile;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
@@ -69,6 +72,24 @@ public class BaseSwitchBlockItem extends BlockItem{
             return InteractionResult.SUCCESS;
         }
         return InteractionResult.PASS;
+    }
+
+    @Override
+    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+        ItemStack stack = player.getItemInHand(hand);
+        CompoundTag tag = stack.getOrCreateTag();
+        if(player.isCrouching()){
+            if (tag.contains("channel"))
+                tag.remove("channel");
+            return new InteractionResultHolder<ItemStack>(InteractionResult.SUCCESS, stack);
+        }
+        if(!level.isClientSide && tag.contains("channel")){
+
+            SwitchData switchData = SwitchData.get(level);
+            switchData.toggleActive(tag.getString("channel"));
+            
+        }
+        return new InteractionResultHolder<ItemStack>(InteractionResult.SUCCESS, stack);
     }
 
 }

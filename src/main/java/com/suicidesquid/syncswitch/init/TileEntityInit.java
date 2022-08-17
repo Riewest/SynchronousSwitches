@@ -2,6 +2,7 @@ package com.suicidesquid.syncswitch.init;
 
 import com.suicidesquid.syncswitch.SynchronousSwitches;
 import com.suicidesquid.syncswitch.tiles.BigButtonTile;
+import com.suicidesquid.syncswitch.tiles.EStopButtonTile;
 import com.suicidesquid.syncswitch.tiles.SwitchBlockTile;
 import com.suicidesquid.syncswitch.tiles.VanillaSwitchBlockTile;
 
@@ -20,6 +21,10 @@ public class TileEntityInit {
     public static final RegistryObject<BlockEntityType<BigButtonTile>> BIG_BUTTON_BLOCK
             = TILE_ENTITY_TYPES.register("big_button",
             () -> BlockEntityType.Builder.of(BigButtonTile::new, BlockInit.BIG_BUTTON_BLOCK.get()).build(null));
+
+    public static final RegistryObject<BlockEntityType<EStopButtonTile>> ESTOP_BUTTON_BLOCK
+            = TILE_ENTITY_TYPES.register("estop_button",
+            () -> BlockEntityType.Builder.of(EStopButtonTile::new, BlockInit.ESTOP_BUTTON_BLOCK.get()).build(null));
 
     public static final RegistryObject<BlockEntityType<VanillaSwitchBlockTile>> VANILLA_SWITCH_BLOCK
             = TILE_ENTITY_TYPES.register("vanilla_switch_block",
