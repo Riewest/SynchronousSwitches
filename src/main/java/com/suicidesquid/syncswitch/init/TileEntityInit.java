@@ -2,6 +2,7 @@ package com.suicidesquid.syncswitch.init;
 
 import com.suicidesquid.syncswitch.SynchronousSwitches;
 import com.suicidesquid.syncswitch.tiles.BigButtonTile;
+import com.suicidesquid.syncswitch.tiles.ChannelOutputTile;
 import com.suicidesquid.syncswitch.tiles.EStopButtonTile;
 import com.suicidesquid.syncswitch.tiles.SwitchBlockTile;
 import com.suicidesquid.syncswitch.tiles.VanillaSwitchBlockTile;
@@ -14,6 +15,10 @@ import net.minecraftforge.registries.RegistryObject;
 public class TileEntityInit {
     public static final DeferredRegister<BlockEntityType<?>> TILE_ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, SynchronousSwitches.MODID);
 
+    public static final RegistryObject<BlockEntityType<ChannelOutputTile>> CHANNEL_OUTPUT_BLOCK
+            = TILE_ENTITY_TYPES.register("channel_output",
+            () -> BlockEntityType.Builder.of(ChannelOutputTile::new, BlockInit.SWITCH_BLOCK.get()).build(null));
+            
     public static final RegistryObject<BlockEntityType<SwitchBlockTile>> SWITCH_BLOCK
             = TILE_ENTITY_TYPES.register("switch_block",
             () -> BlockEntityType.Builder.of(SwitchBlockTile::new, BlockInit.SWITCH_BLOCK.get()).build(null));
