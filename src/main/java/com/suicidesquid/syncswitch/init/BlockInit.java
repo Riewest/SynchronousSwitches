@@ -26,10 +26,10 @@ import net.minecraftforge.registries.RegistryObject;
 public class BlockInit {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, SynchronousSwitches.MODID);
 
-    public static final RegistryObject<Block> SWITCH_BLOCK = BLOCKS.register("switch_block",() -> new SwitchBlock(BlockBehaviour.Properties.of(Material.STONE)));
-    public static final RegistryObject<Block> BIG_BUTTON_BLOCK = BLOCKS.register("big_button",() -> new BigButtonBlock(BlockBehaviour.Properties.of(Material.STONE)));
-    public static final RegistryObject<Block> ESTOP_BUTTON_BLOCK = BLOCKS.register("estop_button",() -> new EStopButtonBlock(BlockBehaviour.Properties.of(Material.STONE)));
-    public static final RegistryObject<Block> VANILLA_SWITCH_BLOCK = BLOCKS.register("vanilla_switch_block",() -> new VanillaSwitchBlock(BlockBehaviour.Properties.of(Material.STONE)));
+    public static final RegistryObject<Block> SWITCH_BLOCK = BLOCKS.register("switch_block",() -> new SwitchBlock(BlockBehaviour.Properties.of(Material.STONE).noCollission().noCollission()));
+    public static final RegistryObject<Block> BIG_BUTTON_BLOCK = BLOCKS.register("big_button",() -> new BigButtonBlock(BlockBehaviour.Properties.of(Material.STONE).noCollission().noCollission()));
+    public static final RegistryObject<Block> ESTOP_BUTTON_BLOCK = BLOCKS.register("estop_button",() -> new EStopButtonBlock(BlockBehaviour.Properties.of(Material.STONE).noCollission().noCollission()));
+    public static final RegistryObject<Block> VANILLA_SWITCH_BLOCK = BLOCKS.register("vanilla_switch_block",() -> new VanillaSwitchBlock(BlockBehaviour.Properties.of(Material.STONE).noCollission().noCollission()));
 
     @SubscribeEvent
     public static void onRegisterItems(final RegisterEvent event) {

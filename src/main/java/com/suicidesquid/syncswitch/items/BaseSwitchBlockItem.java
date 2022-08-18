@@ -81,6 +81,8 @@ public class BaseSwitchBlockItem extends BlockItem{
         if(player.isCrouching()){
             if (tag.contains("channel"))
                 tag.remove("channel");
+                if(level.isClientSide)
+                    player.sendSystemMessage(Component.literal("Channel Cleared!"));
             return new InteractionResultHolder<ItemStack>(InteractionResult.SUCCESS, stack);
         }
         if(!level.isClientSide && tag.contains("channel")){
