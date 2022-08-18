@@ -1,5 +1,6 @@
 package com.suicidesquid.syncswitch.tiles;
 
+import com.suicidesquid.syncswitch.blocks.BaseSwitchBlock;
 import com.suicidesquid.syncswitch.data.SwitchData;
 
 import net.minecraft.core.BlockPos;
@@ -99,8 +100,9 @@ public class BaseSwitchBlockTile extends BlockEntity{
                 boolean channelActive = switchData.isActive(tile.getChannel());
                 if (channelActive != state.getValue(LeverBlock.POWERED)){
                     level.setBlockAndUpdate(pos, state.setValue(LeverBlock.POWERED, channelActive));
-                    float f = channelActive ? 0.6F : 0.5F;
-                    level.playSound((Player)null, pos, SoundEvents.LEVER_CLICK, SoundSource.BLOCKS, 0.3F, f);
+                    // float f = channelActive ? 0.6F : 0.5F;
+                    // level.playSound((Player)null, pos, SoundEvents.LEVER_CLICK, SoundSource.BLOCKS, 0.3F, f);
+                    BaseSwitchBlock.playSound(state, level, pos);
                 }
                 
             }

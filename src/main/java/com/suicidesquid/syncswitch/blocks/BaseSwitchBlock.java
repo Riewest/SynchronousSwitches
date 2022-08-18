@@ -31,11 +31,11 @@ import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition.Builder;
 import net.minecraft.world.level.block.state.properties.AttachFace;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.storage.loot.LootContext;
-import net.minecraft.world.level.storage.loot.LootContext.Builder;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParam;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
@@ -44,9 +44,11 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 public class BaseSwitchBlock extends LeverBlock{
 
     private static final int SHAPE_SCALAR = 16;
+    private static final BooleanProperty SILENT = BooleanProperty.create("silent");
 
     public BaseSwitchBlock(Block.Properties properties) {
         super(properties);
+        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(POWERED, Boolean.valueOf(false)).setValue(FACE, AttachFace.WALL).setValue(SILENT, false));
     }
 
     @Override
@@ -61,6 +63,12 @@ public class BaseSwitchBlock extends LeverBlock{
 
         super.setPlacedBy(level, pos, state, placer, stack);
     }
+
+    // @Override
+    // public int getSignal(BlockState state, BlockGetter blockGetter, BlockPos pos, Direction direction) {
+    //     blockGetter.get
+    //     return super.getSignal(state, blockGetter, pos, direction);
+    // }
 
     @Override
 	public BlockState getStateForPlacement(BlockPlaceContext context) {
@@ -120,14 +128,19 @@ public class BaseSwitchBlock extends LeverBlock{
                 } else if (held.getItem() == Items.WATER_BUCKET){
                     switchtile.setRedacted(false);
                     player.sendSystemMessage(Component.literal("Unredacted Channel"));
+                } else if (held.getItem() == Items.WHITE_WOOL){
+                    world.setBlock(pos, state.cycle(SILENT), 3);
+
+                    if (state.getValue(SILENT))
+                        player.sendSystemMessage(Component.literal("Unsilencing"));
+                    else
+                        player.sendSystemMessage(Component.literal("Silencing"));
                 } else if (!switchtile.hasChannel() && held.isEmpty()){
                     return super.use(state, world, pos, player, hand, hit);
                 } else {
-                    boolean active = switchData.toggleActive(switchtile.getChannel());
-                    float f = active ? 0.6F : 0.5F;
-                    world.playSound((Player)null, pos, SoundEvents.LEVER_CLICK, SoundSource.BLOCKS, 0.3F, f);
-                    world.setBlockAndUpdate(pos, state.setValue(POWERED, active));
+                    world.setBlockAndUpdate(pos, state.setValue(POWERED, switchData.toggleActive(switchtile.getChannel())));
                     world.updateNeighborsAt(pos.relative(BaseSwitchBlockTile.getConnectedDirection(state).getOpposite()), this);
+                    playSound(state, world, pos);
                 }
                 
             }
@@ -139,6 +152,9 @@ public class BaseSwitchBlock extends LeverBlock{
         return super.use(state, world, pos, player, hand, hit);
     }
 
+
+    
+
 	public BlockState rotate(BlockState state, Rotation rot) {
 		return state.setValue(BlockStateProperties.FACING, rot.rotate(state.getValue(BlockStateProperties.FACING)));
 	}
@@ -147,6 +163,13 @@ public class BaseSwitchBlock extends LeverBlock{
 		return state.rotate(mirrorIn.getRotation(state.getValue(BlockStateProperties.FACING)));
 	}
 
+
+    public static void playSound(BlockState state, Level level, BlockPos pos){
+        if(!state.getValue(SILENT)){
+            float f = state.getValue(POWERED) ? 0.6F : 0.5F;
+            level.playSound((Player)null, pos, SoundEvents.LEVER_CLICK, SoundSource.BLOCKS, 0.3F, f);
+        }
+    }
 
     private VoxelShape translateAxis(VoxelShape shape, Axis axis, boolean positive){
 		double moveAmount;
@@ -204,4 +227,10 @@ public class BaseSwitchBlock extends LeverBlock{
 		};
 
 	}
+
+    @Override
+    protected void createBlockStateDefinition(Builder<Block, BlockState> state) {
+        state.add(SILENT);
+        super.createBlockStateDefinition(state);
+    }
 }
