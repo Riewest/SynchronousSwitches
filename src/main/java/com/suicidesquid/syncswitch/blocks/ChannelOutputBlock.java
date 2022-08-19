@@ -2,9 +2,10 @@ package com.suicidesquid.syncswitch.blocks;
 
 import javax.annotation.Nullable;
 
+import com.suicidesquid.syncswitch.blocks.base.BaseSwitchBlock;
 import com.suicidesquid.syncswitch.init.TileEntityInit;
-import com.suicidesquid.syncswitch.tiles.BigButtonTile;
 import com.suicidesquid.syncswitch.tiles.ChannelOutputTile;
+import com.suicidesquid.syncswitch.tiles.Switches.BigButtonTile;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;

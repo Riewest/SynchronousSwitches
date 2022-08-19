@@ -1,11 +1,11 @@
 package com.suicidesquid.syncswitch.init;
 
 import com.suicidesquid.syncswitch.SynchronousSwitches;
-import com.suicidesquid.syncswitch.tiles.BigButtonTile;
 import com.suicidesquid.syncswitch.tiles.ChannelOutputTile;
-import com.suicidesquid.syncswitch.tiles.EStopButtonTile;
-import com.suicidesquid.syncswitch.tiles.SwitchBlockTile;
-import com.suicidesquid.syncswitch.tiles.VanillaSwitchBlockTile;
+import com.suicidesquid.syncswitch.tiles.Switches.BigButtonTile;
+import com.suicidesquid.syncswitch.tiles.Switches.EStopButtonTile;
+import com.suicidesquid.syncswitch.tiles.Switches.SwitchBlockTile;
+import com.suicidesquid.syncswitch.tiles.Switches.VanillaSwitchBlockTile;
 
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.registries.DeferredRegister;

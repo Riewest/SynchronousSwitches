@@ -3,7 +3,7 @@ package com.suicidesquid.syncswitch.items;
 import java.util.List;
 
 import com.suicidesquid.syncswitch.data.SwitchData;
-import com.suicidesquid.syncswitch.tiles.BaseSwitchBlockTile;
+import com.suicidesquid.syncswitch.tiles.Base.BaseChannelTile;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -40,7 +40,7 @@ public class BaseSwitchBlockItem extends BlockItem{
     @Override
     protected boolean updateCustomBlockEntityTag(BlockPos pos, Level level, Player player, ItemStack stack, BlockState state) {
         boolean flag = super.updateCustomBlockEntityTag(pos, level, player, stack, state);
-        BaseSwitchBlockTile tile = (BaseSwitchBlockTile) level.getBlockEntity(pos);
+        BaseChannelTile tile = (BaseChannelTile) level.getBlockEntity(pos);
         if (tile != null){
             String channel = getChannel(stack);
             if (channel != null){
@@ -66,7 +66,7 @@ public class BaseSwitchBlockItem extends BlockItem{
             return InteractionResult.PASS;
 
         BlockEntity be = level.getBlockEntity(context.getClickedPos());
-        if (context.getPlayer().isCrouching() && be instanceof BaseSwitchBlockTile tile){
+        if (context.getPlayer().isCrouching() && be instanceof BaseChannelTile tile){
             CompoundTag tag = stack.getOrCreateTag();
             tag.putString("channel", tile.getChannel());
             return InteractionResult.SUCCESS;

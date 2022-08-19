@@ -1,4 +1,4 @@
-package com.suicidesquid.syncswitch.blocks;
+package com.suicidesquid.syncswitch.blocks.base;
 
 
 import java.util.ArrayList;
@@ -7,7 +7,7 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import com.suicidesquid.syncswitch.data.SwitchData;
-import com.suicidesquid.syncswitch.tiles.BaseSwitchBlockTile;
+import com.suicidesquid.syncswitch.tiles.Base.BaseChannelTile;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -56,7 +56,7 @@ public class BaseSwitchBlock extends LeverBlock{
         
         if(placer != null && placer instanceof Player){
             BlockEntity be =level.getBlockEntity(pos);
-            if (be instanceof BaseSwitchBlockTile tile){
+            if (be instanceof BaseChannelTile tile){
                 tile.setPlayer(((Player)placer).getStringUUID());
             }
         }
@@ -105,7 +105,7 @@ public class BaseSwitchBlock extends LeverBlock{
     @Override
     public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
         List<ItemStack> drops = new ArrayList<>();
-        BaseSwitchBlockTile tile = (BaseSwitchBlockTile) builder.getOptionalParameter(LootContextParams.BLOCK_ENTITY);
+        BaseChannelTile tile = (BaseChannelTile) builder.getOptionalParameter(LootContextParams.BLOCK_ENTITY);
         if (tile != null){
             drops.add(createItem(tile.getChannel()));
         }
@@ -114,7 +114,7 @@ public class BaseSwitchBlock extends LeverBlock{
 
     @Override
     public ItemStack getCloneItemStack(BlockState state, HitResult target, BlockGetter level, BlockPos pos, Player player) {
-        BaseSwitchBlockTile tile = (BaseSwitchBlockTile) level.getBlockEntity(pos);
+        BaseChannelTile tile = (BaseChannelTile) level.getBlockEntity(pos);
         return createItem(tile.getChannel());
     }
 
@@ -131,8 +131,8 @@ public class BaseSwitchBlock extends LeverBlock{
     public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if (!world.isClientSide() && hand == InteractionHand.MAIN_HAND){
             BlockEntity tile = world.getBlockEntity(pos);
-            if (tile instanceof BaseSwitchBlockTile){
-                BaseSwitchBlockTile switchtile = (BaseSwitchBlockTile) tile;
+            if (tile instanceof BaseChannelTile){
+                BaseChannelTile switchtile = (BaseChannelTile) tile;
                 ItemStack held = player.getItemInHand(hand);
                 SwitchData switchData = SwitchData.get(world);
                 if (player.isShiftKeyDown()){
@@ -162,7 +162,7 @@ public class BaseSwitchBlock extends LeverBlock{
                     return super.use(state, world, pos, player, hand, hit);
                 } else {
                     world.setBlockAndUpdate(pos, state.setValue(POWERED, switchData.toggleActive(switchtile.getChannel())));
-                    world.updateNeighborsAt(pos.relative(BaseSwitchBlockTile.getConnectedDirection(state).getOpposite()), this);
+                    world.updateNeighborsAt(pos.relative(BaseChannelTile.getConnectedDirection(state).getOpposite()), this);
                     playSound(state, world, pos);
                 }
                 

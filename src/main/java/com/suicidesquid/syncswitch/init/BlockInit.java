@@ -2,12 +2,12 @@ package com.suicidesquid.syncswitch.init;
 
 import java.util.function.Supplier;
 
-import com.suicidesquid.syncswitch.blocks.BaseSwitchBlock;
-import com.suicidesquid.syncswitch.blocks.BigButtonBlock;
 import com.suicidesquid.syncswitch.blocks.ChannelOutputBlock;
-import com.suicidesquid.syncswitch.blocks.EStopButtonBlock;
-import com.suicidesquid.syncswitch.blocks.SwitchBlock;
-import com.suicidesquid.syncswitch.blocks.VanillaSwitchBlock;
+import com.suicidesquid.syncswitch.blocks.Switches.BigButtonBlock;
+import com.suicidesquid.syncswitch.blocks.Switches.EStopButtonBlock;
+import com.suicidesquid.syncswitch.blocks.Switches.SwitchBlock;
+import com.suicidesquid.syncswitch.blocks.Switches.VanillaSwitchBlock;
+import com.suicidesquid.syncswitch.blocks.base.BaseSwitchBlock;
 import com.suicidesquid.syncswitch.items.BaseSwitchBlockItem;
 import com.suicidesquid.syncswitch.SynchronousSwitches;
 

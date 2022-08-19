@@ -1,9 +1,10 @@
-package com.suicidesquid.syncswitch.blocks;
+package com.suicidesquid.syncswitch.blocks.Switches;
 
 import javax.annotation.Nullable;
 
+import com.suicidesquid.syncswitch.blocks.base.BaseSwitchBlock;
 import com.suicidesquid.syncswitch.init.TileEntityInit;
-import com.suicidesquid.syncswitch.tiles.VanillaSwitchBlockTile;
+import com.suicidesquid.syncswitch.tiles.Switches.VanillaSwitchBlockTile;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;

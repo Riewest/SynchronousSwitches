@@ -1,8 +1,8 @@
-package com.suicidesquid.syncswitch.tiles;
+package com.suicidesquid.syncswitch.tiles.Base;
 
 import java.util.Random;
 
-import com.suicidesquid.syncswitch.blocks.BaseSwitchBlock;
+import com.suicidesquid.syncswitch.blocks.base.BaseSwitchBlock;
 import com.suicidesquid.syncswitch.data.SwitchData;
 
 import net.minecraft.core.BlockPos;
@@ -15,14 +15,14 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.AttachFace;
 
-public class BaseSwitchBlockTile extends BlockEntity{
+public class BaseChannelTile extends BlockEntity{
     public static final String NONE_CHANNEL = "none";
     private int timer = new Random().nextInt(10) + 1;
     private String channel = NONE_CHANNEL;
     private boolean redacted = false;
     private String player;
 
-    public BaseSwitchBlockTile(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+    public BaseChannelTile(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
     }
     
@@ -90,7 +90,7 @@ public class BaseSwitchBlockTile extends BlockEntity{
         }
      }
 
-    private static void tickUpdate(Level level, BlockPos pos, BlockState state, BaseSwitchBlockTile tile){
+    private static void tickUpdate(Level level, BlockPos pos, BlockState state, BaseChannelTile tile){
         if (!level.isClientSide() && tile.hasChannel()){
             tile.timer++;
             if (tile.timer > 10){
@@ -107,7 +107,7 @@ public class BaseSwitchBlockTile extends BlockEntity{
     }
 
     public static <T extends BlockEntity> void tick(Level level, BlockPos pos, BlockState state, T be){
-        BaseSwitchBlockTile tile = (BaseSwitchBlockTile) be;
+        BaseChannelTile tile = (BaseChannelTile) be;
         tickUpdate(level, pos, state, tile);
     }
 }

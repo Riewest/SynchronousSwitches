@@ -1,11 +1,12 @@
-package com.suicidesquid.syncswitch.blocks;
+package com.suicidesquid.syncswitch.blocks.Switches;
 
 import javax.annotation.Nullable;
 
 import org.checkerframework.checker.units.qual.degrees;
 
+import com.suicidesquid.syncswitch.blocks.base.BaseSwitchBlock;
 import com.suicidesquid.syncswitch.init.TileEntityInit;
-import com.suicidesquid.syncswitch.tiles.SwitchBlockTile;
+import com.suicidesquid.syncswitch.tiles.Switches.SwitchBlockTile;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
