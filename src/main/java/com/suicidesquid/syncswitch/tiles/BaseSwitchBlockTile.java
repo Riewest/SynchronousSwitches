@@ -1,14 +1,13 @@
 package com.suicidesquid.syncswitch.tiles;
 
+import java.util.Random;
+
 import com.suicidesquid.syncswitch.blocks.BaseSwitchBlock;
 import com.suicidesquid.syncswitch.data.SwitchData;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.LeverBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -18,7 +17,7 @@ import net.minecraft.world.level.block.state.properties.AttachFace;
 
 public class BaseSwitchBlockTile extends BlockEntity{
     public static final String NONE_CHANNEL = "none";
-    private int timer = 0;
+    private int timer = new Random().nextInt(10) + 1;
     private String channel = NONE_CHANNEL;
     private boolean redacted = false;
     private String player;

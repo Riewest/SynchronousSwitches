@@ -17,7 +17,7 @@ public class TileEntityInit {
 
     public static final RegistryObject<BlockEntityType<ChannelOutputTile>> CHANNEL_OUTPUT_BLOCK
             = TILE_ENTITY_TYPES.register("channel_output",
-            () -> BlockEntityType.Builder.of(ChannelOutputTile::new, BlockInit.SWITCH_BLOCK.get()).build(null));
+            () -> BlockEntityType.Builder.of(ChannelOutputTile::new, BlockInit.CHANNEL_OUTPUT_BLOCK.get()).build(null));
             
     public static final RegistryObject<BlockEntityType<SwitchBlockTile>> SWITCH_BLOCK
             = TILE_ENTITY_TYPES.register("switch_block",
