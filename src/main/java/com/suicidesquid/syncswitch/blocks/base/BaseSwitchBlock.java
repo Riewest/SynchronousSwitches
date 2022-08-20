@@ -134,15 +134,9 @@ public class BaseSwitchBlock extends LeverBlock{
                 BaseChannelTile switchtile = (BaseChannelTile) tile;
                 ItemStack held = player.getItemInHand(hand);
                 SwitchData switchData = SwitchData.get(world);
-                if(switchtile.processInteraction(held, player))
+                if(switchtile.processInteraction(held, player, switchData))
                     return InteractionResult.CONSUME;
-                if (player.isShiftKeyDown()){
-                    if(switchtile.hasChannel()){
-                        player.sendSystemMessage(Component.literal("Channel: " + switchtile.getChannelDisplay(player.getStringUUID()) + " - Active: " + switchData.isActive(switchtile.getChannel())));   
-                    } else {
-                        player.sendSystemMessage(Component.literal("No Channel"));
-                    }
-                } else if (!switchtile.hasChannel() && held.isEmpty()){
+                if (!switchtile.hasChannel() && held.isEmpty()){
                     return super.use(state, world, pos, player, hand, hit);
                 } else {
                     world.setBlockAndUpdate(pos, state.setValue(POWERED, switchData.toggleActive(switchtile.getChannel())));

@@ -109,17 +109,32 @@ public class BaseChannelTile extends BlockEntity{
         }
     }
 
-    public boolean processInteraction(ItemStack held, Player player){
-        if (held.isEmpty())
+    public boolean processInteraction(ItemStack held, Player player, SwitchData switchData){
+        if (held.isEmpty() && !player.isShiftKeyDown())
             return false;
+        else if(player.isShiftKeyDown()) {
+            if(this.hasChannel()){
+                player.sendSystemMessage(Component.literal("Channel: " + this.getChannelDisplay(player.getStringUUID()) + " - Active: " + switchData.isActive(this.getChannel())));   
+            } else {
+                player.sendSystemMessage(Component.literal("No Channel"));
+            }
+            return true;
+        }
         
-        boolean itemProcessed = false;
+        boolean interactionProcessed = false;
 
-        if (held.getItem() == Items.PAPER){
+        if (player.isShiftKeyDown()){
+            if(this.hasChannel()){
+                player.sendSystemMessage(Component.literal("Channel: " + this.getChannelDisplay(player.getStringUUID()) + " - Active: " + switchData.isActive(this.getChannel())));   
+            } else {
+                player.sendSystemMessage(Component.literal("No Channel"));
+            }
+            interactionProcessed = true;
+        } else if (held.getItem() == Items.PAPER){
             String channel = held.getDisplayName().getString().replace("[", "").replace("]", "");
             this.setChannel(channel);
             player.sendSystemMessage(Component.literal("Setting Channel: " + channel));
-            itemProcessed = true;
+            interactionProcessed = true;
         } else if (held.getItem() == Items.INK_SAC){
             if (this.isRedacted()){
                 this.setRedacted(false);
@@ -128,7 +143,7 @@ public class BaseChannelTile extends BlockEntity{
                 this.setRedacted(true);
                 player.sendSystemMessage(Component.literal("Redacted Channel"));
             }
-            itemProcessed = true;
+            interactionProcessed = true;
         } else if (held.getItem() == Items.WHITE_WOOL){
             this.toggleSilent();
             if (this.isSilent())
@@ -138,10 +153,10 @@ public class BaseChannelTile extends BlockEntity{
             else {
                 player.sendSystemMessage(Component.literal("Unsilencing"));
             }
-            itemProcessed = true;
+            interactionProcessed = true;
         }
 
-        return itemProcessed;
+        return interactionProcessed;
     }
 
     public static Direction getConnectedDirection(BlockState state) {

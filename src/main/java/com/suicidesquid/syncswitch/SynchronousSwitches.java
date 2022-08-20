@@ -44,7 +44,7 @@ public class SynchronousSwitches
         modEventBus.addListener(this::commonSetup);
 
         // Register the Deferred Register to the mod event bus so blocks get registered
-        BlockInit.BLOCKS.register(modEventBus);
+        BlockInit.CHANNEL_BLOCKS.register(modEventBus);
         // Register the Deferred Register to the mod event bus so items get registered
         ItemInit.ITEMS.register(modEventBus);
 
