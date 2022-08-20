@@ -44,11 +44,10 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 public class BaseSwitchBlock extends LeverBlock{
 
     private static final int SHAPE_SCALAR = 16;
-    private static final BooleanProperty SILENT = BooleanProperty.create("silent");
+    // public static final BooleanProperty SILENT = BooleanProperty.create("silent");
 
     public BaseSwitchBlock(Block.Properties properties) {
         super(properties);
-        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(POWERED, Boolean.valueOf(false)).setValue(FACE, AttachFace.WALL).setValue(SILENT, false));
     }
 
     @Override
@@ -135,37 +134,21 @@ public class BaseSwitchBlock extends LeverBlock{
                 BaseChannelTile switchtile = (BaseChannelTile) tile;
                 ItemStack held = player.getItemInHand(hand);
                 SwitchData switchData = SwitchData.get(world);
+                if(switchtile.processInteraction(held, player))
+                    return InteractionResult.CONSUME;
                 if (player.isShiftKeyDown()){
                     if(switchtile.hasChannel()){
                         player.sendSystemMessage(Component.literal("Channel: " + switchtile.getChannelDisplay(player.getStringUUID()) + " - Active: " + switchData.isActive(switchtile.getChannel())));   
                     } else {
                         player.sendSystemMessage(Component.literal("No Channel"));
                     }
-                } else if (held.getItem() == Items.PAPER){
-                    String channel = held.getDisplayName().getString().replace("[", "").replace("]", "");
-                    switchtile.setChannel(channel);
-                    player.sendSystemMessage(Component.literal("Setting Channel: " + channel));
-                } else if (held.getItem() == Items.INK_SAC){
-                    switchtile.setRedacted(true);
-                    player.sendSystemMessage(Component.literal("Redacted Channel"));
-                } else if (held.getItem() == Items.WATER_BUCKET){
-                    switchtile.setRedacted(false);
-                    player.sendSystemMessage(Component.literal("Unredacted Channel"));
-                } else if (held.getItem() == Items.WHITE_WOOL){
-                    world.setBlock(pos, state.cycle(SILENT), 3);
-
-                    if (state.getValue(SILENT))
-                        player.sendSystemMessage(Component.literal("Unsilencing"));
-                    else
-                        player.sendSystemMessage(Component.literal("Silencing"));
                 } else if (!switchtile.hasChannel() && held.isEmpty()){
                     return super.use(state, world, pos, player, hand, hit);
                 } else {
                     world.setBlockAndUpdate(pos, state.setValue(POWERED, switchData.toggleActive(switchtile.getChannel())));
                     world.updateNeighborsAt(pos.relative(BaseChannelTile.getConnectedDirection(state).getOpposite()), this);
-                    playSound(state, world, pos);
+                    switchtile.playSound(state, world, pos);
                 }
-                
             }
                 
             return InteractionResult.CONSUME;
@@ -185,14 +168,6 @@ public class BaseSwitchBlock extends LeverBlock{
 	public BlockState mirror(BlockState state, Mirror mirrorIn) {
 		return state.rotate(mirrorIn.getRotation(state.getValue(BlockStateProperties.FACING)));
 	}
-
-
-    public static void playSound(BlockState state, Level level, BlockPos pos){
-        if(!state.getValue(SILENT)){
-            float f = state.getValue(POWERED) ? 0.6F : 0.5F;
-            level.playSound((Player)null, pos, SoundEvents.LEVER_CLICK, SoundSource.BLOCKS, 0.3F, f);
-        }
-    }
 
     private VoxelShape translateAxis(VoxelShape shape, Axis axis, boolean positive){
 		double moveAmount;
@@ -250,10 +225,4 @@ public class BaseSwitchBlock extends LeverBlock{
 		};
 
 	}
-
-    @Override
-    protected void createBlockStateDefinition(Builder<Block, BlockState> state) {
-        state.add(SILENT);
-        super.createBlockStateDefinition(state);
-    }
 }

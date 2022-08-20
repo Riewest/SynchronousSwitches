@@ -8,6 +8,12 @@ import com.suicidesquid.syncswitch.data.SwitchData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.LeverBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -20,6 +26,7 @@ public class BaseChannelTile extends BlockEntity{
     private int timer = new Random().nextInt(10) + 1;
     private String channel = NONE_CHANNEL;
     private boolean redacted = false;
+    private boolean silent = false;
     private String player;
 
     public BaseChannelTile(BlockEntityType<?> type, BlockPos pos, BlockState state) {
@@ -31,6 +38,7 @@ public class BaseChannelTile extends BlockEntity{
         super.saveAdditional(nbt);
         nbt.putString("channel", this.channel);
         nbt.putBoolean("redacted", this.redacted);
+        nbt.putBoolean("silent", this.silent);
         nbt.putString("player", this.player);
     }
 
@@ -39,6 +47,7 @@ public class BaseChannelTile extends BlockEntity{
         super.load(nbt);
         this.channel = nbt.getString("channel");
         this.redacted = nbt.getBoolean("redacted");
+        this.silent = nbt.getBoolean("silent");
         this.player = nbt.getString("player");
     }
 
@@ -70,6 +79,20 @@ public class BaseChannelTile extends BlockEntity{
         return !this.channel.toLowerCase().equals(NONE_CHANNEL);
     }
 
+    public void setSilent(boolean silent){
+        this.silent = silent;
+        setChanged();
+    }
+
+    public void toggleSilent(){
+        this.silent = !this.silent;
+        setChanged();
+    }
+
+    public boolean isSilent(){
+        return this.silent;
+    }
+
     public void setRedacted(boolean redacted){
         this.redacted = redacted;
         setChanged();
@@ -77,6 +100,48 @@ public class BaseChannelTile extends BlockEntity{
 
     public boolean isRedacted(){
         return this.redacted;
+    }
+
+    public void playSound(BlockState state, Level level, BlockPos pos){
+        if(!this.silent){
+            float f = state.getValue(BaseSwitchBlock.POWERED) ? 0.6F : 0.5F;
+            level.playSound((Player)null, pos, SoundEvents.LEVER_CLICK, SoundSource.BLOCKS, 0.3F, f);
+        }
+    }
+
+    public boolean processInteraction(ItemStack held, Player player){
+        if (held.isEmpty())
+            return false;
+        
+        boolean itemProcessed = false;
+
+        if (held.getItem() == Items.PAPER){
+            String channel = held.getDisplayName().getString().replace("[", "").replace("]", "");
+            this.setChannel(channel);
+            player.sendSystemMessage(Component.literal("Setting Channel: " + channel));
+            itemProcessed = true;
+        } else if (held.getItem() == Items.INK_SAC){
+            if (this.isRedacted()){
+                this.setRedacted(false);
+            player.sendSystemMessage(Component.literal("Unredacted Channel"));
+            } else {
+                this.setRedacted(true);
+                player.sendSystemMessage(Component.literal("Redacted Channel"));
+            }
+            itemProcessed = true;
+        } else if (held.getItem() == Items.WHITE_WOOL){
+            this.toggleSilent();
+            if (this.isSilent())
+            {
+                player.sendSystemMessage(Component.literal("Silencing"));
+            }
+            else {
+                player.sendSystemMessage(Component.literal("Unsilencing"));
+            }
+            itemProcessed = true;
+        }
+
+        return itemProcessed;
     }
 
     public static Direction getConnectedDirection(BlockState state) {
@@ -99,7 +164,8 @@ public class BaseChannelTile extends BlockEntity{
                 boolean channelActive = switchData.isActive(tile.getChannel());
                 if (channelActive != state.getValue(LeverBlock.POWERED)){
                     level.setBlockAndUpdate(pos, state.setValue(LeverBlock.POWERED, channelActive));
-                    BaseSwitchBlock.playSound(state, level, pos);
+                    tile.playSound(state, level, pos);
+                    // BaseSwitchBlock.playSound(state, level, pos);
                 }
                 
             }
@@ -110,4 +176,7 @@ public class BaseChannelTile extends BlockEntity{
         BaseChannelTile tile = (BaseChannelTile) be;
         tickUpdate(level, pos, state, tile);
     }
+
+
+
 }
