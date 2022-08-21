@@ -4,5 +4,6 @@
     "block.syncswitch.switch_block": "Synchronous Switch",
     "block.syncswitch.big_button": "Synchronous Big Button",
     "block.syncswitch.estop_button": "Synchronous E-Stop Button",
-    "block.syncswitch.vanilla_switch_block": "Vanilla Synchronous Switch"
+    "block.syncswitch.vanilla_switch_block": "Vanilla Synchronous Switch",
+    "block.syncswitch.channel_output": "Channel Output"
 }
