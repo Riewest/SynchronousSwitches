@@ -74,6 +74,8 @@ public class BaseSwitchBlockItem extends BlockItem{
         return InteractionResult.PASS;
     }
 
+    protected void toggleActive(Level level, CompoundTag tag){}
+
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
@@ -85,12 +87,7 @@ public class BaseSwitchBlockItem extends BlockItem{
                     player.sendSystemMessage(Component.literal("Channel Cleared!"));
             return new InteractionResultHolder<ItemStack>(InteractionResult.SUCCESS, stack);
         }
-        if(!level.isClientSide && tag.contains("channel")){
-
-            SwitchData switchData = SwitchData.get(level);
-            switchData.toggleActive(tag.getString("channel"));
-            
-        }
+        toggleActive(level, tag);
         return new InteractionResultHolder<ItemStack>(InteractionResult.SUCCESS, stack);
     }
 

@@ -11,8 +11,10 @@ import com.suicidesquid.syncswitch.blocks.Switches.EStopButtonBlock;
 import com.suicidesquid.syncswitch.blocks.Switches.IOSwitchBlock;
 import com.suicidesquid.syncswitch.blocks.Switches.SwitchBlock;
 import com.suicidesquid.syncswitch.blocks.Switches.VanillaSwitchBlock;
+import com.suicidesquid.syncswitch.blocks.base.BaseChannelBlock;
 import com.suicidesquid.syncswitch.blocks.base.BaseSwitchBlock;
 import com.suicidesquid.syncswitch.items.BaseSwitchBlockItem;
+import com.suicidesquid.syncswitch.items.UsableSwitchBlockItem;
 import com.suicidesquid.syncswitch.SynchronousSwitches;
 
 import net.minecraft.world.item.BlockItem;
@@ -54,7 +56,7 @@ public class BlockInit {
             CHANNEL_BLOCKS.getEntries().forEach( (blockRegistryObject) -> {
                 Block block = blockRegistryObject.get();
                 Item.Properties properties = new Item.Properties().tab(ItemInit.ModCreativeTab.instance);
-                Supplier<Item> blockItemFactory = () -> new BaseSwitchBlockItem(block, properties);
+                Supplier<Item> blockItemFactory = () -> (block instanceof BaseChannelBlock) ? new BaseSwitchBlockItem(block, properties) : new UsableSwitchBlockItem(block, properties);
                 event.register(ForgeRegistries.Keys.ITEMS, blockRegistryObject.getId(), blockItemFactory);
             });
         }
