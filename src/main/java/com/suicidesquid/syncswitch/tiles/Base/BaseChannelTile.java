@@ -170,12 +170,12 @@ public class BaseChannelTile extends BlockEntity{
         }
      }
 
-    private void tick(Level level, BlockPos pos, BlockState state, BaseChannelTile tile){
+    protected void tick(Level level, BlockPos pos, BlockState state){
         SwitchData switchData = SwitchData.get(level);
-        boolean channelActive = switchData.isActive(tile.getChannel());
+        boolean channelActive = switchData.isActive(this.getChannel());
         if (channelActive != state.getValue(LeverBlock.POWERED)){
             level.setBlockAndUpdate(pos, state.setValue(LeverBlock.POWERED, channelActive));
-            tile.playSound(state, level, pos);
+            this.playSound(state, level, pos);
         }
     }
 
@@ -185,7 +185,7 @@ public class BaseChannelTile extends BlockEntity{
             tile.timer++;
             if (tile.timer > 10){
                 tile.timer = 0;
-                tile.tick(level, pos, state, tile);
+                tile.tick(level, pos, state);
             }
         }
     }
