@@ -14,4 +14,8 @@ public class SwitchState {
     public void toggleActive(){
         this.active = !this.active;
     }
+
+    public void setActive(boolean active){
+        this.active = active;
+    }
 }

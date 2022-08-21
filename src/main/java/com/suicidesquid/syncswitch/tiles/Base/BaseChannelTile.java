@@ -27,7 +27,7 @@ public class BaseChannelTile extends BlockEntity{
     private String channel = NONE_CHANNEL;
     private boolean redacted = false;
     private boolean silent = false;
-    private String player;
+    private String player = "";
 
     public BaseChannelTile(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);

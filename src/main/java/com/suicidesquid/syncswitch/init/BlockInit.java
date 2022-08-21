@@ -2,6 +2,7 @@ package com.suicidesquid.syncswitch.init;
 
 import java.util.function.Supplier;
 
+import com.suicidesquid.syncswitch.blocks.ChannelInputBlock;
 import com.suicidesquid.syncswitch.blocks.ChannelOutputBlock;
 import com.suicidesquid.syncswitch.blocks.Switches.BigButtonBlock;
 import com.suicidesquid.syncswitch.blocks.Switches.EStopButtonBlock;
@@ -29,6 +30,7 @@ public class BlockInit {
 
 
     public static final RegistryObject<Block> CHANNEL_OUTPUT_BLOCK = CHANNEL_BLOCKS.register("channel_output",() -> new ChannelOutputBlock(BlockBehaviour.Properties.of(Material.STONE)));
+    public static final RegistryObject<Block> CHANNEL_INPUT_BLOCK = CHANNEL_BLOCKS.register("channel_input",() -> new ChannelInputBlock(BlockBehaviour.Properties.of(Material.STONE)));
     public static final RegistryObject<Block> SWITCH_BLOCK = CHANNEL_BLOCKS.register("switch_block",() -> new SwitchBlock(BlockBehaviour.Properties.of(Material.STONE).noCollission().noCollission()));
     public static final RegistryObject<Block> BIG_BUTTON_BLOCK = CHANNEL_BLOCKS.register("big_button",() -> new BigButtonBlock(BlockBehaviour.Properties.of(Material.STONE).noCollission().noCollission()));
     public static final RegistryObject<Block> ESTOP_BUTTON_BLOCK = CHANNEL_BLOCKS.register("estop_button",() -> new EStopButtonBlock(BlockBehaviour.Properties.of(Material.STONE).noCollission().noCollission()));

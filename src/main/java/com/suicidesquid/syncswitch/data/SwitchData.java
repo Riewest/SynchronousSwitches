@@ -42,6 +42,16 @@ public class SwitchData extends SavedData{
         return switchState.isActive();
     }
 
+    public boolean setActive(String channel, boolean active){
+        SwitchState switchState = getSwitchState(channel);
+        switchState.setActive(active);
+        switchMap.put(channel, switchState);
+        setDirty();
+        return switchState.isActive();
+    }
+
+
+
     public SwitchData(){}
 
     public SwitchData(CompoundTag tag){

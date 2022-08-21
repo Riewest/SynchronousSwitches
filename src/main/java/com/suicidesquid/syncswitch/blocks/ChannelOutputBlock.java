@@ -16,16 +16,13 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.BooleanProperty;
 
 public class ChannelOutputBlock extends BaseChannelBlock implements EntityBlock{
 
-    private static final BooleanProperty POWERED = BlockStateProperties.POWERED;
+    
 
     public ChannelOutputBlock(Block.Properties properties) {
         super(properties);
-        this.registerDefaultState(this.stateDefinition.any().setValue(POWERED, Boolean.valueOf(false)));
     }
 
     @Nullable
@@ -44,7 +41,7 @@ public class ChannelOutputBlock extends BaseChannelBlock implements EntityBlock{
      }
 
      @Override
-     public boolean isSignalSource(BlockState p_60571_) {
+     public boolean isSignalSource(BlockState state) {
          return true;
      }
     
