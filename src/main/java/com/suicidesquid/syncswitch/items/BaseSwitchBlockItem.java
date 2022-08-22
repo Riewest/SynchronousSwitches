@@ -63,13 +63,16 @@ public class BaseSwitchBlockItem extends BlockItem{
     public InteractionResult onItemUseFirst(ItemStack stack, UseOnContext context) {
         Level level = context.getLevel();
         if(level.isClientSide())
-            return InteractionResult.PASS;
+            if(context.getPlayer().isCrouching())
+                return InteractionResult.CONSUME;
+            else
+                return InteractionResult.PASS;
 
         BlockEntity be = level.getBlockEntity(context.getClickedPos());
         if (context.getPlayer().isCrouching() && be instanceof BaseChannelTile tile){
             CompoundTag tag = stack.getOrCreateTag();
             tag.putString("channel", tile.getChannel());
-            return InteractionResult.SUCCESS;
+            return InteractionResult.CONSUME;
         }
         return InteractionResult.PASS;
     }
