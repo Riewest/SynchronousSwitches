@@ -157,7 +157,7 @@ public class BaseSwitchBlock extends LeverBlock{
 		return state.rotate(mirrorIn.getRotation(state.getValue(BlockStateProperties.FACING)));
 	}
 
-    private VoxelShape translateAxis(VoxelShape shape, Axis axis, boolean positive){
+    public static VoxelShape translateAxis(VoxelShape shape, Axis axis, boolean positive){
 		double moveAmount;
 		if (positive)
 			moveAmount = 1 - shape.max(axis);
@@ -171,11 +171,11 @@ public class BaseSwitchBlock extends LeverBlock{
 		};
 	}
 
-	private VoxelShape rotateCardinal(VoxelShape shape){
+	public static VoxelShape rotateCardinal(VoxelShape shape){
 		return Block.box(SHAPE_SCALAR * shape.min(Axis.Z), SHAPE_SCALAR * shape.min(Axis.Y), SHAPE_SCALAR * shape.min(Axis.X), SHAPE_SCALAR * shape.max(Axis.Z), SHAPE_SCALAR * shape.max(Axis.Y), SHAPE_SCALAR * shape.max(Axis.X));
 	}
 
-	private VoxelShape rotateWall(VoxelShape shape, Direction direction){
+	public static VoxelShape rotateWall(VoxelShape shape, Direction direction){
 		VoxelShape returnShape;
 		switch (direction) {
 			case NORTH:
@@ -196,7 +196,7 @@ public class BaseSwitchBlock extends LeverBlock{
 	}
 
 
-	protected VoxelShape determineShape(VoxelShape defaultShape, BlockState state){
+	public static VoxelShape determineShape(VoxelShape defaultShape, BlockState state){
 		Direction facing = state.getValue(FACING);
 		
 		return switch (state.getValue(FACING)) {
@@ -211,6 +211,5 @@ public class BaseSwitchBlock extends LeverBlock{
 				case CEILING -> translateAxis(rotateCardinal(defaultShape), Axis.Y, true);
 			};
 		};
-
 	}
 }

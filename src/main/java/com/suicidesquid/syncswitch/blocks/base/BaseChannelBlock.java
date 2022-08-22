@@ -1,5 +1,8 @@
 package com.suicidesquid.syncswitch.blocks.base;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.annotation.Nullable;
 
 import com.suicidesquid.syncswitch.data.SwitchData;
@@ -7,6 +10,7 @@ import com.suicidesquid.syncswitch.tiles.Base.BaseChannelTile;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
@@ -20,7 +24,10 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition.Builder;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
 
 public class BaseChannelBlock extends Block{
 
@@ -70,6 +77,31 @@ public class BaseChannelBlock extends Block{
     protected void createBlockStateDefinition(Builder<Block, BlockState> builder) {
         builder.add(POWERED);
         super.createBlockStateDefinition(builder);
+    }
+
+    @Override
+    public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
+        List<ItemStack> drops = new ArrayList<>();
+        BaseChannelTile tile = (BaseChannelTile) builder.getOptionalParameter(LootContextParams.BLOCK_ENTITY);
+        if (tile != null){
+            drops.add(createItem(tile.getChannel()));
+        }
+        return drops;
+    }
+
+    @Override
+    public ItemStack getCloneItemStack(BlockState state, HitResult target, BlockGetter level, BlockPos pos, Player player) {
+        BaseChannelTile tile = (BaseChannelTile) level.getBlockEntity(pos);
+        return createItem(tile.getChannel());
+    }
+
+    private ItemStack createItem(String channel){
+        ItemStack stack = new ItemStack(this, 1);
+        if (channel != null){
+            CompoundTag tag = stack.getOrCreateTag();
+            tag.putString("channel", channel);
+        }
+        return stack;
     }
     
 }
