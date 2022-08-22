@@ -4,6 +4,7 @@ import com.suicidesquid.syncswitch.SynchronousSwitches;
 import com.suicidesquid.syncswitch.tiles.ChannelInputTile;
 import com.suicidesquid.syncswitch.tiles.ChannelOutputTile;
 import com.suicidesquid.syncswitch.tiles.LightBlockTile;
+import com.suicidesquid.syncswitch.tiles.LightPanelTile;
 import com.suicidesquid.syncswitch.tiles.Switches.BigButtonTile;
 import com.suicidesquid.syncswitch.tiles.Switches.EStopButtonTile;
 import com.suicidesquid.syncswitch.tiles.Switches.IOSwitchTile;
@@ -26,9 +27,13 @@ public class TileEntityInit {
             = TILE_ENTITY_TYPES.register("channel_input",
             () -> BlockEntityType.Builder.of(ChannelInputTile::new, BlockInit.CHANNEL_INPUT_BLOCK.get()).build(null));
 
-    public static final RegistryObject<BlockEntityType<LightBlockTile>> TEST_LIGHT_BLOCK
+    public static final RegistryObject<BlockEntityType<LightBlockTile>> LIGHT_BLOCK
             = TILE_ENTITY_TYPES.register("light_block",
-            () -> BlockEntityType.Builder.of(LightBlockTile::new, BlockInit.TEST_LIGHT_BLOCK.get()).build(null));
+            () -> BlockEntityType.Builder.of(LightBlockTile::new, BlockInit.LIGHT_BLOCK.get()).build(null));
+
+    public static final RegistryObject<BlockEntityType<LightPanelTile>> LIGHT_PANEL_BLOCK
+            = TILE_ENTITY_TYPES.register("light_panel",
+            () -> BlockEntityType.Builder.of(LightPanelTile::new, BlockInit.LIGHT_PANEL_BLOCK.get()).build(null));
             
     public static final RegistryObject<BlockEntityType<SwitchBlockTile>> SWITCH_BLOCK
             = TILE_ENTITY_TYPES.register("switch_block",

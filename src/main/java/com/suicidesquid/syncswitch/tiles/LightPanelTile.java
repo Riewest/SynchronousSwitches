@@ -9,9 +9,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class LightBlockTile extends BaseChannelBlockTile{
-    public LightBlockTile(BlockPos pos, BlockState state) {
-        super(TileEntityInit.LIGHT_BLOCK.get(), pos, state);
+public class LightPanelTile extends BaseChannelBlockTile{
+    public LightPanelTile(BlockPos pos, BlockState state) {
+        super(TileEntityInit.LIGHT_PANEL_BLOCK.get(), pos, state);
     }
 
     @Override

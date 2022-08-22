@@ -1,0 +1,10 @@
+{
+    "variants": {
+      "powered=true": {
+        "model": "syncswitch:block/light_block_on"
+      },
+      "powered=false": {
+        "model": "syncswitch:block/light_block"
+      }
+    }
+  }

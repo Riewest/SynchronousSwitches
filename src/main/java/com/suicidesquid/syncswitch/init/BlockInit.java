@@ -5,13 +5,14 @@ import java.util.function.ToIntFunction;
 
 import com.suicidesquid.syncswitch.blocks.ChannelInputBlock;
 import com.suicidesquid.syncswitch.blocks.ChannelOutputBlock;
-import com.suicidesquid.syncswitch.blocks.BaseLightBlock;
+import com.suicidesquid.syncswitch.blocks.LightPanelBlock;
 import com.suicidesquid.syncswitch.blocks.Switches.BigButtonBlock;
 import com.suicidesquid.syncswitch.blocks.Switches.EStopButtonBlock;
 import com.suicidesquid.syncswitch.blocks.Switches.IOSwitchBlock;
 import com.suicidesquid.syncswitch.blocks.Switches.SwitchBlock;
 import com.suicidesquid.syncswitch.blocks.Switches.VanillaSwitchBlock;
 import com.suicidesquid.syncswitch.blocks.base.BaseChannelBlock;
+import com.suicidesquid.syncswitch.blocks.base.BaseLightBlock;
 import com.suicidesquid.syncswitch.blocks.base.BaseSwitchBlock;
 import com.suicidesquid.syncswitch.items.BaseSwitchBlockItem;
 import com.suicidesquid.syncswitch.items.UsableSwitchBlockItem;
@@ -48,7 +49,8 @@ public class BlockInit {
     public static final RegistryObject<Block> VANILLA_SWITCH_BLOCK = CHANNEL_BLOCKS.register("vanilla_switch_block",() -> new VanillaSwitchBlock(BlockBehaviour.Properties.of(Material.STONE).noCollission().noCollission()));
 
     // Lights
-    public static final RegistryObject<Block> TEST_LIGHT_BLOCK = CHANNEL_BLOCKS.register("light_block",() -> new BaseLightBlock(BlockBehaviour.Properties.of(Material.STONE).lightLevel(getLightLevel())));
+    public static final RegistryObject<Block> LIGHT_BLOCK = CHANNEL_BLOCKS.register("light_block",() -> new BaseLightBlock(BlockBehaviour.Properties.of(Material.STONE).lightLevel(getLightLevel())));
+    public static final RegistryObject<Block> LIGHT_PANEL_BLOCK = CHANNEL_BLOCKS.register("light_panel",() -> new LightPanelBlock(BlockBehaviour.Properties.of(Material.STONE).lightLevel(getLightLevel())));
 
     @SubscribeEvent
     public static void onRegisterItems(final RegisterEvent event) {
