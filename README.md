@@ -19,6 +19,7 @@ This mod adds "Synchronous Switches" which can be linked together via a channel.
 * Right click with a switch in your main hand to toggle the channel active without having the switch placed
 
 
+
 ## Credits
 * Riewest14
 * LogicEngineer
