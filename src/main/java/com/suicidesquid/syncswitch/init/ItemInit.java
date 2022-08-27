@@ -10,7 +10,6 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 public class ItemInit {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, SynchronousSwitches.MODID);
-    // public static final RegistryObject<Item> SWITCH_BLOCK_ITEM = ITEMS.register("switch_block",() -> new BaseSwitchBlockItem(BlockInit.SWITCH_BLOCK.get()));
 
 
     public static class ModCreativeTab extends CreativeModeTab {

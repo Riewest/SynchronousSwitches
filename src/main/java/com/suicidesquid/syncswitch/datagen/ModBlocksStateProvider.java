@@ -9,7 +9,6 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.ButtonBlock;
 import net.minecraft.world.level.block.LeverBlock;
-import net.minecraft.world.level.block.LightBlock;
 import net.minecraft.world.level.block.state.properties.AttachFace;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
@@ -53,8 +52,6 @@ public class ModBlocksStateProvider extends BlockStateProvider {
     @Override
     protected void registerStatesAndModels() {
 
-        // buttonBlock(new StoneButtonBlock(BlockBehaviour.Properties.of(Material.STONE)) , new ExistingModelFile(new ResourceLocation(SynchronousSwitches.MODID + ":block/switch_block"), models().existingFileHelper ), new ExistingModelFile(new ResourceLocation(SynchronousSwitches.MODID + ":block/switch_block_on"), models().existingFileHelper ));
-        // leverBlock((LeverBlock)BlockInit.CHANNEL_OUTPUT_BLOCK.get() , new ExistingModelFile(new ResourceLocation(SynchronousSwitches.MODID + ":block/channel_output"), models().existingFileHelper ), new ExistingModelFile(new ResourceLocation(SynchronousSwitches.MODID + ":block/channel_output_on"), models().existingFileHelper ));
         leverBlock((LeverBlock)BlockInit.SWITCH_BLOCK.get() , new ExistingModelFile(new ResourceLocation(SynchronousSwitches.MODID + ":block/switch_block"), models().existingFileHelper ), new ExistingModelFile(new ResourceLocation(SynchronousSwitches.MODID + ":block/switch_block_on"), models().existingFileHelper ));
         leverBlock((LeverBlock)BlockInit.BIG_BUTTON_BLOCK.get() , new ExistingModelFile(new ResourceLocation(SynchronousSwitches.MODID + ":block/big_button"), models().existingFileHelper ), new ExistingModelFile(new ResourceLocation(SynchronousSwitches.MODID + ":block/big_button_on"), models().existingFileHelper ));
         leverBlock((LeverBlock)BlockInit.ESTOP_BUTTON_BLOCK.get() , new ExistingModelFile(new ResourceLocation(SynchronousSwitches.MODID + ":block/estop_button"), models().existingFileHelper ), new ExistingModelFile(new ResourceLocation(SynchronousSwitches.MODID + ":block/estop_button_on"), models().existingFileHelper ));
