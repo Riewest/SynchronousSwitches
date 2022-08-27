@@ -2,7 +2,6 @@ package com.suicidesquid.syncswitch.items;
 
 import java.util.List;
 
-import com.suicidesquid.syncswitch.data.SwitchData;
 import com.suicidesquid.syncswitch.tiles.Base.BaseChannelTile;
 
 import net.minecraft.core.BlockPos;

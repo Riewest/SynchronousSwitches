@@ -3,6 +3,7 @@ package com.suicidesquid.syncswitch.init;
 import java.util.function.Supplier;
 import java.util.function.ToIntFunction;
 
+import com.suicidesquid.syncswitch.SynchronousSwitches;
 import com.suicidesquid.syncswitch.blocks.ChannelInputBlock;
 import com.suicidesquid.syncswitch.blocks.ChannelOutputBlock;
 import com.suicidesquid.syncswitch.blocks.LightPanelBlock;
@@ -13,12 +14,9 @@ import com.suicidesquid.syncswitch.blocks.Switches.SwitchBlock;
 import com.suicidesquid.syncswitch.blocks.Switches.VanillaSwitchBlock;
 import com.suicidesquid.syncswitch.blocks.base.BaseChannelBlock;
 import com.suicidesquid.syncswitch.blocks.base.BaseLightBlock;
-import com.suicidesquid.syncswitch.blocks.base.BaseSwitchBlock;
 import com.suicidesquid.syncswitch.items.BaseSwitchBlockItem;
 import com.suicidesquid.syncswitch.items.UsableSwitchBlockItem;
-import com.suicidesquid.syncswitch.SynchronousSwitches;
 
-import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour;

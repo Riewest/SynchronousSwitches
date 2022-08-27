@@ -57,35 +57,6 @@ public class BaseSwitchBlock extends LeverBlock{
         super.setPlacedBy(level, pos, state, placer, stack);
     }
 
-
-    // private BlockState updateRedstone(BlockState state, BlockGetter blockGetter, BlockPos pos){
-    //     BlockEntity be = blockGetter.getBlockEntity(pos);
-    //     if(be instanceof BaseSwitchBlockTile tile){
-    //         if (tile.hasChannel()){
-    //             Level level = tile.getLevel();
-    //             SwitchData switchData = SwitchData.get(level);
-    //             boolean channelActive = switchData.isActive(tile.getChannel());
-    //             if (channelActive != state.getValue(LeverBlock.POWERED)){
-    //                 level.setBlockAndUpdate(pos, state.setValue(LeverBlock.POWERED, channelActive));
-    //                 return blockGetter.getBlockState(pos);
-    //             }
-    //         }
-    //     }
-    //     return state;
-    // }
-
-    // @Override
-    // public int getSignal(BlockState state, BlockGetter blockGetter, BlockPos pos, Direction direction) {
-    //     updateRedstone(state, blockGetter, pos);
-    //     return super.getSignal(state, blockGetter, pos, direction);
-    // }
-
-    // @Override
-    // public int getDirectSignal(BlockState state, BlockGetter blockGetter, BlockPos pos, Direction direction) {
-    //     updateRedstone(state, blockGetter, pos);
-    //     return super.getDirectSignal(state, blockGetter, pos, direction);
-    // }
-
     @Override
 	public BlockState getStateForPlacement(BlockPlaceContext context) {
 		if (context.getClickedFace().getAxis() == Direction.Axis.Y)

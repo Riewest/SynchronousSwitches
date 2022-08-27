@@ -28,35 +28,9 @@ public class SwitchBlock extends BaseSwitchBlock implements EntityBlock{
         super(properties);
     }
 
-	
-
     @Override
 	public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
-
 		return determineShape(DEFAULT_SHAPE, state);
-
-		// return switch (state.getValue(FACING)) {
-		// 	default -> switch (state.getValue(FACE)) {
-		// 		case FLOOR -> box(5, 0, 3, 11, 6, 13);
-		// 		case WALL -> box(5, 3, 0, 11, 13, 6);
-		// 		case CEILING -> box(5, 10, 3, 11, 16, 13);
-		// 	};
-		// 	case NORTH -> switch (state.getValue(FACE)) {
-		// 		case FLOOR -> box(5, 0, 3, 11, 6, 13);
-		// 		case WALL -> box(5, 3, 10, 11, 13, 16);
-		// 		case CEILING -> box(5, 10, 3, 11, 16, 13);
-		// 	};
-		// 	case EAST -> switch (state.getValue(FACE)) {
-		// 		case FLOOR -> box(3, 0, 5, 13, 6, 11);
-		// 		case WALL -> box(0, 3, 5, 6, 13, 11);
-		// 		case CEILING -> box(3, 10, 5, 13, 16, 11);
-		// 	};
-		// 	case WEST -> switch (state.getValue(FACE)) {
-		// 		case FLOOR -> box(3, 0, 5, 13, 6, 11);
-		// 		case WALL -> box(10, 3, 5, 16, 13, 11);
-		// 		case CEILING -> box(3, 10, 5, 13, 16, 11);
-		// 	};
-		// };
 	}
 
     @Nullable
