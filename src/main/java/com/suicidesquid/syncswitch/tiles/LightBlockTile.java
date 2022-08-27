@@ -3,13 +3,13 @@ package com.suicidesquid.syncswitch.tiles;
 import com.suicidesquid.syncswitch.blocks.base.BaseLightBlock;
 import com.suicidesquid.syncswitch.data.SwitchData;
 import com.suicidesquid.syncswitch.init.TileEntityInit;
-import com.suicidesquid.syncswitch.tiles.Base.BaseChannelBlockTile;
+import com.suicidesquid.syncswitch.tiles.Base.BaseLightTile;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class LightBlockTile extends BaseChannelBlockTile{
+public class LightBlockTile extends BaseLightTile{
     public LightBlockTile(BlockPos pos, BlockState state) {
         super(TileEntityInit.LIGHT_BLOCK.get(), pos, state);
     }

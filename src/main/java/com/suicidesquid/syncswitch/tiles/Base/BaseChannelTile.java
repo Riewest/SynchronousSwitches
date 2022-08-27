@@ -23,7 +23,8 @@ import net.minecraft.world.level.block.state.properties.AttachFace;
 
 public class BaseChannelTile extends BlockEntity{
     public static final String NONE_CHANNEL = "none";
-    private int timer = new Random().nextInt(10) + 1;
+    protected int timerMax;
+    private int timer = 0;
     private String channel = NONE_CHANNEL;
     private boolean redacted = false;
     private boolean silent = false;
@@ -31,6 +32,8 @@ public class BaseChannelTile extends BlockEntity{
 
     public BaseChannelTile(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
+        timerMax = 10;
+        timer = new Random().nextInt(10) + 1;
     }
     
     @Override
@@ -183,7 +186,7 @@ public class BaseChannelTile extends BlockEntity{
         BaseChannelTile tile = (BaseChannelTile) be;
         if (!level.isClientSide() && tile.hasChannel()){
             tile.timer++;
-            if (tile.timer > 10){
+            if (tile.timer > tile.timerMax){
                 tile.timer = 0;
                 tile.tick(level, pos, state);
             }

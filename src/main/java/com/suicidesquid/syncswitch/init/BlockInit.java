@@ -56,8 +56,13 @@ public class BlockInit {
             CHANNEL_BLOCKS.getEntries().forEach( (blockRegistryObject) -> {
                 Block block = blockRegistryObject.get();
                 Item.Properties properties = new Item.Properties().tab(ItemInit.ModCreativeTab.instance);
-                Supplier<Item> blockItemFactory = () -> (block instanceof BaseChannelBlock) ? new BaseSwitchBlockItem(block, properties) : new UsableSwitchBlockItem(block, properties);
-                event.register(ForgeRegistries.Keys.ITEMS, blockRegistryObject.getId(), blockItemFactory);
+                // Supplier<Item> blockItemFactory = () -> (block instanceof BaseChannelBlock) ? new BaseSwitchBlockItem(block, properties) : new UsableSwitchBlockItem(block, properties);
+                if (block instanceof BaseLightBlock || block instanceof BaseChannelBlock){
+                    event.register(ForgeRegistries.Keys.ITEMS, blockRegistryObject.getId(), () -> new BaseSwitchBlockItem(block, properties));
+                } else {
+                    event.register(ForgeRegistries.Keys.ITEMS, blockRegistryObject.getId(), () -> new UsableSwitchBlockItem(block, properties));
+                }
+                
             });
         }
     }
