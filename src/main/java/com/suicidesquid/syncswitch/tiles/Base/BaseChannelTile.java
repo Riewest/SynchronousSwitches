@@ -62,6 +62,10 @@ public class BaseChannelTile extends BlockEntity{
         return this.player;
     }
 
+    public boolean isPlayer(String uuid){
+        return uuid.equals(this.player);
+    }
+
     public void setChannel(String channel){
         this.channel = channel;
         setChanged();
