@@ -68,7 +68,7 @@ public class BaseChannelTile extends BlockEntity{
     }
 
     public String getChannelDisplay(String uuid){
-        if (uuid == this.player){
+        if (uuid.equals(this.player)){
             return this.channel;
         }
         return this.redacted ? "REDACTED" : this.channel;
@@ -126,14 +126,7 @@ public class BaseChannelTile extends BlockEntity{
         
         boolean interactionProcessed = false;
 
-        if (player.isShiftKeyDown()){
-            if(this.hasChannel()){
-                player.sendSystemMessage(Component.literal("Channel: " + this.getChannelDisplay(player.getStringUUID()) + " - Active: " + switchData.isActive(this.getChannel())));   
-            } else {
-                player.sendSystemMessage(Component.literal("No Channel"));
-            }
-            interactionProcessed = true;
-        } else if (held.getItem() == Items.PAPER){
+        if (held.getItem() == Items.PAPER){
             String channel = held.getDisplayName().getString().replace("[", "").replace("]", "");
             this.setChannel(channel);
             player.sendSystemMessage(Component.literal("Setting Channel: " + channel));

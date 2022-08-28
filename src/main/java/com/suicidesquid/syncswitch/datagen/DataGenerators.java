@@ -18,6 +18,7 @@ public class DataGenerators {
         generator.addProvider(event.includeServer(), new ModRecipeProvider(generator));
         // generator.addProvider(new ModLootTableProvider(generator));
         generator.addProvider(event.includeClient(), new ModBlocksStateProvider(generator, existingFileHelper));
+        generator.addProvider(event.includeClient(), new ModLangProvider(generator, SynchronousSwitches.MODID, "en_us"));
         // generator.addProvider(new ModItemModelProvider(generator, existingFileHelper));
     }
 }
