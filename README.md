@@ -13,10 +13,14 @@ This mod adds "Synchronous Switches" which can be linked together via a channel.
 * Copy channel by shift right clicking a channel item on an existing switch/block
 * Clear channel by shift right clicking in the air
 * Clear channel by setting channel to "None" with a named piece of paper
-* Redact/Unredact channel by right clicking ink on the switch/block
-* Mute/Unmute channel by right clicking white wool on the switch/block
-* Check if the switch channel status by shift right clicking with an empty hand
+* Redact/Unredact switch by right clicking ink on the switch/block
+* Mute/Unmute switch by right clicking white wool on the switch/block
+* Check if the channel status by shift right clicking with an empty hand
 * Right click with a switch in your main hand to toggle the channel active without having the switch placed
+
+### Images
+![All Blocks Off](screenshots/All_Blocks_Off.png "All Blocks")
+![All Blocks On](screenshots/All_Blocks_On.png)
 
 
 
