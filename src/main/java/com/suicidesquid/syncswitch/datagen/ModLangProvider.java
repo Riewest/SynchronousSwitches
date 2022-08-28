@@ -2,6 +2,7 @@ package com.suicidesquid.syncswitch.datagen;
 
 import com.suicidesquid.syncswitch.SynchronousSwitches;
 import com.suicidesquid.syncswitch.init.BlockInit;
+import com.suicidesquid.syncswitch.init.LangInit;
 
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.common.data.LanguageProvider;
@@ -24,6 +25,17 @@ public class ModLangProvider extends LanguageProvider {
         add(BlockInit.CHANNEL_INPUT_BLOCK.get(), "Synchronous Channel Input");
         add(BlockInit.LIGHT_BLOCK.get(), "Synchronous Light Block");
         add(BlockInit.LIGHT_PANEL_BLOCK.get(), "Synchronous Light Panel");
+
+        add(LangInit.SET_CHANNEL, "Setting Channel: ");
+        add(LangInit.REMOVE_CHANNEL, "Channel Cleared!");
+        add(LangInit.CHANNEL, "Channel: ");
+        add(LangInit.NO_CHANNEL, "No Channel");
+        add(LangInit.REDACTED, "REDACTED");
+        add(LangInit.SET_REDACTED, "Redacted Channel");
+        add(LangInit.UNREDACTED, "Unredacted Channel");
+        add(LangInit.SILENCING, "Silencing");
+        add(LangInit.UNSILENCING, "Unsilencing");
+        add(LangInit.ACTIVE, "Active: ");
     }
     
 }

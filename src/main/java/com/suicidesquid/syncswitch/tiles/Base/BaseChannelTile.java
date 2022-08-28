@@ -4,6 +4,7 @@ import java.util.Random;
 
 import com.suicidesquid.syncswitch.blocks.base.BaseSwitchBlock;
 import com.suicidesquid.syncswitch.data.SwitchData;
+import com.suicidesquid.syncswitch.init.LangInit;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -71,11 +72,11 @@ public class BaseChannelTile extends BlockEntity{
         setChanged();
     }
 
-    public String getChannelDisplay(String uuid){
+    public Component getChannelDisplay(String uuid){
         if (uuid.equals(this.player)){
-            return this.channel;
+            return Component.literal(this.channel);
         }
-        return this.redacted ? "REDACTED" : this.channel;
+        return this.redacted ? Component.translatable(LangInit.REDACTED) : Component.literal(this.channel);
     }
 
     public String getChannel(){
@@ -121,9 +122,9 @@ public class BaseChannelTile extends BlockEntity{
             return false;
         else if(player.isShiftKeyDown()) {
             if(this.hasChannel()){
-                player.sendSystemMessage(Component.literal("Channel: " + this.getChannelDisplay(player.getStringUUID()) + " - Active: " + switchData.isActive(this.getChannel())));   
+                player.sendSystemMessage(Component.translatable(LangInit.CHANNEL).append(this.getChannelDisplay(player.getStringUUID())).append(" - ").append(Component.translatable(LangInit.ACTIVE)).append(String.valueOf(switchData.isActive(this.getChannel()))));
             } else {
-                player.sendSystemMessage(Component.literal("No Channel"));
+                player.sendSystemMessage(Component.translatable(LangInit.NO_CHANNEL));
             }
             return true;
         }
@@ -133,25 +134,25 @@ public class BaseChannelTile extends BlockEntity{
         if (held.getItem() == Items.PAPER){
             String channel = held.getDisplayName().getString().replace("[", "").replace("]", "");
             this.setChannel(channel);
-            player.sendSystemMessage(Component.literal("Setting Channel: " + channel));
+            player.sendSystemMessage(Component.translatable(LangInit.SET_CHANNEL).append(channel));
             interactionProcessed = true;
         } else if (held.getItem() == Items.INK_SAC){
             if (this.isRedacted()){
                 this.setRedacted(false);
-            player.sendSystemMessage(Component.literal("Unredacted Channel"));
+            player.sendSystemMessage(Component.translatable(LangInit.UNREDACTED));
             } else {
                 this.setRedacted(true);
-                player.sendSystemMessage(Component.literal("Redacted Channel"));
+                player.sendSystemMessage(Component.translatable(LangInit.SET_REDACTED));
             }
             interactionProcessed = true;
         } else if (held.getItem() == Items.WHITE_WOOL){
             this.toggleSilent();
             if (this.isSilent())
             {
-                player.sendSystemMessage(Component.literal("Silencing"));
+                player.sendSystemMessage(Component.translatable(LangInit.SILENCING));
             }
             else {
-                player.sendSystemMessage(Component.literal("Unsilencing"));
+                player.sendSystemMessage(Component.translatable(LangInit.UNSILENCING));
             }
             interactionProcessed = true;
         }

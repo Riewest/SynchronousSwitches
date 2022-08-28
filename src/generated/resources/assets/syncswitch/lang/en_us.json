@@ -8,5 +8,15 @@
   "block.syncswitch.light_panel": "Synchronous Light Panel",
   "block.syncswitch.switch_block": "Synchronous Switch",
   "block.syncswitch.vanilla_switch_block": "Synchronous Vanilla Switch",
+  "chat.syncswitch.active": "Active: ",
+  "chat.syncswitch.channel": "Channel: ",
+  "chat.syncswitch.no_channel": "No Channel",
+  "chat.syncswitch.redacted": "REDACTED",
+  "chat.syncswitch.remove_channel": "Channel Cleared!",
+  "chat.syncswitch.set_channel": "Setting Channel: ",
+  "chat.syncswitch.set_redacted": "Redacted Channel",
+  "chat.syncswitch.silencing": "Silencing",
+  "chat.syncswitch.unredacted": "Unredacted Channel",
+  "chat.syncswitch.unsilencing": "Unsilencing",
   "itemGroup.syncswitch": "Synchronous Switches"
 }

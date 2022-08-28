@@ -2,6 +2,7 @@ package com.suicidesquid.syncswitch.items;
 
 import java.util.List;
 
+import com.suicidesquid.syncswitch.init.LangInit;
 import com.suicidesquid.syncswitch.tiles.Base.BaseChannelTile;
 
 import net.minecraft.core.BlockPos;
@@ -54,7 +55,7 @@ public class BaseSwitchBlockItem extends BlockItem{
     public void appendHoverText(ItemStack stack, Level level, List<Component> tooltip, TooltipFlag flagIn) {
         String channel = getChannel(stack);
         if (channel != null){
-            tooltip.add(Component.literal("Channel: " + channel));
+            tooltip.add(Component.translatable(LangInit.CHANNEL).append(channel));
         }
     }
 
@@ -88,7 +89,7 @@ public class BaseSwitchBlockItem extends BlockItem{
             if (tag.contains("channel"))
                 tag.remove("channel");
                 if(level.isClientSide)
-                    player.sendSystemMessage(Component.literal("Channel Cleared!"));
+                    player.sendSystemMessage(Component.translatable(LangInit.REMOVE_CHANNEL));
             return new InteractionResultHolder<ItemStack>(InteractionResult.SUCCESS, stack);
         }
         toggleActive(level, tag);
