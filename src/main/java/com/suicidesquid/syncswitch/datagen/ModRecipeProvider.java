@@ -19,8 +19,11 @@ import net.minecraftforge.common.crafting.conditions.IConditionBuilder;
 
 public class ModRecipeProvider extends RecipeProvider implements IConditionBuilder{
 
+    private final String recipeLocation;
+
     public ModRecipeProvider(DataGenerator dataGenerator) {
         super(dataGenerator);
+        recipeLocation = SynchronousSwitches.MODID + ":";
     }
 
 
@@ -83,7 +86,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                                     .pattern("PP")
                                     .group(SynchronousSwitches.MODID)
                                     .unlockedBy("has_light_block", inventoryTrigger(ItemPredicate.Builder.item().of(BlockInit.LIGHT_BLOCK.get()).build()))
-                                    .save(finishedRecipeConsumer, new ResourceLocation("light_block_1"));
+                                    .save(finishedRecipeConsumer, new ResourceLocation(recipeLocation + "light_block_1"));
 
         ShapelessRecipeBuilder.shapeless(BlockInit.LIGHT_PANEL_BLOCK.get(), 4)
                                     .requires(BlockInit.LIGHT_BLOCK.get())
@@ -95,11 +98,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         cycleRecipe(BlockInit.VANILLA_SWITCH_BLOCK.get(), BlockInit.IO_SWITCH_BLOCK.get()).save(finishedRecipeConsumer);
         cycleRecipe(BlockInit.IO_SWITCH_BLOCK.get(), BlockInit.ESTOP_BUTTON_BLOCK.get()).save(finishedRecipeConsumer);
         cycleRecipe(BlockInit.ESTOP_BUTTON_BLOCK.get(), BlockInit.BIG_BUTTON_BLOCK.get()).save(finishedRecipeConsumer);
-        cycleRecipe(BlockInit.BIG_BUTTON_BLOCK.get(), BlockInit.SWITCH_BLOCK.get()).save(finishedRecipeConsumer, new ResourceLocation("switch_block_1"));
-
-
-
-        super.buildCraftingRecipes(finishedRecipeConsumer);
+        cycleRecipe(BlockInit.BIG_BUTTON_BLOCK.get(), BlockInit.SWITCH_BLOCK.get()).save(finishedRecipeConsumer, new ResourceLocation(recipeLocation + "switch_block_1"));
     }
     
 }
