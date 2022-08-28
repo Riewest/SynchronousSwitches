@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "syncswitch",
+  "key": {
+    "E": {
+      "tag": "forge:ender_pearls"
+    },
+    "R": {
+      "tag": "forge:dusts/redstone"
+    },
+    "S": {
+      "tag": "forge:stone"
+    }
+  },
+  "pattern": [
+    "SRS",
+    "RER",
+    "SRS"
+  ],
+  "result": {
+    "item": "syncswitch:channel_input"
+  }
+}

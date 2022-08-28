@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "syncswitch",
+  "ingredients": [
+    {
+      "item": "syncswitch:light_block"
+    }
+  ],
+  "result": {
+    "count": 4,
+    "item": "syncswitch:light_panel"
+  }
+}

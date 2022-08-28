@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "syncswitch",
+  "ingredients": [
+    {
+      "item": "syncswitch:estop_button"
+    }
+  ],
+  "result": {
+    "item": "syncswitch:big_button"
+  }
+}

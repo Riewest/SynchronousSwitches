@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "syncswitch",
+  "ingredients": [
+    {
+      "item": "syncswitch:switch_block"
+    }
+  ],
+  "result": {
+    "item": "syncswitch:vanilla_switch_block"
+  }
+}
