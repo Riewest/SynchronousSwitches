@@ -35,8 +35,6 @@ This mod adds "Synchronous Switches" which can be linked together via a channel.
 ![Silencing Switch](screenshots/Silencing_Switch.png)
 
 
-
-
 ## Credits
 * Riewest14
 * LogicEngineer
