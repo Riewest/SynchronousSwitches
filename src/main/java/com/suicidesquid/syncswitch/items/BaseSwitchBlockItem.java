@@ -77,7 +77,7 @@ public class BaseSwitchBlockItem extends BlockItem{
                 CompoundTag tag = stack.getOrCreateTag();
                 String channel = tile.getChannel();
                 tag.putString("channel", channel);
-                player.displayClientMessage(Component.translatable(LangInit.COPIED).append(channel), true);
+                player.displayClientMessage(new TranslatableComponent(LangInit.COPIED).append(channel), true);
                 return InteractionResult.CONSUME;
             }
         }
