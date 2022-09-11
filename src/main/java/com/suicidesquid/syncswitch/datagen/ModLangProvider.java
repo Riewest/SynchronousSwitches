@@ -36,6 +36,9 @@ public class ModLangProvider extends LanguageProvider {
         add(LangInit.SILENCING, "Silencing");
         add(LangInit.UNSILENCING, "Unsilencing");
         add(LangInit.ACTIVE, "Active: ");
+        add(LangInit.ON, "On");
+        add(LangInit.OFF, "Off");
+        add(LangInit.COPIED, "Copied: ");
     }
     
 }

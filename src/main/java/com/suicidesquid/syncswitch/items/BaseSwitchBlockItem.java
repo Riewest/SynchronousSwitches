@@ -61,25 +61,29 @@ public class BaseSwitchBlockItem extends BlockItem{
 
     @Override
     public InteractionResult onItemUseFirst(ItemStack stack, UseOnContext context) {
+        Player player = context.getPlayer();
         Level level = context.getLevel();
         if(level.isClientSide())
-            if(context.getPlayer().isCrouching())
+            if(player.isCrouching())
                 return InteractionResult.CONSUME;
             else
                 return InteractionResult.PASS;
 
         BlockEntity be = level.getBlockEntity(context.getClickedPos());
-        if (context.getPlayer().isCrouching() && be instanceof BaseChannelTile tile){
-            if (!tile.isRedacted() || tile.isPlayer(context.getPlayer().getStringUUID())){
+        
+        if (player.isCrouching() && be instanceof BaseChannelTile tile){
+            if (!tile.isRedacted() || tile.isPlayer(player.getStringUUID())){
                 CompoundTag tag = stack.getOrCreateTag();
-                tag.putString("channel", tile.getChannel());
+                String channel = tile.getChannel();
+                tag.putString("channel", channel);
+                player.displayClientMessage(Component.translatable(LangInit.COPIED).append(channel), true);
                 return InteractionResult.CONSUME;
             }
         }
         return InteractionResult.PASS;
     }
 
-    protected void toggleActive(Level level, CompoundTag tag){}
+    protected void toggleActive(Level level, Player player, CompoundTag tag){}
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
@@ -92,7 +96,7 @@ public class BaseSwitchBlockItem extends BlockItem{
                     player.displayClientMessage(Component.translatable(LangInit.REMOVE_CHANNEL), true);
             return new InteractionResultHolder<ItemStack>(InteractionResult.SUCCESS, stack);
         }
-        toggleActive(level, tag);
+        toggleActive(level, player, tag);
         return new InteractionResultHolder<ItemStack>(InteractionResult.SUCCESS, stack);
     }
 
