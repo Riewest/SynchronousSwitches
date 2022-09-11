@@ -4,7 +4,7 @@ import javax.annotation.Nullable;
 
 import com.suicidesquid.syncswitch.blocks.base.BaseChannelBlock;
 import com.suicidesquid.syncswitch.data.SwitchData;
-import com.suicidesquid.syncswitch.init.TileEntityInit;
+import com.suicidesquid.syncswitch.setup.Registration;
 import com.suicidesquid.syncswitch.tiles.ChannelInputTile;
 
 import net.minecraft.core.BlockPos;
@@ -23,7 +23,7 @@ public class ChannelInputBlock extends BaseChannelBlock implements EntityBlock{
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return TileEntityInit.CHANNEL_INPUT_BLOCK.get().create(pos, state);
+        return Registration.CHANNEL_INPUT_BLOCK_BE.get().create(pos, state);
     }
 
     @Override

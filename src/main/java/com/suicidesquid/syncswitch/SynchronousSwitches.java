@@ -1,15 +1,17 @@
 package com.suicidesquid.syncswitch;
 
 import com.mojang.logging.LogUtils;
-import com.suicidesquid.syncswitch.init.BlockInit;
-import com.suicidesquid.syncswitch.init.ItemInit;
-import com.suicidesquid.syncswitch.init.TileEntityInit;
+import com.suicidesquid.syncswitch.setup.ClientSetup;
+import com.suicidesquid.syncswitch.setup.ModSetup;
+import com.suicidesquid.syncswitch.setup.Registration;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -38,20 +40,14 @@ public class SynchronousSwitches
 
     public SynchronousSwitches()
     {
-        IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+        Registration.init();
 
-        // Register the commonSetup method for modloading
-        modEventBus.addListener(this::commonSetup);
-
-        // Register the Deferred Register to the mod event bus so blocks get registered
-        BlockInit.CHANNEL_BLOCKS.register(modEventBus);
-        // Register the Deferred Register to the mod event bus so items get registered
-        ItemInit.ITEMS.register(modEventBus);
-
-        TileEntityInit.TILE_ENTITY_TYPES.register(modEventBus);
-
-        // Register ourselves for server and other game events we are interested in
-        MinecraftForge.EVENT_BUS.register(this);
+        // Register the setup method for modloading
+        IEventBus modbus = FMLJavaModLoadingContext.get().getModEventBus();
+        // Register 'ModSetup::init' to be called at mod setup time (server and client)
+        modbus.addListener(ModSetup::init);
+        // Register 'ClientSetup::init' to be called at mod setup time (client only)
+        DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> modbus.addListener(ClientSetup::init));
     }
 
     private void commonSetup(final FMLCommonSetupEvent event)

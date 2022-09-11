@@ -3,7 +3,7 @@ package com.suicidesquid.syncswitch.blocks;
 import javax.annotation.Nullable;
 
 import com.suicidesquid.syncswitch.blocks.base.BaseChannelBlock;
-import com.suicidesquid.syncswitch.init.TileEntityInit;
+import com.suicidesquid.syncswitch.setup.Registration;
 import com.suicidesquid.syncswitch.tiles.ChannelOutputTile;
 
 import net.minecraft.core.BlockPos;
@@ -28,12 +28,12 @@ public class ChannelOutputBlock extends BaseChannelBlock implements EntityBlock{
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return TileEntityInit.CHANNEL_OUTPUT_BLOCK.get().create(pos, state);
+        return Registration.CHANNEL_OUTPUT_BLOCK_BE.get().create(pos, state);
     }
 
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-        return type == TileEntityInit.CHANNEL_OUTPUT_BLOCK.get() ? ChannelOutputTile::tick : null;
+        return type == Registration.CHANNEL_OUTPUT_BLOCK_BE.get() ? ChannelOutputTile::tick : null;
     }
 
     public int getSignal(BlockState state, BlockGetter blockGetter, BlockPos pos, Direction direction) {

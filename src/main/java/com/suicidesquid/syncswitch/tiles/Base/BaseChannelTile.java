@@ -4,7 +4,7 @@ import java.util.Random;
 
 import com.suicidesquid.syncswitch.blocks.base.BaseSwitchBlock;
 import com.suicidesquid.syncswitch.data.SwitchData;
-import com.suicidesquid.syncswitch.init.LangInit;
+import com.suicidesquid.syncswitch.setup.LangInit;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

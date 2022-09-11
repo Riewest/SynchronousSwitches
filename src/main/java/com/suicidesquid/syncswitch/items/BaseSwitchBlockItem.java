@@ -2,7 +2,7 @@ package com.suicidesquid.syncswitch.items;
 
 import java.util.List;
 
-import com.suicidesquid.syncswitch.init.LangInit;
+import com.suicidesquid.syncswitch.setup.LangInit;
 import com.suicidesquid.syncswitch.tiles.Base.BaseChannelTile;
 
 import net.minecraft.core.BlockPos;

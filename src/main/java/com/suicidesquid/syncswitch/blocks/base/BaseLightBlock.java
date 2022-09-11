@@ -6,7 +6,7 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import com.suicidesquid.syncswitch.data.SwitchData;
-import com.suicidesquid.syncswitch.init.TileEntityInit;
+import com.suicidesquid.syncswitch.setup.Registration;
 import com.suicidesquid.syncswitch.tiles.LightBlockTile;
 import com.suicidesquid.syncswitch.tiles.Base.BaseChannelTile;
 
@@ -45,12 +45,12 @@ public class BaseLightBlock extends Block implements EntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return TileEntityInit.LIGHT_BLOCK.get().create(pos, state);
+        return Registration.LIGHT_BLOCK_BE.get().create(pos, state);
     }
 
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-        return type == TileEntityInit.LIGHT_BLOCK.get() ? LightBlockTile::tick : null;
+        return type == Registration.LIGHT_BLOCK_BE.get() ? LightBlockTile::tick : null;
     }
 
     @Override

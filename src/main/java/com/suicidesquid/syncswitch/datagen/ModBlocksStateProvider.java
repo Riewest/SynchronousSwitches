@@ -2,7 +2,7 @@ package com.suicidesquid.syncswitch.datagen;
 
 import com.suicidesquid.syncswitch.SynchronousSwitches;
 import com.suicidesquid.syncswitch.blocks.base.BaseDirectionalLightBlock;
-import com.suicidesquid.syncswitch.init.BlockInit;
+import com.suicidesquid.syncswitch.setup.Registration;
 
 import net.minecraft.core.Direction;
 import net.minecraft.data.DataGenerator;
@@ -52,14 +52,14 @@ public class ModBlocksStateProvider extends BlockStateProvider {
     @Override
     protected void registerStatesAndModels() {
 
-        leverBlock((LeverBlock)BlockInit.SWITCH_BLOCK.get() , new ExistingModelFile(new ResourceLocation(SynchronousSwitches.MODID + ":block/switch_block"), models().existingFileHelper ), new ExistingModelFile(new ResourceLocation(SynchronousSwitches.MODID + ":block/switch_block_on"), models().existingFileHelper ));
-        leverBlock((LeverBlock)BlockInit.BIG_BUTTON_BLOCK.get() , new ExistingModelFile(new ResourceLocation(SynchronousSwitches.MODID + ":block/big_button"), models().existingFileHelper ), new ExistingModelFile(new ResourceLocation(SynchronousSwitches.MODID + ":block/big_button_on"), models().existingFileHelper ));
-        leverBlock((LeverBlock)BlockInit.ESTOP_BUTTON_BLOCK.get() , new ExistingModelFile(new ResourceLocation(SynchronousSwitches.MODID + ":block/estop_button"), models().existingFileHelper ), new ExistingModelFile(new ResourceLocation(SynchronousSwitches.MODID + ":block/estop_button_on"), models().existingFileHelper ));
-        leverBlock((LeverBlock)BlockInit.IO_SWITCH_BLOCK.get() , new ExistingModelFile(new ResourceLocation(SynchronousSwitches.MODID + ":block/io_switch"), models().existingFileHelper ), new ExistingModelFile(new ResourceLocation(SynchronousSwitches.MODID + ":block/io_switch_on"), models().existingFileHelper ));
-        leverBlock((LeverBlock)BlockInit.VANILLA_SWITCH_BLOCK.get() , new ExistingModelFile(new ResourceLocation("minecraft:block/lever"), models().existingFileHelper ), new ExistingModelFile(new ResourceLocation("minecraft:block/lever_on"), models().existingFileHelper ));
+        leverBlock((LeverBlock)Registration.SWITCH_BLOCK.get() , new ExistingModelFile(new ResourceLocation(SynchronousSwitches.MODID + ":block/switch_block"), models().existingFileHelper ), new ExistingModelFile(new ResourceLocation(SynchronousSwitches.MODID + ":block/switch_block_on"), models().existingFileHelper ));
+        leverBlock((LeverBlock)Registration.BIG_BUTTON_BLOCK.get() , new ExistingModelFile(new ResourceLocation(SynchronousSwitches.MODID + ":block/big_button"), models().existingFileHelper ), new ExistingModelFile(new ResourceLocation(SynchronousSwitches.MODID + ":block/big_button_on"), models().existingFileHelper ));
+        leverBlock((LeverBlock)Registration.ESTOP_BUTTON_BLOCK.get() , new ExistingModelFile(new ResourceLocation(SynchronousSwitches.MODID + ":block/estop_button"), models().existingFileHelper ), new ExistingModelFile(new ResourceLocation(SynchronousSwitches.MODID + ":block/estop_button_on"), models().existingFileHelper ));
+        leverBlock((LeverBlock)Registration.IO_SWITCH_BLOCK.get() , new ExistingModelFile(new ResourceLocation(SynchronousSwitches.MODID + ":block/io_switch"), models().existingFileHelper ), new ExistingModelFile(new ResourceLocation(SynchronousSwitches.MODID + ":block/io_switch_on"), models().existingFileHelper ));
+        leverBlock((LeverBlock)Registration.VANILLA_SWITCH_BLOCK.get() , new ExistingModelFile(new ResourceLocation("minecraft:block/lever"), models().existingFileHelper ), new ExistingModelFile(new ResourceLocation("minecraft:block/lever_on"), models().existingFileHelper ));
         
         
-        lightBlock((BaseDirectionalLightBlock)BlockInit.LIGHT_PANEL_BLOCK.get() , new ExistingModelFile(new ResourceLocation(SynchronousSwitches.MODID + ":block/light_panel"), models().existingFileHelper ), new ExistingModelFile(new ResourceLocation(SynchronousSwitches.MODID + ":block/light_panel_on"), models().existingFileHelper ));
+        lightBlock((BaseDirectionalLightBlock)Registration.LIGHT_PANEL_BLOCK.get() , new ExistingModelFile(new ResourceLocation(SynchronousSwitches.MODID + ":block/light_panel"), models().existingFileHelper ), new ExistingModelFile(new ResourceLocation(SynchronousSwitches.MODID + ":block/light_panel_on"), models().existingFileHelper ));
         
     }
     

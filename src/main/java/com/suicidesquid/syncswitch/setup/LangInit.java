@@ -1,4 +1,4 @@
-package com.suicidesquid.syncswitch.init;
+package com.suicidesquid.syncswitch.setup;
 
 import com.suicidesquid.syncswitch.SynchronousSwitches;
 
