@@ -74,7 +74,7 @@ public class BaseChannelTile extends BlockEntity{
 
     public Component getChannelDisplay(String uuid){
         if (uuid.equals(this.player)){
-            return Component.literal(this.channel);
+            return this.redacted ? Component.literal(this.channel).append(Component.literal(" (").append(Component.translatable(LangInit.REDACTED)).append(")")) : Component.literal(this.channel);
         }
         return this.redacted ? Component.translatable(LangInit.REDACTED) : Component.literal(this.channel);
     }
