@@ -10,6 +10,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Player;
@@ -74,9 +76,9 @@ public class BaseChannelTile extends BlockEntity{
 
     public Component getChannelDisplay(String uuid){
         if (uuid.equals(this.player)){
-            return Component.literal(this.channel);
+            return new TextComponent(this.channel);
         }
-        return this.redacted ? Component.translatable(LangInit.REDACTED) : Component.literal(this.channel);
+        return this.redacted ? new TranslatableComponent(LangInit.REDACTED) : new TextComponent(this.channel);
     }
 
     public String getChannel(){
@@ -122,9 +124,9 @@ public class BaseChannelTile extends BlockEntity{
             return false;
         else if(player.isShiftKeyDown()) {
             if(this.hasChannel()){
-                player.sendSystemMessage(Component.translatable(LangInit.CHANNEL).append(this.getChannelDisplay(player.getStringUUID())).append(" - ").append(Component.translatable(LangInit.ACTIVE)).append(String.valueOf(switchData.isActive(this.getChannel()))));
+                player.displayClientMessage(new TranslatableComponent(LangInit.CHANNEL).append(this.getChannelDisplay(player.getStringUUID())).append(" - ").append(new TranslatableComponent(LangInit.ACTIVE)).append(String.valueOf(switchData.isActive(this.getChannel()))), true);
             } else {
-                player.sendSystemMessage(Component.translatable(LangInit.NO_CHANNEL));
+                player.displayClientMessage(new TranslatableComponent(LangInit.NO_CHANNEL), true);
             }
             return true;
         }
@@ -134,25 +136,25 @@ public class BaseChannelTile extends BlockEntity{
         if (held.getItem() == Items.PAPER){
             String channel = held.getDisplayName().getString().replace("[", "").replace("]", "");
             this.setChannel(channel);
-            player.sendSystemMessage(Component.translatable(LangInit.SET_CHANNEL).append(channel));
+            player.displayClientMessage(new TranslatableComponent(LangInit.SET_CHANNEL).append(channel), true);
             interactionProcessed = true;
         } else if (held.getItem() == Items.INK_SAC){
             if (this.isRedacted()){
                 this.setRedacted(false);
-            player.sendSystemMessage(Component.translatable(LangInit.UNREDACTED));
+            player.displayClientMessage(new TranslatableComponent(LangInit.UNREDACTED), true);
             } else {
                 this.setRedacted(true);
-                player.sendSystemMessage(Component.translatable(LangInit.SET_REDACTED));
+                player.displayClientMessage(new TranslatableComponent(LangInit.SET_REDACTED), true);
             }
             interactionProcessed = true;
         } else if (held.getItem() == Items.WHITE_WOOL){
             this.toggleSilent();
             if (this.isSilent())
             {
-                player.sendSystemMessage(Component.translatable(LangInit.SILENCING));
+                player.displayClientMessage(new TranslatableComponent(LangInit.SILENCING), true);
             }
             else {
-                player.sendSystemMessage(Component.translatable(LangInit.UNSILENCING));
+                player.displayClientMessage(new TranslatableComponent(LangInit.UNSILENCING), true);
             }
             interactionProcessed = true;
         }

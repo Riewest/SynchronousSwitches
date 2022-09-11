@@ -8,6 +8,7 @@ import com.suicidesquid.syncswitch.tiles.Base.BaseChannelTile;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
@@ -55,7 +56,7 @@ public class BaseSwitchBlockItem extends BlockItem{
     public void appendHoverText(ItemStack stack, Level level, List<Component> tooltip, TooltipFlag flagIn) {
         String channel = getChannel(stack);
         if (channel != null){
-            tooltip.add(Component.translatable(LangInit.CHANNEL).append(channel));
+            tooltip.add(new TranslatableComponent(LangInit.CHANNEL).append(channel));
         }
     }
 
@@ -89,7 +90,7 @@ public class BaseSwitchBlockItem extends BlockItem{
             if (tag.contains("channel"))
                 tag.remove("channel");
                 if(level.isClientSide)
-                    player.sendSystemMessage(Component.translatable(LangInit.REMOVE_CHANNEL));
+                    player.displayClientMessage(new TranslatableComponent(LangInit.REMOVE_CHANNEL), true);
             return new InteractionResultHolder<ItemStack>(InteractionResult.SUCCESS, stack);
         }
         toggleActive(level, tag);
