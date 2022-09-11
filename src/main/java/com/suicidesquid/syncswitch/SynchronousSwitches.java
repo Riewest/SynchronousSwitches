@@ -6,18 +6,14 @@ import com.suicidesquid.syncswitch.setup.ModSetup;
 import com.suicidesquid.syncswitch.setup.Registration;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.registries.ForgeRegistries;
 import org.slf4j.Logger;
 
 // The value here should match an entry in the META-INF/mods.toml file
@@ -48,13 +44,6 @@ public class SynchronousSwitches
         modbus.addListener(ModSetup::init);
         // Register 'ClientSetup::init' to be called at mod setup time (client only)
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> modbus.addListener(ClientSetup::init));
-    }
-
-    private void commonSetup(final FMLCommonSetupEvent event)
-    {
-        // Some common setup code
-        LOGGER.info("HELLO FROM COMMON SETUP");
-        LOGGER.info("DIRT BLOCK >> {}", ForgeRegistries.BLOCKS.getKey(Blocks.DIRT));
     }
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call

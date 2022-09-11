@@ -1,6 +1,5 @@
 package com.suicidesquid.syncswitch.setup;
 
-import com.suicidesquid.syncswitch.SynchronousSwitches;
 
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
