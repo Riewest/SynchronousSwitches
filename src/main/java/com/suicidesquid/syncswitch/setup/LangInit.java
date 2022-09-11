@@ -16,4 +16,7 @@ public class LangInit {
     public static final String SILENCING        = CHAT_PREFIX + "silencing";
     public static final String UNSILENCING      = CHAT_PREFIX + "unsilencing";
     public static final String ACTIVE           = CHAT_PREFIX + "active";
+    public static final String ON               = CHAT_PREFIX + "on";
+    public static final String OFF              = CHAT_PREFIX + "off";
+    public static final String COPIED           = CHAT_PREFIX + "copied";
 }

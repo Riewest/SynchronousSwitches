@@ -11,6 +11,6 @@ import net.minecraftforge.fml.common.Mod;
 public class ModEvents {
 //   @SubscribeEvent
 //   public static void addSwitchChannel(PlayerInteractEvent event)  {
-//     event.getEntity().sendSystemMessage(Component.literal("TEST EVENT"));
+//     event.getEntity().displayClientMessage(Component.literal("TEST EVENT"));
 //   }
 }
