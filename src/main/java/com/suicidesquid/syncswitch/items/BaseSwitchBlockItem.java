@@ -89,7 +89,7 @@ public class BaseSwitchBlockItem extends BlockItem{
             if (tag.contains("channel"))
                 tag.remove("channel");
                 if(level.isClientSide)
-                    player.sendSystemMessage(Component.translatable(LangInit.REMOVE_CHANNEL));
+                    player.displayClientMessage(Component.translatable(LangInit.REMOVE_CHANNEL), true);
             return new InteractionResultHolder<ItemStack>(InteractionResult.SUCCESS, stack);
         }
         toggleActive(level, tag);
