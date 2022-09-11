@@ -3,14 +3,17 @@ package com.suicidesquid.syncswitch.setup;
 import com.suicidesquid.syncswitch.SynchronousSwitches;
 
 public class LangInit {
-    public static final String SET_CHANNEL = "chat." + SynchronousSwitches.MODID + "." + "set_channel";
-    public static final String REMOVE_CHANNEL = "chat." + SynchronousSwitches.MODID + "." + "remove_channel";
-    public static final String CHANNEL = "chat." + SynchronousSwitches.MODID + "." + "channel";
-    public static final String NO_CHANNEL = "chat." + SynchronousSwitches.MODID + "." + "no_channel";
-    public static final String REDACTED = "chat." + SynchronousSwitches.MODID + "." + "redacted";
-    public static final String SET_REDACTED = "chat." + SynchronousSwitches.MODID + "." + "set_redacted";
-    public static final String UNREDACTED = "chat." + SynchronousSwitches.MODID + "." + "unredacted";
-    public static final String SILENCING = "chat." + SynchronousSwitches.MODID + "." + "silencing";
-    public static final String UNSILENCING = "chat." + SynchronousSwitches.MODID + "." + "unsilencing";
-    public static final String ACTIVE = "chat." + SynchronousSwitches.MODID + "." + "active";
+    // Prefixes
+    public static final String CHAT_PREFIX = "chat." + SynchronousSwitches.MODID + ".";
+
+    public static final String SET_CHANNEL      = CHAT_PREFIX + "set_channel";
+    public static final String REMOVE_CHANNEL   = CHAT_PREFIX + "remove_channel";
+    public static final String CHANNEL          = CHAT_PREFIX + "channel";
+    public static final String NO_CHANNEL       = CHAT_PREFIX + "no_channel";
+    public static final String REDACTED         = CHAT_PREFIX + "redacted";
+    public static final String SET_REDACTED     = CHAT_PREFIX + "set_redacted";
+    public static final String UNREDACTED       = CHAT_PREFIX + "unredacted";
+    public static final String SILENCING        = CHAT_PREFIX + "silencing";
+    public static final String UNSILENCING      = CHAT_PREFIX + "unsilencing";
+    public static final String ACTIVE           = CHAT_PREFIX + "active";
 }
