@@ -3,7 +3,7 @@ package com.suicidesquid.syncswitch.blocks.Switches;
 import javax.annotation.Nullable;
 
 import com.suicidesquid.syncswitch.blocks.base.BaseSwitchBlock;
-import com.suicidesquid.syncswitch.init.TileEntityInit;
+import com.suicidesquid.syncswitch.setup.Registration;
 import com.suicidesquid.syncswitch.tiles.Switches.BigButtonTile;
 
 import net.minecraft.core.BlockPos;
@@ -39,12 +39,12 @@ public class BigButtonBlock extends BaseSwitchBlock implements EntityBlock{
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return TileEntityInit.BIG_BUTTON_BLOCK.get().create(pos, state);
+        return Registration.BIG_BUTTON_BLOCK_BE.get().create(pos, state);
     }
 
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-        return type == TileEntityInit.BIG_BUTTON_BLOCK.get() ? BigButtonTile::tick : null;
+        return type == Registration.BIG_BUTTON_BLOCK_BE.get() ? BigButtonTile::tick : null;
     }
 
 }

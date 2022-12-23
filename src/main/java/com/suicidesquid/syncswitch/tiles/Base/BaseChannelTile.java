@@ -4,6 +4,7 @@ import java.util.Random;
 
 import com.suicidesquid.syncswitch.blocks.base.BaseSwitchBlock;
 import com.suicidesquid.syncswitch.data.SwitchData;
+import com.suicidesquid.syncswitch.setup.LangInit;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -62,16 +63,20 @@ public class BaseChannelTile extends BlockEntity{
         return this.player;
     }
 
+    public boolean isPlayer(String uuid){
+        return uuid.equals(this.player);
+    }
+
     public void setChannel(String channel){
         this.channel = channel;
         setChanged();
     }
 
-    public String getChannelDisplay(String uuid){
-        if (uuid == this.player){
-            return this.channel;
+    public Component getChannelDisplay(String uuid){
+        if (uuid.equals(this.player)){
+            return this.redacted ? Component.literal(this.channel).append(Component.literal(" (").append(Component.translatable(LangInit.REDACTED)).append(")")) : Component.literal(this.channel);
         }
-        return this.redacted ? "REDACTED" : this.channel;
+        return this.redacted ? Component.translatable(LangInit.REDACTED) : Component.literal(this.channel);
     }
 
     public String getChannel(){
@@ -117,44 +122,37 @@ public class BaseChannelTile extends BlockEntity{
             return false;
         else if(player.isShiftKeyDown()) {
             if(this.hasChannel()){
-                player.sendSystemMessage(Component.literal("Channel: " + this.getChannelDisplay(player.getStringUUID()) + " - Active: " + switchData.isActive(this.getChannel())));   
+                player.displayClientMessage(Component.translatable(LangInit.CHANNEL).append(this.getChannelDisplay(player.getStringUUID())).append(" - ").append(Component.translatable(LangInit.ACTIVE)).append(String.valueOf(switchData.isActive(this.getChannel()))), true);
             } else {
-                player.sendSystemMessage(Component.literal("No Channel"));
+                player.displayClientMessage(Component.translatable(LangInit.NO_CHANNEL), true);
             }
             return true;
         }
         
         boolean interactionProcessed = false;
 
-        if (player.isShiftKeyDown()){
-            if(this.hasChannel()){
-                player.sendSystemMessage(Component.literal("Channel: " + this.getChannelDisplay(player.getStringUUID()) + " - Active: " + switchData.isActive(this.getChannel())));   
-            } else {
-                player.sendSystemMessage(Component.literal("No Channel"));
-            }
-            interactionProcessed = true;
-        } else if (held.getItem() == Items.PAPER){
+        if (held.getItem() == Items.PAPER){
             String channel = held.getDisplayName().getString().replace("[", "").replace("]", "");
             this.setChannel(channel);
-            player.sendSystemMessage(Component.literal("Setting Channel: " + channel));
+            player.displayClientMessage(Component.translatable(LangInit.SET_CHANNEL).append(channel), true);
             interactionProcessed = true;
         } else if (held.getItem() == Items.INK_SAC){
             if (this.isRedacted()){
                 this.setRedacted(false);
-            player.sendSystemMessage(Component.literal("Unredacted Channel"));
+            player.displayClientMessage(Component.translatable(LangInit.UNREDACTED), true);
             } else {
                 this.setRedacted(true);
-                player.sendSystemMessage(Component.literal("Redacted Channel"));
+                player.displayClientMessage(Component.translatable(LangInit.SET_REDACTED), true);
             }
             interactionProcessed = true;
         } else if (held.getItem() == Items.WHITE_WOOL){
             this.toggleSilent();
             if (this.isSilent())
             {
-                player.sendSystemMessage(Component.literal("Silencing"));
+                player.displayClientMessage(Component.translatable(LangInit.SILENCING), true);
             }
             else {
-                player.sendSystemMessage(Component.literal("Unsilencing"));
+                player.displayClientMessage(Component.translatable(LangInit.UNSILENCING), true);
             }
             interactionProcessed = true;
         }

@@ -3,7 +3,7 @@ package com.suicidesquid.syncswitch.datagen;
 import java.util.function.Consumer;
 
 import com.suicidesquid.syncswitch.SynchronousSwitches;
-import com.suicidesquid.syncswitch.init.BlockInit;
+import com.suicidesquid.syncswitch.setup.Registration;
 
 import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.data.DataGenerator;
@@ -19,15 +19,18 @@ import net.minecraftforge.common.crafting.conditions.IConditionBuilder;
 
 public class ModRecipeProvider extends RecipeProvider implements IConditionBuilder{
 
+    private final String recipeLocation;
+
     public ModRecipeProvider(DataGenerator dataGenerator) {
         super(dataGenerator);
+        recipeLocation = SynchronousSwitches.MODID + ":";
     }
 
 
     private ShapelessRecipeBuilder cycleRecipe(ItemLike input, ItemLike output){
         return ShapelessRecipeBuilder.shapeless(output)
                                         .requires(input)
-                                        .unlockedBy("has_sync_switch", inventoryTrigger(ItemPredicate.Builder.item().of(BlockInit.SWITCH_BLOCK.get()).build()))
+                                        .unlockedBy("has_sync_switch", inventoryTrigger(ItemPredicate.Builder.item().of(Registration.SWITCH_BLOCK.get()).build()))
                                         .group(SynchronousSwitches.MODID);
     }
 
@@ -37,7 +40,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
 
 
 
-        ShapedRecipeBuilder.shaped(BlockInit.SWITCH_BLOCK.get())
+        ShapedRecipeBuilder.shaped(Registration.SWITCH_BLOCK.get())
                                     .define('E', Tags.Items.ENDER_PEARLS)
                                     .define('S', Tags.Items.RODS_WOODEN)
                                     .define('C', Tags.Items.STONE)
@@ -47,7 +50,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                                     .group(SynchronousSwitches.MODID)
                                     .unlockedBy("has_ender_pearl", inventoryTrigger(ItemPredicate.Builder.item().of(Items.ENDER_PEARL).build()))
                                     .save(finishedRecipeConsumer);
-        ShapedRecipeBuilder.shaped(BlockInit.CHANNEL_OUTPUT_BLOCK.get())
+        ShapedRecipeBuilder.shaped(Registration.CHANNEL_OUTPUT_BLOCK.get())
                                     .define('E', Tags.Items.ENDER_PEARLS)
                                     .define('S', Tags.Items.STONE)
                                     .define('R', Tags.Items.DUSTS_REDSTONE)
@@ -57,7 +60,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                                     .group(SynchronousSwitches.MODID)
                                     .unlockedBy("has_ender_pearl", inventoryTrigger(ItemPredicate.Builder.item().of(Items.ENDER_PEARL).build()))
                                     .save(finishedRecipeConsumer);
-        ShapedRecipeBuilder.shaped(BlockInit.CHANNEL_INPUT_BLOCK.get())
+        ShapedRecipeBuilder.shaped(Registration.CHANNEL_INPUT_BLOCK.get())
                                     .define('E', Tags.Items.ENDER_PEARLS)
                                     .define('S', Tags.Items.STONE)
                                     .define('R', Tags.Items.DUSTS_REDSTONE)
@@ -67,7 +70,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                                     .group(SynchronousSwitches.MODID)
                                     .unlockedBy("has_ender_pearl", inventoryTrigger(ItemPredicate.Builder.item().of(Items.ENDER_PEARL).build()))
                                     .save(finishedRecipeConsumer);
-        ShapedRecipeBuilder.shaped(BlockInit.LIGHT_BLOCK.get(), 4)
+        ShapedRecipeBuilder.shaped(Registration.LIGHT_BLOCK.get(), 4)
                                     .define('E', Tags.Items.ENDER_PEARLS)
                                     .define('S', Items.SEA_LANTERN)
                                     .pattern(" S ")
@@ -77,29 +80,25 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                                     .unlockedBy("has_sea_lantern", inventoryTrigger(ItemPredicate.Builder.item().of(Items.SEA_LANTERN).build()))
                                     .save(finishedRecipeConsumer);
 
-        ShapedRecipeBuilder.shaped(BlockInit.LIGHT_BLOCK.get())
-                                    .define('P', BlockInit.LIGHT_PANEL_BLOCK.get())
+        ShapedRecipeBuilder.shaped(Registration.LIGHT_BLOCK.get())
+                                    .define('P', Registration.LIGHT_PANEL_BLOCK.get())
                                     .pattern("PP")
                                     .pattern("PP")
                                     .group(SynchronousSwitches.MODID)
-                                    .unlockedBy("has_light_block", inventoryTrigger(ItemPredicate.Builder.item().of(BlockInit.LIGHT_BLOCK.get()).build()))
-                                    .save(finishedRecipeConsumer, new ResourceLocation("light_block_1"));
+                                    .unlockedBy("has_light_block", inventoryTrigger(ItemPredicate.Builder.item().of(Registration.LIGHT_BLOCK.get()).build()))
+                                    .save(finishedRecipeConsumer, new ResourceLocation(recipeLocation + "light_block_1"));
 
-        ShapelessRecipeBuilder.shapeless(BlockInit.LIGHT_PANEL_BLOCK.get(), 4)
-                                    .requires(BlockInit.LIGHT_BLOCK.get())
-                                    .unlockedBy("has_light_block", inventoryTrigger(ItemPredicate.Builder.item().of(BlockInit.LIGHT_BLOCK.get()).build()))
+        ShapelessRecipeBuilder.shapeless(Registration.LIGHT_PANEL_BLOCK.get(), 4)
+                                    .requires(Registration.LIGHT_BLOCK.get())
+                                    .unlockedBy("has_light_block", inventoryTrigger(ItemPredicate.Builder.item().of(Registration.LIGHT_BLOCK.get()).build()))
                                     .group(SynchronousSwitches.MODID)
                                     .save(finishedRecipeConsumer);
 
-        cycleRecipe(BlockInit.SWITCH_BLOCK.get(), BlockInit.VANILLA_SWITCH_BLOCK.get()).save(finishedRecipeConsumer);
-        cycleRecipe(BlockInit.VANILLA_SWITCH_BLOCK.get(), BlockInit.IO_SWITCH_BLOCK.get()).save(finishedRecipeConsumer);
-        cycleRecipe(BlockInit.IO_SWITCH_BLOCK.get(), BlockInit.ESTOP_BUTTON_BLOCK.get()).save(finishedRecipeConsumer);
-        cycleRecipe(BlockInit.ESTOP_BUTTON_BLOCK.get(), BlockInit.BIG_BUTTON_BLOCK.get()).save(finishedRecipeConsumer);
-        cycleRecipe(BlockInit.BIG_BUTTON_BLOCK.get(), BlockInit.SWITCH_BLOCK.get()).save(finishedRecipeConsumer, new ResourceLocation("switch_block_1"));
-
-
-
-        super.buildCraftingRecipes(finishedRecipeConsumer);
+        cycleRecipe(Registration.SWITCH_BLOCK.get(), Registration.VANILLA_SWITCH_BLOCK.get()).save(finishedRecipeConsumer);
+        cycleRecipe(Registration.VANILLA_SWITCH_BLOCK.get(), Registration.IO_SWITCH_BLOCK.get()).save(finishedRecipeConsumer);
+        cycleRecipe(Registration.IO_SWITCH_BLOCK.get(), Registration.ESTOP_BUTTON_BLOCK.get()).save(finishedRecipeConsumer);
+        cycleRecipe(Registration.ESTOP_BUTTON_BLOCK.get(), Registration.BIG_BUTTON_BLOCK.get()).save(finishedRecipeConsumer);
+        cycleRecipe(Registration.BIG_BUTTON_BLOCK.get(), Registration.SWITCH_BLOCK.get()).save(finishedRecipeConsumer, new ResourceLocation(recipeLocation + "switch_block_1"));
     }
     
 }

@@ -4,7 +4,7 @@ import javax.annotation.Nullable;
 
 import com.suicidesquid.syncswitch.blocks.base.BaseDirectionalLightBlock;
 import com.suicidesquid.syncswitch.blocks.base.BaseSwitchBlock;
-import com.suicidesquid.syncswitch.init.TileEntityInit;
+import com.suicidesquid.syncswitch.setup.Registration;
 import com.suicidesquid.syncswitch.tiles.LightPanelTile;
 
 import net.minecraft.core.BlockPos;
@@ -39,12 +39,12 @@ public class LightPanelBlock extends BaseDirectionalLightBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return TileEntityInit.LIGHT_PANEL_BLOCK.get().create(pos, state);
+        return Registration.LIGHT_PANEL_BLOCK_BE.get().create(pos, state);
     }
 
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-        return type == TileEntityInit.LIGHT_PANEL_BLOCK.get() ? LightPanelTile::tick : null;
+        return type == Registration.LIGHT_PANEL_BLOCK_BE.get() ? LightPanelTile::tick : null;
     }
 
     

@@ -2,6 +2,7 @@ package com.suicidesquid.syncswitch.items;
 
 import java.util.List;
 
+import com.suicidesquid.syncswitch.setup.LangInit;
 import com.suicidesquid.syncswitch.tiles.Base.BaseChannelTile;
 
 import net.minecraft.core.BlockPos;
@@ -54,29 +55,35 @@ public class BaseSwitchBlockItem extends BlockItem{
     public void appendHoverText(ItemStack stack, Level level, List<Component> tooltip, TooltipFlag flagIn) {
         String channel = getChannel(stack);
         if (channel != null){
-            tooltip.add(Component.literal("Channel: " + channel));
+            tooltip.add(Component.translatable(LangInit.CHANNEL).append(channel));
         }
     }
 
     @Override
     public InteractionResult onItemUseFirst(ItemStack stack, UseOnContext context) {
+        Player player = context.getPlayer();
         Level level = context.getLevel();
         if(level.isClientSide())
-            if(context.getPlayer().isCrouching())
+            if(player.isCrouching())
                 return InteractionResult.CONSUME;
             else
                 return InteractionResult.PASS;
 
         BlockEntity be = level.getBlockEntity(context.getClickedPos());
-        if (context.getPlayer().isCrouching() && be instanceof BaseChannelTile tile){
-            CompoundTag tag = stack.getOrCreateTag();
-            tag.putString("channel", tile.getChannel());
-            return InteractionResult.CONSUME;
+        
+        if (player.isCrouching() && be instanceof BaseChannelTile tile){
+            if (!tile.isRedacted() || tile.isPlayer(player.getStringUUID())){
+                CompoundTag tag = stack.getOrCreateTag();
+                String channel = tile.getChannel();
+                tag.putString("channel", channel);
+                player.displayClientMessage(Component.translatable(LangInit.COPIED).append(channel), true);
+                return InteractionResult.CONSUME;
+            }
         }
         return InteractionResult.PASS;
     }
 
-    protected void toggleActive(Level level, CompoundTag tag){}
+    protected void toggleActive(Level level, Player player, CompoundTag tag){}
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
@@ -86,10 +93,10 @@ public class BaseSwitchBlockItem extends BlockItem{
             if (tag.contains("channel"))
                 tag.remove("channel");
                 if(level.isClientSide)
-                    player.sendSystemMessage(Component.literal("Channel Cleared!"));
+                    player.displayClientMessage(Component.translatable(LangInit.REMOVE_CHANNEL), true);
             return new InteractionResultHolder<ItemStack>(InteractionResult.SUCCESS, stack);
         }
-        toggleActive(level, tag);
+        toggleActive(level, player, tag);
         return new InteractionResultHolder<ItemStack>(InteractionResult.SUCCESS, stack);
     }
 

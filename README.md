@@ -4,6 +4,11 @@ This mod adds "Synchronous Switches" which can be linked together via a channel.
 ## Features
 ### Adds
 * Synchronous Switch (Several Styles)
+    * Default
+    * Vanilla Style
+    * IO Switch
+    * E-Stop Button
+    * Big Button (Looks like pressure plate)
 * Channel Output Block
 * Channel Input Block
 * Channel Light Block/Panel
@@ -13,11 +18,21 @@ This mod adds "Synchronous Switches" which can be linked together via a channel.
 * Copy channel by shift right clicking a channel item on an existing switch/block
 * Clear channel by shift right clicking in the air
 * Clear channel by setting channel to "None" with a named piece of paper
-* Redact/Unredact channel by right clicking ink on the switch/block
-* Mute/Unmute channel by right clicking white wool on the switch/block
-* Check if the switch channel status by shift right clicking with an empty hand
+* Redact/Unredact switch by right clicking ink on the switch/block
+* Mute/Unmute switch by right clicking white wool on the switch/block
+* Check if the channel status by shift right clicking with an empty hand
 * Right click with a switch in your main hand to toggle the channel active without having the switch placed
 
+### Images
+![All Blocks Off](screenshots/All_Blocks_Off.png "All Blocks")
+![All Blocks On](screenshots/All_Blocks_On.png)
+![Create Channel Paper](screenshots/Channel_Paper.png)
+![Set Channel](screenshots/Setting_Channel.png)
+![Display Channel](screenshots/Displaying_Channel.png)
+![Create None Channel Paper](screenshots/None_Paper.png)
+![Remove Channel](screenshots/Removing_Channel.png)
+![Redacting Switch](screenshots/Redacting_Channel.png)
+![Silencing Switch](screenshots/Silencing_Switch.png)
 
 
 ## Credits
