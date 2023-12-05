@@ -14,12 +14,14 @@ import com.suicidesquid.syncswitch.blocks.Switches.SwitchBlock;
 import com.suicidesquid.syncswitch.blocks.Switches.VanillaSwitchBlock;
 import com.suicidesquid.syncswitch.blocks.base.BaseChannelBlock;
 import com.suicidesquid.syncswitch.blocks.base.BaseLightBlock;
+import com.suicidesquid.syncswitch.blocks.buttons.StoneButtonBlock;
 import com.suicidesquid.syncswitch.items.BaseSwitchBlockItem;
 import com.suicidesquid.syncswitch.items.UsableSwitchBlockItem;
 import com.suicidesquid.syncswitch.tiles.ChannelInputTile;
 import com.suicidesquid.syncswitch.tiles.ChannelOutputTile;
 import com.suicidesquid.syncswitch.tiles.LightBlockTile;
 import com.suicidesquid.syncswitch.tiles.LightPanelTile;
+import com.suicidesquid.syncswitch.tiles.Buttons.StoneButtonTile;
 import com.suicidesquid.syncswitch.tiles.Switches.BigButtonTile;
 import com.suicidesquid.syncswitch.tiles.Switches.EStopButtonTile;
 import com.suicidesquid.syncswitch.tiles.Switches.IOSwitchTile;
@@ -103,6 +105,10 @@ public class Registration {
 
     public static final RegistryObject<Block> VANILLA_SWITCH_BLOCK = registerChannelBlock("vanilla_switch_block",() -> new VanillaSwitchBlock(BlockBehaviour.Properties.of(Material.STONE).noCollission().noCollission()));
     public static final RegistryObject<BlockEntityType<VanillaSwitchBlockTile>> VANILLA_SWITCH_BLOCK_BE = registerChannelBlockEntity(VANILLA_SWITCH_BLOCK, VanillaSwitchBlockTile::new);
+
+    // Buttons
+    public static final RegistryObject<Block> STONE_BUTTON_BLOCK = registerChannelBlock("stone_button_block",() -> new StoneButtonBlock(true, BlockBehaviour.Properties.of(Material.STONE).noCollission().noCollission()));
+    public static final RegistryObject<BlockEntityType<StoneButtonTile>> STONE_BUTTON_BLOCK_BE = registerChannelBlockEntity(STONE_BUTTON_BLOCK, StoneButtonTile::new);
 
     // Lights
     public static final RegistryObject<Block> LIGHT_BLOCK = registerChannelBlock("light_block",() -> new BaseLightBlock(BlockBehaviour.Properties.of(Material.STONE).lightLevel(getLightLevel())));

@@ -25,6 +25,7 @@ public class ModLangProvider extends LanguageProvider {
         add(Registration.CHANNEL_INPUT_BLOCK.get(), "Synchronous Channel Input");
         add(Registration.LIGHT_BLOCK.get(), "Synchronous Light Block");
         add(Registration.LIGHT_PANEL_BLOCK.get(), "Synchronous Light Panel");
+        add(Registration.STONE_BUTTON_BLOCK.get(), "Synchronous Stone Button");
 
         add(LangInit.SET_CHANNEL, "Setting Channel: ");
         add(LangInit.REMOVE_CHANNEL, "Channel Cleared!");
