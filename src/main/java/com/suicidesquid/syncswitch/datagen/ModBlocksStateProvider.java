@@ -5,7 +5,7 @@ import com.suicidesquid.syncswitch.blocks.base.BaseDirectionalLightBlock;
 import com.suicidesquid.syncswitch.setup.Registration;
 
 import net.minecraft.core.Direction;
-import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.ButtonBlock;
 import net.minecraft.world.level.block.LeverBlock;
@@ -18,8 +18,8 @@ import net.minecraftforge.common.data.ExistingFileHelper;
 
 public class ModBlocksStateProvider extends BlockStateProvider {
 
-    public ModBlocksStateProvider(DataGenerator gen, ExistingFileHelper existingFileHelper){
-        super(gen, SynchronousSwitches.MODID, existingFileHelper);
+    public ModBlocksStateProvider(PackOutput packOutput, ExistingFileHelper existingFileHelper){
+        super(packOutput, SynchronousSwitches.MODID, existingFileHelper);
     }
 
     public void leverBlock(LeverBlock block, ModelFile button, ModelFile buttonPressed) {

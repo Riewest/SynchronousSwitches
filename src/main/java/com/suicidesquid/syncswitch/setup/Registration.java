@@ -59,7 +59,7 @@ public class Registration {
         BLOCK_ENTITIES.register(bus);        
     }
 
-    public static final Item.Properties ITEM_PROPERTIES = new Item.Properties().tab(ModSetup.ITEM_GROUP);
+    public static final Item.Properties ITEM_PROPERTIES = new Item.Properties();
 
     private static <T extends Block> RegistryObject<T> registerChannelBlock(String name, Supplier<T> block){
         RegistryObject<T> toReturn = BLOCKS.register(name, block);
