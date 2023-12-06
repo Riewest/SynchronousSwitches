@@ -30,5 +30,6 @@
     "recipes": [
       "syncswitch:switch_block_1"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

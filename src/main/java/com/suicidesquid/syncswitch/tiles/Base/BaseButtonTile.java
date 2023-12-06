@@ -3,7 +3,6 @@ package com.suicidesquid.syncswitch.tiles.Base;
 import com.suicidesquid.syncswitch.data.SwitchData;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.LeverBlock;
 import net.minecraft.world.level.block.entity.BlockEntityType;

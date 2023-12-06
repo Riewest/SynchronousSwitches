@@ -20,5 +20,6 @@
   ],
   "result": {
     "item": "syncswitch:channel_output"
-  }
+  },
+  "show_notification": true
 }

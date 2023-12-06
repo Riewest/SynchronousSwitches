@@ -20,5 +20,6 @@
   ],
   "result": {
     "item": "syncswitch:switch_block"
-  }
+  },
+  "show_notification": true
 }

@@ -30,5 +30,6 @@
     "recipes": [
       "syncswitch:light_panel"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

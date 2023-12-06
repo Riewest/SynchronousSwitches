@@ -30,5 +30,6 @@
     "recipes": [
       "syncswitch:channel_output"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

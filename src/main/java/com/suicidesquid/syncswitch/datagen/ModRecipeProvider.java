@@ -6,7 +6,6 @@ import com.suicidesquid.syncswitch.SynchronousSwitches;
 import com.suicidesquid.syncswitch.setup.Registration;
 
 import net.minecraft.advancements.critereon.ItemPredicate;
-import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeCategory;
