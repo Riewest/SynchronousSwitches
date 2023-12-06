@@ -14,7 +14,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.event.CreativeModeTabEvent;
+import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.RegistryObject;
@@ -67,8 +67,8 @@ public class SynchronousSwitches {
         LOGGER.info("HELLO from server starting");
     }
 
-    private void addCreative(CreativeModeTabEvent.BuildContents event) {
-        if (event.getTab() == CreativeModeTabs.REDSTONE_BLOCKS) {
+    private void addCreative(BuildCreativeModeTabContentsEvent event) {
+        if (event.getTabKey() == CreativeModeTabs.REDSTONE_BLOCKS) {
             for (RegistryObject<Item> regItem : Registration.ITEMS.getEntries()) {
                 event.accept(regItem.get());
             }

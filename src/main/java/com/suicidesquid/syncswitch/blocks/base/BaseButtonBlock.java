@@ -29,8 +29,8 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.material.PushReaction;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -38,7 +38,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 public class BaseButtonBlock extends ButtonBlock{
     private static final int SHAPE_SCALAR = 16;
     protected BaseButtonBlock(boolean sensitive, Properties properties) {
-        super(BlockBehaviour.Properties.of(Material.DECORATION).noCollission().strength(0.5F), BlockSetType.STONE, 20, false);
+        super(BlockBehaviour.Properties.of().noCollission().strength(0.5F).pushReaction(PushReaction.DESTROY), BlockSetType.STONE, 20, false);
     }
 
     @Override
@@ -55,7 +55,7 @@ public class BaseButtonBlock extends ButtonBlock{
     }
 
     @Override
-    public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
+    public List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
         List<ItemStack> drops = new ArrayList<>();
         BaseChannelTile tile = (BaseChannelTile) builder.getOptionalParameter(LootContextParams.BLOCK_ENTITY);
         if (tile != null){
