@@ -2,9 +2,9 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [32, 32],
 	"textures": {
-		"0": "syncswitch:blocks/lever_ender_tipped_on",
-		"2": "syncswitch:blocks/switch_base_stone",
-		"particle": "syncswitch:blocks/lever_ender_tipped_on"
+		"0": "syncswitch:block/lever_ender_tipped_on",
+		"2": "syncswitch:block/switch_base_stone",
+		"particle": "syncswitch:block/lever_ender_tipped_on"
 	},
 	"elements": [
 		{

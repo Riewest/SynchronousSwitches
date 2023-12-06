@@ -99,11 +99,11 @@ public class BaseButtonBlock extends ButtonBlock{
         return super.use(state, world, pos, player, hand, hit);
     }
 
-    @Override
-    protected SoundEvent getSound(boolean bool) {
-        // TODO Auto-generated method stub
-        return null;
-    }
+    // @Override
+    // protected SoundEvent getSound(boolean bool) {
+    //     // TODO Auto-generated method stub
+    //     if boo
+    // }
 
     public BlockState rotate(BlockState state, Rotation rot) {
 		return state.setValue(BlockStateProperties.FACING, rot.rotate(state.getValue(BlockStateProperties.FACING)));

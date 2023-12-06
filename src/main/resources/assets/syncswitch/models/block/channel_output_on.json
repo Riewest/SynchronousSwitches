@@ -1,8 +1,8 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "syncswitch:blocks/channel_output_on",
-		"particle": "syncswitch:blocks/channel_output_on"
+		"0": "syncswitch:block/channel_output_on",
+		"particle": "syncswitch:block/channel_output_on"
 	},
 	"elements": [
 		{
