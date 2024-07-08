@@ -14,12 +14,14 @@ import com.suicidesquid.syncswitch.blocks.Switches.SwitchBlock;
 import com.suicidesquid.syncswitch.blocks.Switches.VanillaSwitchBlock;
 import com.suicidesquid.syncswitch.blocks.base.BaseChannelBlock;
 import com.suicidesquid.syncswitch.blocks.base.BaseLightBlock;
+import com.suicidesquid.syncswitch.blocks.buttons.StoneButtonBlock;
 import com.suicidesquid.syncswitch.items.BaseSwitchBlockItem;
 import com.suicidesquid.syncswitch.items.UsableSwitchBlockItem;
 import com.suicidesquid.syncswitch.tiles.ChannelInputTile;
 import com.suicidesquid.syncswitch.tiles.ChannelOutputTile;
 import com.suicidesquid.syncswitch.tiles.LightBlockTile;
 import com.suicidesquid.syncswitch.tiles.LightPanelTile;
+import com.suicidesquid.syncswitch.tiles.Buttons.StoneButtonTile;
 import com.suicidesquid.syncswitch.tiles.Switches.BigButtonTile;
 import com.suicidesquid.syncswitch.tiles.Switches.EStopButtonTile;
 import com.suicidesquid.syncswitch.tiles.Switches.IOSwitchTile;
@@ -29,12 +31,12 @@ import com.suicidesquid.syncswitch.tiles.Switches.VanillaSwitchBlockTile;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.entity.BlockEntityType.BlockEntitySupplier;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
@@ -57,7 +59,7 @@ public class Registration {
         BLOCK_ENTITIES.register(bus);        
     }
 
-    public static final Item.Properties ITEM_PROPERTIES = new Item.Properties().tab(ModSetup.ITEM_GROUP);
+    public static final Item.Properties ITEM_PROPERTIES = new Item.Properties();
 
     private static <T extends Block> RegistryObject<T> registerChannelBlock(String name, Supplier<T> block){
         RegistryObject<T> toReturn = BLOCKS.register(name, block);
@@ -82,33 +84,37 @@ public class Registration {
     }
 
     // Channel Blocks
-    public static final RegistryObject<Block> CHANNEL_OUTPUT_BLOCK = registerChannelBlock("channel_output",() -> new ChannelOutputBlock(BlockBehaviour.Properties.of(Material.STONE)));
+    public static final RegistryObject<Block> CHANNEL_OUTPUT_BLOCK = registerChannelBlock("channel_output",() -> new ChannelOutputBlock(BlockBehaviour.Properties.copy(Blocks.STONE)));
     public static final RegistryObject<BlockEntityType<ChannelOutputTile>> CHANNEL_OUTPUT_BLOCK_BE = registerChannelBlockEntity(CHANNEL_OUTPUT_BLOCK, ChannelOutputTile::new);
     
-    public static final RegistryObject<Block> CHANNEL_INPUT_BLOCK = registerChannelBlock("channel_input",() -> new ChannelInputBlock(BlockBehaviour.Properties.of(Material.STONE)));
+    public static final RegistryObject<Block> CHANNEL_INPUT_BLOCK = registerChannelBlock("channel_input",() -> new ChannelInputBlock(BlockBehaviour.Properties.copy(Blocks.STONE)));
     public static final RegistryObject<BlockEntityType<ChannelInputTile>> CHANNEL_INPUT_BLOCK_BE = registerChannelBlockEntity(CHANNEL_INPUT_BLOCK, ChannelInputTile::new);
     
     // Switches
-    public static final RegistryObject<Block> SWITCH_BLOCK = registerChannelBlock("switch_block",() -> new SwitchBlock(BlockBehaviour.Properties.of(Material.STONE).noCollission().noCollission()));
+    public static final RegistryObject<Block> SWITCH_BLOCK = registerChannelBlock("switch_block",() -> new SwitchBlock(BlockBehaviour.Properties.copy(Blocks.STONE).noCollission().noCollission()));
     public static final RegistryObject<BlockEntityType<SwitchBlockTile>> SWITCH_BLOCK_BE = registerChannelBlockEntity(SWITCH_BLOCK, SwitchBlockTile::new);
 
-    public static final RegistryObject<Block> BIG_BUTTON_BLOCK = registerChannelBlock("big_button",() -> new BigButtonBlock(BlockBehaviour.Properties.of(Material.STONE).noCollission().noCollission()));
+    public static final RegistryObject<Block> BIG_BUTTON_BLOCK = registerChannelBlock("big_button",() -> new BigButtonBlock(BlockBehaviour.Properties.copy(Blocks.STONE).noCollission().noCollission()));
     public static final RegistryObject<BlockEntityType<BigButtonTile>> BIG_BUTTON_BLOCK_BE = registerChannelBlockEntity(BIG_BUTTON_BLOCK, BigButtonTile::new);
 
-    public static final RegistryObject<Block> ESTOP_BUTTON_BLOCK = registerChannelBlock("estop_button",() -> new EStopButtonBlock(BlockBehaviour.Properties.of(Material.STONE).noCollission().noCollission()));
+    public static final RegistryObject<Block> ESTOP_BUTTON_BLOCK = registerChannelBlock("estop_button",() -> new EStopButtonBlock(BlockBehaviour.Properties.copy(Blocks.STONE).noCollission().noCollission()));
     public static final RegistryObject<BlockEntityType<EStopButtonTile>> ESTOP_BUTTON_BLOCK_BE = registerChannelBlockEntity(ESTOP_BUTTON_BLOCK, EStopButtonTile::new);
 
-    public static final RegistryObject<Block> IO_SWITCH_BLOCK = registerChannelBlock("io_switch",() -> new IOSwitchBlock(BlockBehaviour.Properties.of(Material.STONE).noCollission().noCollission()));
+    public static final RegistryObject<Block> IO_SWITCH_BLOCK = registerChannelBlock("io_switch",() -> new IOSwitchBlock(BlockBehaviour.Properties.copy(Blocks.STONE).noCollission().noCollission()));
     public static final RegistryObject<BlockEntityType<IOSwitchTile>> IO_SWITCH_BLOCK_BE = registerChannelBlockEntity(IO_SWITCH_BLOCK, IOSwitchTile::new);
 
-    public static final RegistryObject<Block> VANILLA_SWITCH_BLOCK = registerChannelBlock("vanilla_switch_block",() -> new VanillaSwitchBlock(BlockBehaviour.Properties.of(Material.STONE).noCollission().noCollission()));
+    public static final RegistryObject<Block> VANILLA_SWITCH_BLOCK = registerChannelBlock("vanilla_switch_block",() -> new VanillaSwitchBlock(BlockBehaviour.Properties.copy(Blocks.STONE).noCollission().noCollission()));
     public static final RegistryObject<BlockEntityType<VanillaSwitchBlockTile>> VANILLA_SWITCH_BLOCK_BE = registerChannelBlockEntity(VANILLA_SWITCH_BLOCK, VanillaSwitchBlockTile::new);
 
+    // Buttons
+    public static final RegistryObject<Block> STONE_BUTTON_BLOCK = registerChannelBlock("stone_button_block",() -> new StoneButtonBlock(true, BlockBehaviour.Properties.copy(Blocks.STONE).noCollission().noCollission()));
+    public static final RegistryObject<BlockEntityType<StoneButtonTile>> STONE_BUTTON_BLOCK_BE = registerChannelBlockEntity(STONE_BUTTON_BLOCK, StoneButtonTile::new);
+
     // Lights
-    public static final RegistryObject<Block> LIGHT_BLOCK = registerChannelBlock("light_block",() -> new BaseLightBlock(BlockBehaviour.Properties.of(Material.STONE).lightLevel(getLightLevel())));
+    public static final RegistryObject<Block> LIGHT_BLOCK = registerChannelBlock("light_block",() -> new BaseLightBlock(BlockBehaviour.Properties.copy(Blocks.STONE).lightLevel(getLightLevel())));
     public static final RegistryObject<BlockEntityType<LightBlockTile>> LIGHT_BLOCK_BE = registerChannelBlockEntity(LIGHT_BLOCK, LightBlockTile::new);
 
-    public static final RegistryObject<Block> LIGHT_PANEL_BLOCK = registerChannelBlock("light_panel",() -> new LightPanelBlock(BlockBehaviour.Properties.of(Material.STONE).lightLevel(getLightLevel())));
+    public static final RegistryObject<Block> LIGHT_PANEL_BLOCK = registerChannelBlock("light_panel",() -> new LightPanelBlock(BlockBehaviour.Properties.copy(Blocks.STONE).lightLevel(getLightLevel())));
     public static final RegistryObject<BlockEntityType<LightPanelTile>> LIGHT_PANEL_BLOCK_BE = registerChannelBlockEntity(LIGHT_PANEL_BLOCK, LightPanelTile::new);
 
 

@@ -2,8 +2,8 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [32, 32],
 	"textures": {
-		"0": "syncswitch:blocks/light_block_on",
-		"particle": "syncswitch:blocks/light_block_on"
+		"0": "syncswitch:block/light_block_on",
+		"particle": "syncswitch:block/light_block_on"
 	},
 	"elements": [
 		{

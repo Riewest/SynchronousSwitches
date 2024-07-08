@@ -1,6 +1,5 @@
 package com.suicidesquid.syncswitch.blocks.base;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,30 +17,26 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.LeverBlock;
+import net.minecraft.world.level.block.ButtonBlock;
 import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.AttachFace;
+import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class BaseSwitchBlock extends LeverBlock{
-
+public class BaseButtonBlock extends ButtonBlock{
     private static final int SHAPE_SCALAR = 16;
-    // public static final BooleanProperty SILENT = BooleanProperty.create("silent");
-
-    public BaseSwitchBlock(Block.Properties properties) {
-        super(properties);
+    protected BaseButtonBlock(boolean sensitive, Properties properties) {
+        super(BlockBehaviour.Properties.of().noCollission().strength(0.5F).pushReaction(PushReaction.DESTROY), BlockSetType.STONE, 20, false);
     }
 
     @Override
@@ -58,15 +53,6 @@ public class BaseSwitchBlock extends LeverBlock{
     }
 
     @Override
-	public BlockState getStateForPlacement(BlockPlaceContext context) {
-		if (context.getClickedFace().getAxis() == Direction.Axis.Y)
-			return this.defaultBlockState()
-					.setValue(FACE, context.getClickedFace().getOpposite() == Direction.UP ? AttachFace.CEILING : AttachFace.FLOOR)
-					.setValue(FACING, context.getHorizontalDirection());
-		return this.defaultBlockState().setValue(FACE, AttachFace.WALL).setValue(FACING, context.getClickedFace());
-	}
-
-    @Override
     public List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
         List<ItemStack> drops = new ArrayList<>();
         BaseChannelTile tile = (BaseChannelTile) builder.getOptionalParameter(LootContextParams.BLOCK_ENTITY);
@@ -74,12 +60,6 @@ public class BaseSwitchBlock extends LeverBlock{
             drops.add(createItem(tile.getChannel()));
         }
         return drops;
-    }
-
-    @Override
-    public ItemStack getCloneItemStack(BlockState state, HitResult target, BlockGetter level, BlockPos pos, Player player) {
-        BaseChannelTile tile = (BaseChannelTile) level.getBlockEntity(pos);
-        return createItem(tile.getChannel());
     }
 
     private ItemStack createItem(String channel){
@@ -101,14 +81,14 @@ public class BaseSwitchBlock extends LeverBlock{
                 SwitchData switchData = SwitchData.get(world);
                 if(switchtile.processInteraction(held, player, switchData))
                     return InteractionResult.CONSUME;
-                if (!switchtile.hasChannel() && held.isEmpty()){
+                if (!switchtile.hasChannel()){
                     return super.use(state, world, pos, player, hand, hit);
                 } else {
                     world.setBlockAndUpdate(pos, state.setValue(POWERED, switchData.toggleActive(switchtile.getChannel())));
                     world.updateNeighborsAt(pos.relative(BaseChannelTile.getConnectedDirection(state).getOpposite()), this);
                     switchtile.playSound(state, world, pos);
                 }
-            }
+            } 
                 
             return InteractionResult.CONSUME;
         }
@@ -117,10 +97,13 @@ public class BaseSwitchBlock extends LeverBlock{
         return super.use(state, world, pos, player, hand, hit);
     }
 
+    // @Override
+    // protected SoundEvent getSound(boolean bool) {
+    //     // TODO Auto-generated method stub
+    //     if boo
+    // }
 
-    
-
-	public BlockState rotate(BlockState state, Rotation rot) {
+    public BlockState rotate(BlockState state, Rotation rot) {
 		return state.setValue(BlockStateProperties.FACING, rot.rotate(state.getValue(BlockStateProperties.FACING)));
 	}
 
@@ -183,4 +166,5 @@ public class BaseSwitchBlock extends LeverBlock{
 			};
 		};
 	}
+    
 }

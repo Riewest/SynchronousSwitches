@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_sync_switch": {
+    "has_light_block": {
       "conditions": {
         "items": [
           {
             "items": [
-              "syncswitch:switch_block"
+              "syncswitch:light_block"
             ]
           }
         ]
@@ -15,20 +15,21 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "syncswitch:vanilla_switch_block"
+        "recipe": "syncswitch:light_block_1"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_sync_switch",
+      "has_light_block",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "syncswitch:vanilla_switch_block"
+      "syncswitch:light_block_1"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

@@ -5,7 +5,7 @@ import com.suicidesquid.syncswitch.blocks.base.BaseDirectionalLightBlock;
 import com.suicidesquid.syncswitch.setup.Registration;
 
 import net.minecraft.core.Direction;
-import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.ButtonBlock;
 import net.minecraft.world.level.block.LeverBlock;
@@ -18,8 +18,8 @@ import net.minecraftforge.common.data.ExistingFileHelper;
 
 public class ModBlocksStateProvider extends BlockStateProvider {
 
-    public ModBlocksStateProvider(DataGenerator gen, ExistingFileHelper existingFileHelper){
-        super(gen, SynchronousSwitches.MODID, existingFileHelper);
+    public ModBlocksStateProvider(PackOutput packOutput, ExistingFileHelper existingFileHelper){
+        super(packOutput, SynchronousSwitches.MODID, existingFileHelper);
     }
 
     public void leverBlock(LeverBlock block, ModelFile button, ModelFile buttonPressed) {
@@ -57,6 +57,7 @@ public class ModBlocksStateProvider extends BlockStateProvider {
         leverBlock((LeverBlock)Registration.ESTOP_BUTTON_BLOCK.get() , new ExistingModelFile(new ResourceLocation(SynchronousSwitches.MODID + ":block/estop_button"), models().existingFileHelper ), new ExistingModelFile(new ResourceLocation(SynchronousSwitches.MODID + ":block/estop_button_on"), models().existingFileHelper ));
         leverBlock((LeverBlock)Registration.IO_SWITCH_BLOCK.get() , new ExistingModelFile(new ResourceLocation(SynchronousSwitches.MODID + ":block/io_switch"), models().existingFileHelper ), new ExistingModelFile(new ResourceLocation(SynchronousSwitches.MODID + ":block/io_switch_on"), models().existingFileHelper ));
         leverBlock((LeverBlock)Registration.VANILLA_SWITCH_BLOCK.get() , new ExistingModelFile(new ResourceLocation("minecraft:block/lever"), models().existingFileHelper ), new ExistingModelFile(new ResourceLocation("minecraft:block/lever_on"), models().existingFileHelper ));
+        buttonBlock((ButtonBlock)Registration.STONE_BUTTON_BLOCK.get() , new ExistingModelFile(new ResourceLocation("minecraft:block/stone_button"), models().existingFileHelper ), new ExistingModelFile(new ResourceLocation("minecraft:block/stone_button_pressed"), models().existingFileHelper ));
         
         
         lightBlock((BaseDirectionalLightBlock)Registration.LIGHT_PANEL_BLOCK.get() , new ExistingModelFile(new ResourceLocation(SynchronousSwitches.MODID + ":block/light_panel"), models().existingFileHelper ), new ExistingModelFile(new ResourceLocation(SynchronousSwitches.MODID + ":block/light_panel_on"), models().existingFileHelper ));

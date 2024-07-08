@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "group": "syncswitch",
   "key": {
     "C": {
@@ -19,5 +20,6 @@
   ],
   "result": {
     "item": "syncswitch:switch_block"
-  }
+  },
+  "show_notification": true
 }

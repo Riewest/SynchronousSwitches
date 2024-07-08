@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_ender_pearl": {
+    "has_sync_switch": {
       "conditions": {
         "items": [
           {
             "items": [
-              "minecraft:ender_pearl"
+              "syncswitch:switch_block"
             ]
           }
         ]
@@ -15,20 +15,21 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "syncswitch:channel_output"
+        "recipe": "syncswitch:estop_button"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_ender_pearl",
+      "has_sync_switch",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "syncswitch:channel_output"
+      "syncswitch:estop_button"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

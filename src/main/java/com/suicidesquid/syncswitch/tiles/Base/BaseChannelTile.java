@@ -39,11 +39,11 @@ public class BaseChannelTile extends BlockEntity{
     
     @Override
     protected void saveAdditional(CompoundTag nbt) {
-        super.saveAdditional(nbt);
         nbt.putString("channel", this.channel);
         nbt.putBoolean("redacted", this.redacted);
         nbt.putBoolean("silent", this.silent);
         nbt.putString("player", this.player);
+        super.saveAdditional(nbt);
     }
 
     @Override
@@ -190,7 +190,4 @@ public class BaseChannelTile extends BlockEntity{
             }
         }
     }
-
-
-
 }

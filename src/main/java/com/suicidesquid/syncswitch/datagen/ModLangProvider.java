@@ -4,13 +4,13 @@ import com.suicidesquid.syncswitch.SynchronousSwitches;
 import com.suicidesquid.syncswitch.setup.LangInit;
 import com.suicidesquid.syncswitch.setup.Registration;
 
-import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraftforge.common.data.LanguageProvider;
 
 public class ModLangProvider extends LanguageProvider {
 
-    public ModLangProvider(DataGenerator gen, String modid, String locale) {
-        super(gen, modid, locale);
+    public ModLangProvider(PackOutput packOutput, String locale) {
+        super(packOutput, SynchronousSwitches.MODID, locale);
     }
 
     @Override
@@ -25,6 +25,7 @@ public class ModLangProvider extends LanguageProvider {
         add(Registration.CHANNEL_INPUT_BLOCK.get(), "Synchronous Channel Input");
         add(Registration.LIGHT_BLOCK.get(), "Synchronous Light Block");
         add(Registration.LIGHT_PANEL_BLOCK.get(), "Synchronous Light Panel");
+        add(Registration.STONE_BUTTON_BLOCK.get(), "Synchronous Stone Button");
 
         add(LangInit.SET_CHANNEL, "Setting Channel: ");
         add(LangInit.REMOVE_CHANNEL, "Channel Cleared!");

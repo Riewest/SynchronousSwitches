@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_sea_lantern": {
+    "has_sync_switch": {
       "conditions": {
         "items": [
           {
             "items": [
-              "minecraft:sea_lantern"
+              "syncswitch:switch_block"
             ]
           }
         ]
@@ -15,20 +15,21 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "syncswitch:light_block"
+        "recipe": "syncswitch:vanilla_switch_block"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_sea_lantern",
+      "has_sync_switch",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "syncswitch:light_block"
+      "syncswitch:vanilla_switch_block"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

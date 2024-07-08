@@ -15,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "syncswitch:estop_button"
+        "recipe": "syncswitch:io_switch"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -28,7 +28,8 @@
   ],
   "rewards": {
     "recipes": [
-      "syncswitch:estop_button"
+      "syncswitch:io_switch"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }
