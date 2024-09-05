@@ -5,7 +5,7 @@ import com.suicidesquid.syncswitch.setup.LangInit;
 import com.suicidesquid.syncswitch.setup.Registration;
 
 import net.minecraft.data.PackOutput;
-import net.minecraftforge.common.data.LanguageProvider;
+import net.neoforged.neoforge.common.data.LanguageProvider;
 
 public class ModLangProvider extends LanguageProvider {
 

@@ -21,6 +21,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.LeverBlock;
 import net.minecraft.world.level.block.Mirror;
@@ -77,8 +78,8 @@ public class BaseSwitchBlock extends LeverBlock{
     }
 
     @Override
-    public ItemStack getCloneItemStack(BlockState state, HitResult target, BlockGetter level, BlockPos pos, Player player) {
-        BaseChannelTile tile = (BaseChannelTile) level.getBlockEntity(pos);
+    public ItemStack getCloneItemStack(LevelReader pLevel, BlockPos pPos, BlockState pState) {
+        BaseChannelTile tile = (BaseChannelTile) pLevel.getBlockEntity(pPos);
         return createItem(tile.getChannel());
     }
 
