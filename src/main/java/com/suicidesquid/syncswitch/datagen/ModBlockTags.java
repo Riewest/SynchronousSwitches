@@ -4,9 +4,9 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.common.data.BlockTagsProvider;
-import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.common.data.BlockTagsProvider;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import net.neoforged.neoforge.registries.DeferredHolder;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -23,7 +23,7 @@ public class ModBlockTags extends BlockTagsProvider {
 
     @Override
     protected void addTags(HolderLookup.Provider provider) {
-        for (RegistryObject<Block> regBlock : Registration.BLOCKS.getEntries()) {
+        for (DeferredHolder<Block, ? extends Block> regBlock : Registration.BLOCKS.getEntries()) {
             tag(BlockTags.MINEABLE_WITH_PICKAXE)
                 .add(regBlock.get());
             tag(BlockTags.MINEABLE_WITH_AXE)

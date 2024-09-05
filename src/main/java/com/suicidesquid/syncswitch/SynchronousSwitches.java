@@ -8,16 +8,14 @@ import com.suicidesquid.syncswitch.setup.Registration;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
-import net.minecraftforge.event.server.ServerStartingEvent;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
+import net.neoforged.neoforge.event.server.ServerStartingEvent;
+import net.neoforged.neoforge.registries.DeferredHolder;
 
 import org.slf4j.Logger;
 
@@ -31,11 +29,11 @@ public class SynchronousSwitches {
     // Create a Deferred Register to hold Blocks which will all be registered under
     // the "examplemod" namespace
     // public static final DeferredRegister<Block> BLOCKS =
-    // DeferredRegister.create(ForgeRegistries.BLOCKS, MODID);
+    // DeferredRegister.create(BuiltInRegistries.BLOCKS, MODID);
     // Create a Deferred Register to hold Items which will all be registered under
     // the "examplemod" namespace
     // public static final DeferredRegister<Item> ITEMS =
-    // DeferredRegister.create(ForgeRegistries.ITEMS, MODID);
+    // DeferredRegister.create(BuiltInRegistries.ITEMS, MODID);
 
     // Creates a new Block with the id "examplemod:example_block", combining the
     // namespace and path
@@ -48,16 +46,16 @@ public class SynchronousSwitches {
     // ITEMS.register("example_block", () -> new BlockItem(EXAMPLE_BLOCK.get(), new
     // Item.Properties().tab(CreativeModeTab.TAB_BUILDING_BLOCKS)));
 
-    public SynchronousSwitches() {
-        Registration.init();
+    public SynchronousSwitches(IEventBus modEventBus, Dist dist) {
+        Registration.init(modEventBus);
 
-        // Register the setup method for modloading
-        IEventBus modbus = FMLJavaModLoadingContext.get().getModEventBus();
         // Register 'ModSetup::init' to be called at mod setup time (server and client)
-        modbus.addListener(ModSetup::init);
+        modEventBus.addListener(ModSetup::init);
         // Register 'ClientSetup::init' to be called at mod setup time (client only)
-        DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> modbus.addListener(ClientSetup::init));
-        modbus.addListener(this::addCreative);
+        if (dist.isClient()) {
+            modEventBus.addListener(ClientSetup::init);
+        }
+        modEventBus.addListener(this::addCreative);
     }
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call
@@ -69,7 +67,7 @@ public class SynchronousSwitches {
 
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
         if (event.getTabKey() == CreativeModeTabs.REDSTONE_BLOCKS) {
-            for (RegistryObject<Item> regItem : Registration.ITEMS.getEntries()) {
+            for (DeferredHolder<Item, ? extends Item> regItem : Registration.ITEMS.getEntries()) {
                 event.accept(regItem.get());
             }
         }

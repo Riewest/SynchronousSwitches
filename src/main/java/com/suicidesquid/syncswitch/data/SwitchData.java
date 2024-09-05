@@ -8,6 +8,7 @@ import javax.annotation.Nonnull;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.saveddata.SavedData;
@@ -20,13 +21,18 @@ public class SwitchData extends SavedData{
         return switchMap.computeIfAbsent(channel, ch -> new SwitchState(false));
     }
 
+    private static Factory<SwitchData> factory(Level level)
+	{
+		return new Factory<>(() -> new SwitchData(), nbt -> new SwitchData(nbt));
+	}
+
     @Nonnull
     public static SwitchData get(Level level){
         if (level.isClientSide){
             throw new RuntimeException("Don't access this client-side!");
         }
         DimensionDataStorage storage = ((ServerLevel)level).getDataStorage();
-        return storage.computeIfAbsent(SwitchData::new, SwitchData::new, "switchdata");
+        return storage.computeIfAbsent(factory(level), "switchdata");
     }
 
     public boolean isActive(String channel){

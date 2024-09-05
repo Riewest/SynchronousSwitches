@@ -36,7 +36,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 public class BaseButtonBlock extends ButtonBlock{
     private static final int SHAPE_SCALAR = 16;
     protected BaseButtonBlock(boolean sensitive, Properties properties) {
-        super(BlockBehaviour.Properties.of().noCollission().strength(0.5F).pushReaction(PushReaction.DESTROY), BlockSetType.STONE, 20, false);
+        super(BlockSetType.STONE, 20, BlockBehaviour.Properties.of().noCollission().strength(0.5F).pushReaction(PushReaction.DESTROY));
     }
 
     @Override
