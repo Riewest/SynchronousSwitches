@@ -1,7 +1,5 @@
 package com.suicidesquid.syncswitch.datagen;
 
-import java.util.function.Consumer;
-
 import com.suicidesquid.syncswitch.SynchronousSwitches;
 import com.suicidesquid.syncswitch.setup.Registration;
 
