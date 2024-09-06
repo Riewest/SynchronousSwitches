@@ -3,6 +3,7 @@ package com.suicidesquid.syncswitch.setup;
 import java.util.function.Supplier;
 import java.util.function.ToIntFunction;
 
+import com.mojang.serialization.Codec;
 import com.suicidesquid.syncswitch.SynchronousSwitches;
 import com.suicidesquid.syncswitch.blocks.ChannelInputBlock;
 import com.suicidesquid.syncswitch.blocks.ChannelOutputBlock;
@@ -28,7 +29,9 @@ import com.suicidesquid.syncswitch.tiles.Switches.IOSwitchTile;
 import com.suicidesquid.syncswitch.tiles.Switches.SwitchBlockTile;
 import com.suicidesquid.syncswitch.tiles.Switches.VanillaSwitchBlockTile;
 
+import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -39,18 +42,22 @@ import net.minecraft.world.level.block.entity.BlockEntityType.BlockEntitySupplie
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 public class Registration {
     private static final int LIGHT_LEVEL = 15;
 
+    public static final DeferredRegister<DataComponentType<?>> COMPONENTS = DeferredRegister.createDataComponents(SynchronousSwitches.MODID);
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.createBlocks(SynchronousSwitches.MODID);
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.createItems(SynchronousSwitches.MODID);
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(BuiltInRegistries.BLOCK_ENTITY_TYPE, SynchronousSwitches.MODID);
 
     
+    
 
     public static void init(IEventBus modEventBus){
+        COMPONENTS.register(modEventBus);
         BLOCKS.register(modEventBus);
         ITEMS.register(modEventBus);
         BLOCK_ENTITIES.register(modEventBus);        
@@ -115,6 +122,8 @@ public class Registration {
     public static final Supplier<Block> LIGHT_PANEL_BLOCK = registerChannelBlock("light_panel",() -> new LightPanelBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).lightLevel(getLightLevel())));
     public static final Supplier<BlockEntityType<LightPanelTile>> LIGHT_PANEL_BLOCK_BE = registerChannelBlockEntity("light_panel", LIGHT_PANEL_BLOCK, LightPanelTile::new);
 
+    // Data Components
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<String>> CHANNEL = COMPONENTS.register("channel", () -> DataComponentType.<String>builder().persistent(Codec.STRING).networkSynchronized(ByteBufCodecs.STRING_UTF8).build());
 
     private static ToIntFunction<BlockState> getLightLevel() {
 	    return (state) -> {

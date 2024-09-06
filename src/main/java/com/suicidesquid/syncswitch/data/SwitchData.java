@@ -1,10 +1,14 @@
 package com.suicidesquid.syncswitch.data;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.annotation.Nonnull;
 
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
@@ -21,18 +25,19 @@ public class SwitchData extends SavedData{
         return switchMap.computeIfAbsent(channel, ch -> new SwitchState(false));
     }
 
-    private static Factory<SwitchData> factory(Level level)
-	{
-		return new Factory<>(() -> new SwitchData(), nbt -> new SwitchData(nbt));
-	}
-
     @Nonnull
     public static SwitchData get(Level level){
         if (level.isClientSide){
             throw new RuntimeException("Don't access this client-side!");
         }
         DimensionDataStorage storage = ((ServerLevel)level).getDataStorage();
-        return storage.computeIfAbsent(factory(level), "switchdata");
+        return storage.computeIfAbsent(
+            new SavedData.Factory<SwitchData>(
+                    () -> new SwitchData(new CompoundTag()),
+                    null
+            ),
+            "switchdata"
+    );
     }
 
     public boolean isActive(String channel){
@@ -70,7 +75,7 @@ public class SwitchData extends SavedData{
     }
 
     @Override
-    public CompoundTag save(CompoundTag tag) {
+    public CompoundTag save(CompoundTag tag, Provider pRegistries) {
         ListTag list = new ListTag();
         switchMap.forEach((channel, switchstate) -> {
             CompoundTag switchTag = new CompoundTag();
@@ -81,6 +86,4 @@ public class SwitchData extends SavedData{
         tag.put("switchdata", list);
         return tag;
     }
-
-    
 }

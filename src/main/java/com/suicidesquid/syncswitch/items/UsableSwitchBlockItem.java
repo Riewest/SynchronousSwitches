@@ -3,7 +3,6 @@ package com.suicidesquid.syncswitch.items;
 import com.suicidesquid.syncswitch.data.SwitchData;
 import com.suicidesquid.syncswitch.setup.LangInit;
 
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -16,10 +15,10 @@ public class UsableSwitchBlockItem extends BaseSwitchBlockItem{
     }
 
     @Override
-    protected void toggleActive(Level level, Player player, CompoundTag tag) {
-        if(!level.isClientSide && tag.contains("channel")){
+    protected void toggleActive(Level level, Player player, String channel) {
+        if(!level.isClientSide){
             SwitchData switchData = SwitchData.get(level);
-            boolean newState = switchData.toggleActive(tag.getString("channel"));
+            boolean newState = switchData.toggleActive(channel);
             player.displayClientMessage(Component.translatable(LangInit.CHANNEL).append(Component.translatable(newState ? LangInit.ON : LangInit.OFF)), true);
         }
     }

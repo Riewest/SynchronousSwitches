@@ -1,9 +1,12 @@
 package com.suicidesquid.syncswitch.datagen;
 
+import java.util.concurrent.CompletableFuture;
+
 import com.suicidesquid.syncswitch.SynchronousSwitches;
 import com.suicidesquid.syncswitch.setup.Registration;
 
 import net.minecraft.advancements.critereon.ItemPredicate;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
@@ -20,8 +23,8 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
 
     private final String recipeLocation;
 
-    public ModRecipeProvider(PackOutput packOutput) {
-        super(packOutput);
+    public ModRecipeProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider) {
+        super(output, lookupProvider);
         recipeLocation = SynchronousSwitches.MODID + ":";
     }
 
@@ -39,7 +42,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Registration.SWITCH_BLOCK.get())
                                     .define('E', Tags.Items.ENDER_PEARLS)
                                     .define('S', Tags.Items.RODS_WOODEN)
-                                    .define('C', Tags.Items.STONE)
+                                    .define('C', Tags.Items.STONES)
                                     .pattern("E")
                                     .pattern("S")
                                     .pattern("C")
@@ -48,7 +51,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                                     .save(consumer);
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Registration.CHANNEL_OUTPUT_BLOCK.get())
                                     .define('E', Tags.Items.ENDER_PEARLS)
-                                    .define('S', Tags.Items.STONE)
+                                    .define('S', Tags.Items.STONES)
                                     .define('R', Tags.Items.DUSTS_REDSTONE)
                                     .pattern("RSR")
                                     .pattern("SES")
@@ -58,7 +61,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                                     .save(consumer);
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Registration.CHANNEL_INPUT_BLOCK.get())
                                     .define('E', Tags.Items.ENDER_PEARLS)
-                                    .define('S', Tags.Items.STONE)
+                                    .define('S', Tags.Items.STONES)
                                     .define('R', Tags.Items.DUSTS_REDSTONE)
                                     .pattern("SRS")
                                     .pattern("RER")
