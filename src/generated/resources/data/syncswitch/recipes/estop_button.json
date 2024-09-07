@@ -8,6 +8,7 @@
     }
   ],
   "result": {
-    "item": "syncswitch:estop_button"
+    "count": 1,
+    "id": "syncswitch:estop_button"
   }
 }

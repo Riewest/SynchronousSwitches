@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "minecraft:sea_lantern"
-            ]
+            "items": "minecraft:sea_lantern"
           }
         ]
       },
@@ -22,14 +20,13 @@
   },
   "requirements": [
     [
-      "has_sea_lantern",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_sea_lantern"
     ]
   ],
   "rewards": {
     "recipes": [
       "syncswitch:light_block"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

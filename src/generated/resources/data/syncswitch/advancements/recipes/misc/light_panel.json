@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "syncswitch:light_block"
-            ]
+            "items": "syncswitch:light_block"
           }
         ]
       },
@@ -22,14 +20,13 @@
   },
   "requirements": [
     [
-      "has_light_block",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_light_block"
     ]
   ],
   "rewards": {
     "recipes": [
       "syncswitch:light_panel"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

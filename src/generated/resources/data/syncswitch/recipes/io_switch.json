@@ -8,6 +8,7 @@
     }
   ],
   "result": {
-    "item": "syncswitch:io_switch"
+    "count": 1,
+    "id": "syncswitch:io_switch"
   }
 }

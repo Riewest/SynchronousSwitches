@@ -8,6 +8,7 @@
     }
   ],
   "result": {
-    "item": "syncswitch:big_button"
+    "count": 1,
+    "id": "syncswitch:big_button"
   }
 }

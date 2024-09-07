@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "syncswitch:switch_block"
-            ]
+            "items": "syncswitch:switch_block"
           }
         ]
       },
@@ -22,14 +20,13 @@
   },
   "requirements": [
     [
-      "has_sync_switch",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_sync_switch"
     ]
   ],
   "rewards": {
     "recipes": [
       "syncswitch:estop_button"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }
