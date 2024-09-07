@@ -85,7 +85,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                                     .pattern("PP")
                                     .group(SynchronousSwitches.MODID)
                                     .unlockedBy("has_light_block", inventoryTrigger(ItemPredicate.Builder.item().of(Registration.LIGHT_BLOCK.get()).build()))
-                                    .save(consumer, new ResourceLocation(recipeLocation + "light_block_1"));
+                                    .save(consumer, ResourceLocation.fromNamespaceAndPath(SynchronousSwitches.MODID, "light_block_1"));
 
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Registration.LIGHT_PANEL_BLOCK.get(), 4)
                                     .requires(Registration.LIGHT_BLOCK.get())
@@ -97,7 +97,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         cycleRecipe(Registration.VANILLA_SWITCH_BLOCK.get(), Registration.IO_SWITCH_BLOCK.get()).save(consumer);
         cycleRecipe(Registration.IO_SWITCH_BLOCK.get(), Registration.ESTOP_BUTTON_BLOCK.get()).save(consumer);
         cycleRecipe(Registration.ESTOP_BUTTON_BLOCK.get(), Registration.BIG_BUTTON_BLOCK.get()).save(consumer);
-        cycleRecipe(Registration.BIG_BUTTON_BLOCK.get(), Registration.SWITCH_BLOCK.get()).save(consumer, new ResourceLocation(recipeLocation + "switch_block_1"));
+        cycleRecipe(Registration.BIG_BUTTON_BLOCK.get(), Registration.SWITCH_BLOCK.get()).save(consumer, ResourceLocation.fromNamespaceAndPath(SynchronousSwitches.MODID, "switch_block_1"));
     }
     
 }
