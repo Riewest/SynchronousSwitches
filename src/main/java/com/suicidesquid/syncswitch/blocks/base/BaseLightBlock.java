@@ -14,6 +14,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -74,8 +75,9 @@ public class BaseLightBlock extends Block implements EntityBlock {
     }
 
 
-    @Override
-    public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+     @Override
+    public InteractionResult useWithoutItem(BlockState state, Level world, BlockPos pos, Player player, BlockHitResult hit) {
+        var hand = InteractionHand.MAIN_HAND;
         if (!world.isClientSide() && hand == InteractionHand.MAIN_HAND){
             BlockEntity tile = world.getBlockEntity(pos);
             if (tile instanceof BaseChannelTile){
@@ -86,7 +88,22 @@ public class BaseLightBlock extends Block implements EntityBlock {
                     return InteractionResult.CONSUME;
             }
         }
-        return super.use(state, world, pos, player, hand, hit);
+        return super.useWithoutItem(state, world, pos, player, hit);
+    }
+
+    @Override
+    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+        if (!level.isClientSide() && hand == InteractionHand.MAIN_HAND){
+            BlockEntity tile = level.getBlockEntity(pos);
+            if (tile instanceof BaseChannelTile){
+                BaseChannelTile switchtile = (BaseChannelTile) tile;
+                ItemStack held = player.getItemInHand(hand);
+                SwitchData switchData = SwitchData.get(level);
+                if(switchtile.processInteraction(held, player, switchData))
+                    return ItemInteractionResult.CONSUME;
+            }
+        }
+        return super.useItemOn(stack, state, level, pos, player, hand, hitResult);
     }
     
     @Override
@@ -108,8 +125,7 @@ public class BaseLightBlock extends Block implements EntityBlock {
     private ItemStack createItem(String channel){
         ItemStack stack = new ItemStack(this, 1);
         if (channel != null){
-            CompoundTag tag = stack.getOrCreateTag();
-            tag.putString("channel", channel);
+            stack.set(Registration.CHANNEL, channel);
         }
         return stack;
     }

@@ -6,6 +6,7 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import com.suicidesquid.syncswitch.data.SwitchData;
+import com.suicidesquid.syncswitch.setup.Registration;
 import com.suicidesquid.syncswitch.tiles.Base.BaseChannelTile;
 
 import net.minecraft.core.BlockPos;
@@ -14,6 +15,7 @@ import net.minecraft.core.Direction.Axis;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -65,14 +67,14 @@ public class BaseButtonBlock extends ButtonBlock{
     private ItemStack createItem(String channel){
         ItemStack stack = new ItemStack(this, 1);
         if (channel != null){
-            CompoundTag tag = stack.getOrCreateTag();
-            tag.putString("channel", channel);
+            stack.set(Registration.CHANNEL, channel);
         }
         return stack;
     }
 
     @Override
-    public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+    public InteractionResult useWithoutItem(BlockState state, Level world, BlockPos pos, Player player, BlockHitResult hit) {
+        var hand = InteractionHand.MAIN_HAND;
         if (!world.isClientSide() && hand == InteractionHand.MAIN_HAND){
             BlockEntity tile = world.getBlockEntity(pos);
             if (tile instanceof BaseChannelTile){
@@ -82,7 +84,7 @@ public class BaseButtonBlock extends ButtonBlock{
                 if(switchtile.processInteraction(held, player, switchData))
                     return InteractionResult.CONSUME;
                 if (!switchtile.hasChannel()){
-                    return super.use(state, world, pos, player, hand, hit);
+                    return super.useWithoutItem(state, world, pos, player, hit);
                 } else {
                     world.setBlockAndUpdate(pos, state.setValue(POWERED, switchData.toggleActive(switchtile.getChannel())));
                     world.updateNeighborsAt(pos.relative(BaseChannelTile.getConnectedDirection(state).getOpposite()), this);
@@ -94,14 +96,34 @@ public class BaseButtonBlock extends ButtonBlock{
         }
         
 
-        return super.use(state, world, pos, player, hand, hit);
+        return super.useWithoutItem(state, world, pos, player, hit);
     }
 
-    // @Override
-    // protected SoundEvent getSound(boolean bool) {
-    //     // TODO Auto-generated method stub
-    //     if boo
-    // }
+    @Override
+    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+        if (!world.isClientSide() && hand == InteractionHand.MAIN_HAND){
+            BlockEntity tile = world.getBlockEntity(pos);
+            if (tile instanceof BaseChannelTile){
+                BaseChannelTile switchtile = (BaseChannelTile) tile;
+                ItemStack held = player.getItemInHand(hand);
+                SwitchData switchData = SwitchData.get(world);
+                if(switchtile.processInteraction(held, player, switchData))
+                    return ItemInteractionResult.CONSUME;
+                if (!switchtile.hasChannel()){
+                    return super.useItemOn(stack, state, world, pos, player, hand, hitResult);
+                } else {
+                    world.setBlockAndUpdate(pos, state.setValue(POWERED, switchData.toggleActive(switchtile.getChannel())));
+                    world.updateNeighborsAt(pos.relative(BaseChannelTile.getConnectedDirection(state).getOpposite()), this);
+                    switchtile.playSound(state, world, pos);
+                }
+            } 
+                
+            return ItemInteractionResult.CONSUME;
+        }
+        
+
+        return super.useItemOn(stack, state, world, pos, player, hand, hitResult);
+    }
 
     public BlockState rotate(BlockState state, Rotation rot) {
 		return state.setValue(BlockStateProperties.FACING, rot.rotate(state.getValue(BlockStateProperties.FACING)));

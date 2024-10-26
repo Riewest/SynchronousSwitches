@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "syncswitch:switch_block"
-            ]
+            "items": "syncswitch:switch_block"
           }
         ]
       },
@@ -15,21 +13,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "syncswitch:switch_block_1"
+        "recipe": "syncswitch:estop_button"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_sync_switch",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_sync_switch"
     ]
   ],
   "rewards": {
     "recipes": [
-      "syncswitch:switch_block_1"
+      "syncswitch:estop_button"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

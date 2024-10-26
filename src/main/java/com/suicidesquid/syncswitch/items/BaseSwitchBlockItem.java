@@ -3,6 +3,7 @@ package com.suicidesquid.syncswitch.items;
 import java.util.List;
 
 import com.suicidesquid.syncswitch.setup.LangInit;
+import com.suicidesquid.syncswitch.setup.Registration;
 import com.suicidesquid.syncswitch.tiles.Base.BaseChannelTile;
 
 import net.minecraft.core.BlockPos;
@@ -13,6 +14,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
@@ -28,11 +30,8 @@ public class BaseSwitchBlockItem extends BlockItem{
     }
 
     public String getChannel(ItemStack stack){
-        if (stack.hasTag()){
-            CompoundTag stackTag = stack.getTag();
-            if(stackTag.contains("channel")){
-                return stackTag.getString("channel");
-            }
+        if (stack.has(Registration.CHANNEL)){
+            return stack.get(Registration.CHANNEL);
         }
         return null;
     }
@@ -52,7 +51,7 @@ public class BaseSwitchBlockItem extends BlockItem{
     }
     
     @Override
-    public void appendHoverText(ItemStack stack, Level level, List<Component> tooltip, TooltipFlag flagIn) {
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag tooltipFlag) {
         String channel = getChannel(stack);
         if (channel != null){
             tooltip.add(Component.translatable(LangInit.CHANNEL).append(channel));
@@ -73,9 +72,8 @@ public class BaseSwitchBlockItem extends BlockItem{
         
         if (player.isCrouching() && be instanceof BaseChannelTile tile){
             if (!tile.isRedacted() || tile.isPlayer(player.getStringUUID())){
-                CompoundTag tag = stack.getOrCreateTag();
                 String channel = tile.getChannel();
-                tag.putString("channel", channel);
+                stack.set(Registration.CHANNEL, channel);
                 player.displayClientMessage(Component.translatable(LangInit.COPIED).append(channel), true);
                 return InteractionResult.CONSUME;
             }
@@ -83,20 +81,21 @@ public class BaseSwitchBlockItem extends BlockItem{
         return InteractionResult.PASS;
     }
 
-    protected void toggleActive(Level level, Player player, CompoundTag tag){}
+    protected void toggleActive(Level level, Player player, String channel){}
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
-        CompoundTag tag = stack.getOrCreateTag();
         if(player.isCrouching()){
-            if (tag.contains("channel"))
-                tag.remove("channel");
+            if (stack.has(Registration.CHANNEL))
+                stack.remove(Registration.CHANNEL);
                 if(level.isClientSide)
                     player.displayClientMessage(Component.translatable(LangInit.REMOVE_CHANNEL), true);
             return new InteractionResultHolder<ItemStack>(InteractionResult.SUCCESS, stack);
         }
-        toggleActive(level, player, tag);
+        if (stack.has(Registration.CHANNEL)){
+            toggleActive(level, player, stack.get(Registration.CHANNEL));
+        }
         return new InteractionResultHolder<ItemStack>(InteractionResult.SUCCESS, stack);
     }
 

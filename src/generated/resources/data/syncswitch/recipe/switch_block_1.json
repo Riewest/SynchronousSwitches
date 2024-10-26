@@ -4,10 +4,11 @@
   "group": "syncswitch",
   "ingredients": [
     {
-      "item": "syncswitch:io_switch"
+      "item": "syncswitch:big_button"
     }
   ],
   "result": {
-    "item": "syncswitch:estop_button"
+    "count": 1,
+    "id": "syncswitch:switch_block"
   }
 }

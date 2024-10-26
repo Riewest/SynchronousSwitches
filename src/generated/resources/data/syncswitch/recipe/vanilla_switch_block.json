@@ -4,11 +4,11 @@
   "group": "syncswitch",
   "ingredients": [
     {
-      "item": "syncswitch:light_block"
+      "item": "syncswitch:switch_block"
     }
   ],
   "result": {
-    "count": 4,
-    "item": "syncswitch:light_panel"
+    "count": 1,
+    "id": "syncswitch:vanilla_switch_block"
   }
 }

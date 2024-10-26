@@ -4,13 +4,13 @@
   "group": "syncswitch",
   "key": {
     "C": {
-      "tag": "forge:stone"
+      "tag": "c:stones"
     },
     "E": {
-      "tag": "forge:ender_pearls"
+      "tag": "c:ender_pearls"
     },
     "S": {
-      "tag": "forge:rods/wooden"
+      "tag": "c:rods/wooden"
     }
   },
   "pattern": [
@@ -19,7 +19,7 @@
     "C"
   ],
   "result": {
-    "item": "syncswitch:switch_block"
-  },
-  "show_notification": true
+    "count": 1,
+    "id": "syncswitch:switch_block"
+  }
 }

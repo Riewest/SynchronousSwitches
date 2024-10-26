@@ -8,6 +8,7 @@ import com.suicidesquid.syncswitch.setup.LangInit;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
@@ -38,17 +39,17 @@ public class BaseChannelTile extends BlockEntity{
     }
     
     @Override
-    protected void saveAdditional(CompoundTag nbt) {
+    protected void saveAdditional(CompoundTag nbt, HolderLookup.Provider registries) {
         nbt.putString("channel", this.channel);
         nbt.putBoolean("redacted", this.redacted);
         nbt.putBoolean("silent", this.silent);
         nbt.putString("player", this.player);
-        super.saveAdditional(nbt);
+        super.saveAdditional(nbt, registries);
     }
 
     @Override
-    public void load(CompoundTag nbt) {
-        super.load(nbt);
+    public void loadAdditional(CompoundTag nbt, HolderLookup.Provider registries) {
+        super.loadAdditional(nbt, registries);
         this.channel = nbt.getString("channel");
         this.redacted = nbt.getBoolean("redacted");
         this.silent = nbt.getBoolean("silent");

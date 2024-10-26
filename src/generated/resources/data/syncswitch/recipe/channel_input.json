@@ -4,13 +4,13 @@
   "group": "syncswitch",
   "key": {
     "E": {
-      "tag": "forge:ender_pearls"
+      "tag": "c:ender_pearls"
     },
     "R": {
-      "tag": "forge:dusts/redstone"
+      "tag": "c:dusts/redstone"
     },
     "S": {
-      "tag": "forge:stone"
+      "tag": "c:stones"
     }
   },
   "pattern": [
@@ -19,7 +19,7 @@
     "SRS"
   ],
   "result": {
-    "item": "syncswitch:channel_input"
-  },
-  "show_notification": true
+    "count": 1,
+    "id": "syncswitch:channel_input"
+  }
 }

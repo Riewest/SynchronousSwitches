@@ -1,13 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_sea_lantern": {
+    "has_ender_pearl": {
       "conditions": {
         "items": [
           {
-            "items": [
-              "minecraft:sea_lantern"
-            ]
+            "items": "minecraft:ender_pearl"
           }
         ]
       },
@@ -15,21 +13,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "syncswitch:light_block"
+        "recipe": "syncswitch:channel_output"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_sea_lantern",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_ender_pearl"
     ]
   ],
   "rewards": {
     "recipes": [
-      "syncswitch:light_block"
+      "syncswitch:channel_output"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }
