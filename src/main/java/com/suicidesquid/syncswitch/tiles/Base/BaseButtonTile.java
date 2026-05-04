@@ -15,6 +15,25 @@ public class BaseButtonTile extends BaseChannelTile{
     private Boolean previousChannelCheck; 
 
     @Override
+    protected boolean shouldSyncOnLoad() {
+        return false;
+    }
+
+    // @Override
+    // public void onLoad() {
+    //     super.onLoad();
+    //     if (this.level == null || this.level.isClientSide()) {
+    //         return;
+    //     }
+
+    //     this.previousChannelCheck = this.hasChannel() ? SwitchData.get(this.level).isActive(this.getChannel()) : null;
+    //     BlockState state = this.getBlockState();
+    //     if (state.hasProperty(LeverBlock.POWERED) && state.getValue(LeverBlock.POWERED)) {
+    //         this.level.setBlockAndUpdate(this.worldPosition, state.setValue(LeverBlock.POWERED, false));
+    //     }
+    // }
+
+    @Override
     protected void tick(Level level, BlockPos pos, BlockState state) {
         SwitchData switchData = SwitchData.get(level);
         if(this.previousChannelCheck == null){
@@ -24,9 +43,11 @@ public class BaseButtonTile extends BaseChannelTile{
         if (!this.previousChannelCheck && channelActive)
         {
             level.setBlockAndUpdate(pos, state.setValue(LeverBlock.POWERED, channelActive));
+            this.notifyAttachedNeighbor(state, level, pos);
             this.playSound(state, level, pos);
         } else if(state.getValue(LeverBlock.POWERED)){
             level.setBlockAndUpdate(pos, state.setValue(LeverBlock.POWERED, false));
+            this.notifyAttachedNeighbor(state, level, pos);
             this.playSound(state, level, pos);
         }
        this.previousChannelCheck = channelActive;

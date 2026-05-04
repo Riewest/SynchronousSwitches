@@ -33,8 +33,8 @@ public class SwitchData extends SavedData{
         DimensionDataStorage storage = ((ServerLevel)level).getDataStorage();
         return storage.computeIfAbsent(
             new SavedData.Factory<SwitchData>(
-                    () -> new SwitchData(new CompoundTag()),
-                    null
+                    SwitchData::new,
+                    (tag, registries) -> new SwitchData(tag)
             ),
             "switchdata"
     );

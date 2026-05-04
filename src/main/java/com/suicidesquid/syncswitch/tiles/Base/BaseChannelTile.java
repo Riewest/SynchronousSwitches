@@ -56,6 +56,29 @@ public class BaseChannelTile extends BlockEntity{
         this.player = nbt.getString("player");
     }
 
+    @Override
+    public void onLoad() {
+        super.onLoad();
+        if (!this.shouldSyncOnLoad() || this.level == null || this.level.isClientSide() || !this.hasChannel()) {
+            return;
+        }
+
+        BlockState state = this.getBlockState();
+        if (!state.hasProperty(LeverBlock.POWERED)) {
+            return;
+        }
+
+        boolean channelActive = SwitchData.get(this.level).isActive(this.getChannel());
+        if (state.getValue(LeverBlock.POWERED) != channelActive) {
+            this.level.setBlockAndUpdate(this.worldPosition, state.setValue(LeverBlock.POWERED, channelActive));
+            this.notifyAttachedNeighbor(state, this.level, this.worldPosition);
+        }
+    }
+
+    protected boolean shouldSyncOnLoad() {
+        return true;
+    }
+
     public void setPlayer(String uuid){
         this.player = uuid;
     }
@@ -118,6 +141,12 @@ public class BaseChannelTile extends BlockEntity{
         }
     }
 
+    protected void notifyAttachedNeighbor(BlockState state, Level level, BlockPos pos) {
+        if (state.hasProperty(LeverBlock.FACE) && state.hasProperty(LeverBlock.FACING)) {
+            level.updateNeighborsAt(pos.relative(getConnectedDirection(state).getOpposite()), state.getBlock());
+        }
+    }
+
     public boolean processInteraction(ItemStack held, Player player, SwitchData switchData){
         if (held.isEmpty() && !player.isShiftKeyDown())
             return false;
@@ -177,6 +206,7 @@ public class BaseChannelTile extends BlockEntity{
         boolean channelActive = switchData.isActive(this.getChannel());
         if (channelActive != state.getValue(LeverBlock.POWERED)){
             level.setBlockAndUpdate(pos, state.setValue(LeverBlock.POWERED, channelActive));
+            this.notifyAttachedNeighbor(state, level, pos);
             this.playSound(state, level, pos);
         }
     }
