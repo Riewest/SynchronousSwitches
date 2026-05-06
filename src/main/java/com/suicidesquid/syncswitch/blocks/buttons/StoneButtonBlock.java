@@ -1,6 +1,6 @@
 package com.suicidesquid.syncswitch.blocks.buttons;
 
-import javax.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import com.suicidesquid.syncswitch.blocks.base.BaseButtonBlock;
 import com.suicidesquid.syncswitch.setup.ModRegistration;

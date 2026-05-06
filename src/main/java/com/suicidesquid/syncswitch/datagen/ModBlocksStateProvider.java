@@ -17,7 +17,7 @@ import net.minecraft.client.renderer.block.model.VariantMutator;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.properties.AttachFace;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -28,12 +28,12 @@ public class ModBlocksStateProvider extends ModelProvider {
         super(packOutput, SynchronousSwitches.MODID);
     }
 
-    private static ResourceLocation modBlock(String name) {
-        return ResourceLocation.fromNamespaceAndPath(SynchronousSwitches.MODID, "block/" + name);
+    private static Identifier modBlock(String name) {
+        return Identifier.fromNamespaceAndPath(SynchronousSwitches.MODID, "block/" + name);
     }
 
-    private static ResourceLocation mcBlock(String name) {
-        return ResourceLocation.withDefaultNamespace("block/" + name);
+    private static Identifier mcBlock(String name) {
+        return Identifier.withDefaultNamespace("block/" + name);
     }
 
     private static Quadrant degToQuadrant(int deg) {
@@ -55,7 +55,7 @@ public class ModBlocksStateProvider extends ModelProvider {
     }
 
     private static void leverBlock(BlockModelGenerators blockModels, Block block,
-            ResourceLocation offModel, ResourceLocation onModel) {
+            Identifier offModel, Identifier onModel) {
         blockModels.blockStateOutput.accept(
             MultiVariantGenerator.dispatch(block)
                 .with(PropertyDispatch.initial(BlockStateProperties.POWERED)
@@ -72,7 +72,7 @@ public class ModBlocksStateProvider extends ModelProvider {
     }
 
     private static void lightBlock(BlockModelGenerators blockModels, BaseDirectionalLightBlock block,
-            ResourceLocation offModel, ResourceLocation onModel) {
+            Identifier offModel, Identifier onModel) {
         blockModels.blockStateOutput.accept(
             MultiVariantGenerator.dispatch(block)
                 .with(PropertyDispatch.initial(BaseLightBlock.LIT)
@@ -111,7 +111,7 @@ public class ModBlocksStateProvider extends ModelProvider {
         lightBlock(blockModels, (BaseDirectionalLightBlock) ModRegistration.LIGHT_PANEL_BLOCK.get(),
                 modBlock("light_panel"), modBlock("light_panel_on"));
 
-        blockModels.registerSimpleItemModel(ModRegistration.VANILLA_SWITCH_BLOCK.get(), ResourceLocation.withDefaultNamespace("item/lever"));
-        blockModels.registerSimpleItemModel(ModRegistration.STONE_BUTTON_BLOCK.get(), ResourceLocation.withDefaultNamespace("block/stone_button_inventory"));
+        blockModels.registerSimpleItemModel(ModRegistration.VANILLA_SWITCH_BLOCK.get(), Identifier.withDefaultNamespace("item/lever"));
+        blockModels.registerSimpleItemModel(ModRegistration.STONE_BUTTON_BLOCK.get(), Identifier.withDefaultNamespace("block/stone_button_inventory"));
     }
 }

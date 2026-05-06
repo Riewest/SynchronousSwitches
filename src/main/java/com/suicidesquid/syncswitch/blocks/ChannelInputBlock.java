@@ -1,6 +1,6 @@
 package com.suicidesquid.syncswitch.blocks;
 
-import javax.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import com.suicidesquid.syncswitch.blocks.base.BaseChannelBlock;
 import com.suicidesquid.syncswitch.data.SwitchData;

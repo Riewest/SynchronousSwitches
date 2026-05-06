@@ -3,7 +3,7 @@ package com.suicidesquid.syncswitch.blocks.base;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import com.suicidesquid.syncswitch.data.SwitchData;
 import com.suicidesquid.syncswitch.setup.ModRegistration;
