@@ -5,10 +5,7 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.registries.DeferredHolder;
-
-import org.jetbrains.annotations.Nullable;
 
 import com.suicidesquid.syncswitch.SynchronousSwitches;
 import com.suicidesquid.syncswitch.setup.Registration;
@@ -17,8 +14,8 @@ import java.util.concurrent.CompletableFuture;
 
 public class ModBlockTags extends BlockTagsProvider {
 
-    public ModBlockTags(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, @Nullable ExistingFileHelper existingFileHelper) {
-        super(output, lookupProvider, SynchronousSwitches.MODID, existingFileHelper);
+    public ModBlockTags(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider) {
+        super(output, lookupProvider, SynchronousSwitches.MODID);
     }
 
     @Override

@@ -32,6 +32,7 @@ import com.suicidesquid.syncswitch.tiles.Switches.VanillaSwitchBlockTile;
 
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -51,7 +52,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 public class Registration {
     private static final int LIGHT_LEVEL = 15;
 
-    public static final DeferredRegister<DataComponentType<?>> COMPONENTS = DeferredRegister.createDataComponents(SynchronousSwitches.MODID);
+    public static final DeferredRegister<DataComponentType<?>> COMPONENTS = DeferredRegister.createDataComponents(Registries.DATA_COMPONENT_TYPE, SynchronousSwitches.MODID);
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(SynchronousSwitches.MODID);
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(SynchronousSwitches.MODID);
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(BuiltInRegistries.BLOCK_ENTITY_TYPE, SynchronousSwitches.MODID);

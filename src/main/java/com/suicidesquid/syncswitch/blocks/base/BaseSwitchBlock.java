@@ -79,7 +79,7 @@ public class BaseSwitchBlock extends LeverBlock{
     }
 
     @Override
-    public ItemStack getCloneItemStack(LevelReader pLevel, BlockPos pPos, BlockState pState) {
+    public ItemStack getCloneItemStack(LevelReader pLevel, BlockPos pPos, BlockState pState, boolean includeData, Player pPlayer) {
         BaseChannelTile tile = (BaseChannelTile) pLevel.getBlockEntity(pPos);
         return createItem(tile.getChannel());
     }

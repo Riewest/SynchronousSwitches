@@ -22,9 +22,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.ItemLike;
 import net.neoforged.neoforge.common.Tags;
-import net.neoforged.neoforge.common.conditions.IConditionBuilder;
-
-public class ModRecipeProvider extends RecipeProvider implements IConditionBuilder {
+public class ModRecipeProvider extends RecipeProvider {
 
     public ModRecipeProvider(HolderLookup.Provider registries, RecipeOutput output) {
         super(registries, output);

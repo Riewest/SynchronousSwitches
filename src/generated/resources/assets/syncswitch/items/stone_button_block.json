@@ -1,0 +1,6 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "syncswitch:block/stone_button_block"
+  }
+}
