@@ -8,8 +8,8 @@ import com.suicidesquid.syncswitch.setup.LangInit;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -39,21 +39,21 @@ public class BaseChannelTile extends BlockEntity{
     }
     
     @Override
-    protected void saveAdditional(CompoundTag nbt, HolderLookup.Provider registries) {
-        nbt.putString("channel", this.channel);
-        nbt.putBoolean("redacted", this.redacted);
-        nbt.putBoolean("silent", this.silent);
-        nbt.putString("player", this.player);
-        super.saveAdditional(nbt, registries);
+    protected void saveAdditional(ValueOutput output) {
+        output.putString("channel", this.channel);
+        output.putBoolean("redacted", this.redacted);
+        output.putBoolean("silent", this.silent);
+        output.putString("player", this.player);
+        super.saveAdditional(output);
     }
 
     @Override
-    public void loadAdditional(CompoundTag nbt, HolderLookup.Provider registries) {
-        super.loadAdditional(nbt, registries);
-        this.channel = nbt.getStringOr("channel", NONE_CHANNEL);
-        this.redacted = nbt.getBooleanOr("redacted", false);
-        this.silent = nbt.getBooleanOr("silent", false);
-        this.player = nbt.getStringOr("player", "");
+    public void loadAdditional(ValueInput input) {
+        super.loadAdditional(input);
+        this.channel = input.getStringOr("channel", NONE_CHANNEL);
+        this.redacted = input.getBooleanOr("redacted", false);
+        this.silent = input.getBooleanOr("silent", false);
+        this.player = input.getStringOr("player", "");
     }
 
     @Override
