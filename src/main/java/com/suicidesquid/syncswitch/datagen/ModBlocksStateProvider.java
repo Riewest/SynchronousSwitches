@@ -5,13 +5,15 @@ import com.suicidesquid.syncswitch.blocks.base.BaseDirectionalLightBlock;
 import com.suicidesquid.syncswitch.blocks.base.BaseLightBlock;
 import com.suicidesquid.syncswitch.setup.Registration;
 
+import com.mojang.math.Quadrant;
+
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.ModelProvider;
+import net.minecraft.client.data.models.MultiVariant;
 import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
 import net.minecraft.client.data.models.blockstates.PropertyDispatch;
-import net.minecraft.client.data.models.blockstates.Variant;
-import net.minecraft.client.data.models.blockstates.VariantProperties;
+import net.minecraft.client.renderer.block.model.VariantMutator;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
@@ -34,32 +36,36 @@ public class ModBlocksStateProvider extends ModelProvider {
         return ResourceLocation.withDefaultNamespace("block/" + name);
     }
 
-    private static VariantProperties.Rotation degToRotation(int deg) {
+    private static Quadrant degToQuadrant(int deg) {
         int normalized = ((deg % 360) + 360) % 360;
         return switch (normalized) {
-            case 0   -> VariantProperties.Rotation.R0;
-            case 90  -> VariantProperties.Rotation.R90;
-            case 180 -> VariantProperties.Rotation.R180;
-            case 270 -> VariantProperties.Rotation.R270;
+            case 0   -> Quadrant.R0;
+            case 90  -> Quadrant.R90;
+            case 180 -> Quadrant.R180;
+            case 270 -> Quadrant.R270;
             default  -> throw new IllegalArgumentException("Invalid rotation: " + deg);
         };
+    }
+
+    private static VariantMutator rotationMutator(int xDeg, int yDeg) {
+        VariantMutator mutator = BlockModelGenerators.NOP;
+        if (xDeg != 0) mutator = mutator.then(VariantMutator.X_ROT.withValue(degToQuadrant(xDeg)));
+        if (yDeg != 0) mutator = mutator.then(VariantMutator.Y_ROT.withValue(degToQuadrant(yDeg)));
+        return mutator;
     }
 
     private static void leverBlock(BlockModelGenerators blockModels, Block block,
             ResourceLocation offModel, ResourceLocation onModel) {
         blockModels.blockStateOutput.accept(
-            MultiVariantGenerator.multiVariant(block)
-                .with(PropertyDispatch.property(BlockStateProperties.POWERED)
-                    .select(false, Variant.variant().with(VariantProperties.MODEL, offModel))
-                    .select(true,  Variant.variant().with(VariantProperties.MODEL, onModel)))
-                .with(PropertyDispatch.properties(BlockStateProperties.ATTACH_FACE, BlockStateProperties.HORIZONTAL_FACING)
+            MultiVariantGenerator.dispatch(block)
+                .with(PropertyDispatch.initial(BlockStateProperties.POWERED)
+                    .select(false, BlockModelGenerators.plainVariant(offModel))
+                    .select(true,  BlockModelGenerators.plainVariant(onModel)))
+                .with(PropertyDispatch.modify(BlockStateProperties.ATTACH_FACE, BlockStateProperties.HORIZONTAL_FACING)
                     .generate((face, facing) -> {
                         int xDeg = face == AttachFace.FLOOR ? 0 : (face == AttachFace.WALL ? 90 : 180);
                         int yDeg = (int) (face == AttachFace.CEILING ? facing : facing.getOpposite()).toYRot();
-                        Variant v = Variant.variant();
-                        if (xDeg != 0) v = v.with(VariantProperties.X_ROT, degToRotation(xDeg));
-                        if (yDeg != 0) v = v.with(VariantProperties.Y_ROT, degToRotation(yDeg));
-                        return v;
+                        return rotationMutator(xDeg, yDeg);
                     }))
         );
     }
@@ -67,18 +73,15 @@ public class ModBlocksStateProvider extends ModelProvider {
     private static void lightBlock(BlockModelGenerators blockModels, BaseDirectionalLightBlock block,
             ResourceLocation offModel, ResourceLocation onModel) {
         blockModels.blockStateOutput.accept(
-            MultiVariantGenerator.multiVariant(block)
-                .with(PropertyDispatch.property(BaseLightBlock.LIT)
-                    .select(false, Variant.variant().with(VariantProperties.MODEL, offModel))
-                    .select(true,  Variant.variant().with(VariantProperties.MODEL, onModel)))
-                .with(PropertyDispatch.properties(BlockStateProperties.ATTACH_FACE, BlockStateProperties.HORIZONTAL_FACING)
+            MultiVariantGenerator.dispatch(block)
+                .with(PropertyDispatch.initial(BaseLightBlock.LIT)
+                    .select(false, BlockModelGenerators.plainVariant(offModel))
+                    .select(true,  BlockModelGenerators.plainVariant(onModel)))
+                .with(PropertyDispatch.modify(BlockStateProperties.ATTACH_FACE, BlockStateProperties.HORIZONTAL_FACING)
                     .generate((face, facing) -> {
                         int xDeg = face == AttachFace.FLOOR ? 0 : (face == AttachFace.WALL ? 90 : 180);
                         int yDeg = (int) (face == AttachFace.CEILING ? facing : facing.getOpposite()).toYRot();
-                        Variant v = Variant.variant();
-                        if (xDeg != 0) v = v.with(VariantProperties.X_ROT, degToRotation(xDeg));
-                        if (yDeg != 0) v = v.with(VariantProperties.Y_ROT, degToRotation(yDeg));
-                        return v;
+                        return rotationMutator(xDeg, yDeg);
                     }))
         );
     }

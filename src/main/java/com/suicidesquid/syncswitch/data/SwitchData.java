@@ -1,51 +1,57 @@
 package com.suicidesquid.syncswitch.data;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 import javax.annotation.Nonnull;
 
-import net.minecraft.core.HolderLookup;
-import net.minecraft.core.HolderLookup.Provider;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.Tag;
-import net.minecraft.server.MinecraftServer;
+import com.mojang.serialization.Codec;
+
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.saveddata.SavedData;
+import net.minecraft.world.level.saveddata.SavedDataType;
 import net.minecraft.world.level.storage.DimensionDataStorage;
 
-public class SwitchData extends SavedData{
+public class SwitchData extends SavedData {
+    public static final SavedDataType<SwitchData> TYPE = new SavedDataType<>(
+        "switchdata",
+        SwitchData::new,
+        Codec.unboundedMap(Codec.STRING, Codec.BOOL).xmap(
+            map -> {
+                SwitchData data = new SwitchData();
+                map.forEach((channel, active) -> data.switchMap.put(channel, new SwitchState(active)));
+                return data;
+            },
+            data -> {
+                Map<String, Boolean> map = new HashMap<>();
+                data.switchMap.forEach((channel, state) -> map.put(channel, state.isActive()));
+                return map;
+            }
+        )
+    );
+
     private final Map<String, SwitchState> switchMap = new HashMap<>();
 
-    private SwitchState getSwitchState(String channel){
+    private SwitchState getSwitchState(String channel) {
         return switchMap.computeIfAbsent(channel, ch -> new SwitchState(false));
     }
 
     @Nonnull
-    public static SwitchData get(Level level){
-        if (level.isClientSide){
+    public static SwitchData get(Level level) {
+        if (level.isClientSide) {
             throw new RuntimeException("Don't access this client-side!");
         }
-        DimensionDataStorage storage = ((ServerLevel)level).getDataStorage();
-        return storage.computeIfAbsent(
-            new SavedData.Factory<SwitchData>(
-                    SwitchData::new,
-                    (tag, registries) -> new SwitchData(tag)
-            ),
-            "switchdata"
-    );
+        DimensionDataStorage storage = ((ServerLevel) level).getDataStorage();
+        return storage.computeIfAbsent(TYPE);
     }
 
-    public boolean isActive(String channel){
+    public boolean isActive(String channel) {
         SwitchState switchState = getSwitchState(channel);
         return switchState.isActive();
     }
 
-    public boolean toggleActive(String channel){
+    public boolean toggleActive(String channel) {
         SwitchState switchState = getSwitchState(channel);
         switchState.toggleActive();
         switchMap.put(channel, switchState);
@@ -53,7 +59,7 @@ public class SwitchData extends SavedData{
         return switchState.isActive();
     }
 
-    public boolean setActive(String channel, boolean active){
+    public boolean setActive(String channel, boolean active) {
         SwitchState switchState = getSwitchState(channel);
         switchState.setActive(active);
         switchMap.put(channel, switchState);
@@ -61,29 +67,5 @@ public class SwitchData extends SavedData{
         return switchState.isActive();
     }
 
-
-
-    public SwitchData(){}
-
-    public SwitchData(CompoundTag tag){
-        ListTag list = tag.getList("switchdata", Tag.TAG_COMPOUND);
-        for (Tag t : list){
-            CompoundTag switchTag = (CompoundTag) t;
-            SwitchState switchState = new SwitchState(switchTag.getBoolean("active"));
-            switchMap.put(switchTag.getString("channel"), switchState);
-        }
-    }
-
-    @Override
-    public CompoundTag save(CompoundTag tag, Provider pRegistries) {
-        ListTag list = new ListTag();
-        switchMap.forEach((channel, switchstate) -> {
-            CompoundTag switchTag = new CompoundTag();
-            switchTag.putBoolean("active", switchstate.isActive());
-            switchTag.putString("channel", channel);
-            list.add(switchTag);
-        });
-        tag.put("switchdata", list);
-        return tag;
-    }
+    public SwitchData() {}
 }

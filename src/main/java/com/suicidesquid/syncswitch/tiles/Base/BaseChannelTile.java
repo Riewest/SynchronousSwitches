@@ -50,10 +50,10 @@ public class BaseChannelTile extends BlockEntity{
     @Override
     public void loadAdditional(CompoundTag nbt, HolderLookup.Provider registries) {
         super.loadAdditional(nbt, registries);
-        this.channel = nbt.getString("channel");
-        this.redacted = nbt.getBoolean("redacted");
-        this.silent = nbt.getBoolean("silent");
-        this.player = nbt.getString("player");
+        this.channel = nbt.getStringOr("channel", NONE_CHANNEL);
+        this.redacted = nbt.getBooleanOr("redacted", false);
+        this.silent = nbt.getBooleanOr("silent", false);
+        this.player = nbt.getStringOr("player", "");
     }
 
     @Override
