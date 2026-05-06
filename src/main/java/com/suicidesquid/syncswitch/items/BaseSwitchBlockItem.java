@@ -3,7 +3,7 @@ package com.suicidesquid.syncswitch.items;
 import java.util.function.Consumer;
 
 import com.suicidesquid.syncswitch.setup.LangInit;
-import com.suicidesquid.syncswitch.setup.Registration;
+import com.suicidesquid.syncswitch.setup.ModRegistration;
 import com.suicidesquid.syncswitch.tiles.Base.BaseChannelTile;
 
 import net.minecraft.core.BlockPos;
@@ -29,8 +29,8 @@ public class BaseSwitchBlockItem extends BlockItem{
     }
 
     public String getChannel(ItemStack stack){
-        if (stack.has(Registration.CHANNEL)){
-            return stack.get(Registration.CHANNEL);
+        if (stack.has(ModRegistration.CHANNEL)){
+            return stack.get(ModRegistration.CHANNEL);
         }
         return null;
     }
@@ -72,7 +72,7 @@ public class BaseSwitchBlockItem extends BlockItem{
         if (player.isCrouching() && be instanceof BaseChannelTile tile){
             if (!tile.isRedacted() || tile.isPlayer(player.getStringUUID())){
                 String channel = tile.getChannel();
-                stack.set(Registration.CHANNEL, channel);
+                stack.set(ModRegistration.CHANNEL, channel);
                 player.displayClientMessage(Component.translatable(LangInit.COPIED).append(channel), true);
                 return InteractionResult.CONSUME;
             }
@@ -86,14 +86,14 @@ public class BaseSwitchBlockItem extends BlockItem{
     public InteractionResult use(Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
         if(player.isCrouching()){
-            if (stack.has(Registration.CHANNEL))
-                stack.remove(Registration.CHANNEL);
-                if(level.isClientSide)
+            if (stack.has(ModRegistration.CHANNEL))
+                stack.remove(ModRegistration.CHANNEL);
+                if(level.isClientSide())
                     player.displayClientMessage(Component.translatable(LangInit.REMOVE_CHANNEL), true);
             return InteractionResult.SUCCESS;
         }
-        if (stack.has(Registration.CHANNEL)){
-            toggleActive(level, player, stack.get(Registration.CHANNEL));
+        if (stack.has(ModRegistration.CHANNEL)){
+            toggleActive(level, player, stack.get(ModRegistration.CHANNEL));
         }
         return InteractionResult.SUCCESS;
     }

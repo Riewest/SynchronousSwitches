@@ -39,7 +39,7 @@ public class SwitchData extends SavedData {
 
     @Nonnull
     public static SwitchData get(Level level) {
-        if (level.isClientSide) {
+        if (level.isClientSide()) {
             throw new RuntimeException("Don't access this client-side!");
         }
         DimensionDataStorage storage = ((ServerLevel) level).getDataStorage();

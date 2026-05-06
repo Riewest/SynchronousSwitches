@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "syncswitch:block/vanilla_switch_block"
+    "model": "minecraft:item/lever"
   }
 }

@@ -3,7 +3,7 @@ package com.suicidesquid.syncswitch.datagen;
 import com.suicidesquid.syncswitch.SynchronousSwitches;
 import com.suicidesquid.syncswitch.blocks.base.BaseDirectionalLightBlock;
 import com.suicidesquid.syncswitch.blocks.base.BaseLightBlock;
-import com.suicidesquid.syncswitch.setup.Registration;
+import com.suicidesquid.syncswitch.setup.ModRegistration;
 
 import com.mojang.math.Quadrant;
 
@@ -67,6 +67,7 @@ public class ModBlocksStateProvider extends ModelProvider {
                         int yDeg = (int) (face == AttachFace.CEILING ? facing : facing.getOpposite()).toYRot();
                         return rotationMutator(xDeg, yDeg);
                     }))
+                    
         );
     }
 
@@ -89,25 +90,28 @@ public class ModBlocksStateProvider extends ModelProvider {
     @Override
     protected java.util.stream.Stream<? extends Holder<Block>> getKnownBlocks() {
         return java.util.stream.Stream.of(
-            Registration.SWITCH_BLOCK.get(),
-            Registration.BIG_BUTTON_BLOCK.get(),
-            Registration.ESTOP_BUTTON_BLOCK.get(),
-            Registration.IO_SWITCH_BLOCK.get(),
-            Registration.VANILLA_SWITCH_BLOCK.get(),
-            Registration.STONE_BUTTON_BLOCK.get(),
-            Registration.LIGHT_PANEL_BLOCK.get()
+            ModRegistration.SWITCH_BLOCK.get(),
+            ModRegistration.BIG_BUTTON_BLOCK.get(),
+            ModRegistration.ESTOP_BUTTON_BLOCK.get(),
+            ModRegistration.IO_SWITCH_BLOCK.get(),
+            ModRegistration.VANILLA_SWITCH_BLOCK.get(),
+            ModRegistration.STONE_BUTTON_BLOCK.get(),
+            ModRegistration.LIGHT_PANEL_BLOCK.get()
         ).map(BuiltInRegistries.BLOCK::wrapAsHolder);
     }
 
     @Override
     protected void registerModels(BlockModelGenerators blockModels, ItemModelGenerators itemModels) {
-        leverBlock(blockModels, Registration.SWITCH_BLOCK.get(),       modBlock("switch_block"),   modBlock("switch_block_on"));
-        leverBlock(blockModels, Registration.BIG_BUTTON_BLOCK.get(),   modBlock("big_button"),     modBlock("big_button_on"));
-        leverBlock(blockModels, Registration.ESTOP_BUTTON_BLOCK.get(), modBlock("estop_button"),   modBlock("estop_button_on"));
-        leverBlock(blockModels, Registration.IO_SWITCH_BLOCK.get(),    modBlock("io_switch"),      modBlock("io_switch_on"));
-        leverBlock(blockModels, Registration.VANILLA_SWITCH_BLOCK.get(), mcBlock("lever"),         mcBlock("lever_on"));
-        leverBlock(blockModels, Registration.STONE_BUTTON_BLOCK.get(), mcBlock("stone_button"),    mcBlock("stone_button_pressed"));
-        lightBlock(blockModels, (BaseDirectionalLightBlock) Registration.LIGHT_PANEL_BLOCK.get(),
+        leverBlock(blockModels, ModRegistration.SWITCH_BLOCK.get(),       modBlock("switch_block"),   modBlock("switch_block_on"));
+        leverBlock(blockModels, ModRegistration.BIG_BUTTON_BLOCK.get(),   modBlock("big_button"),     modBlock("big_button_on"));
+        leverBlock(blockModels, ModRegistration.ESTOP_BUTTON_BLOCK.get(), modBlock("estop_button"),   modBlock("estop_button_on"));
+        leverBlock(blockModels, ModRegistration.IO_SWITCH_BLOCK.get(),    modBlock("io_switch"),      modBlock("io_switch_on"));
+        leverBlock(blockModels, ModRegistration.VANILLA_SWITCH_BLOCK.get(), mcBlock("lever"),         mcBlock("lever_on"));
+        leverBlock(blockModels, ModRegistration.STONE_BUTTON_BLOCK.get(), mcBlock("stone_button"),    mcBlock("stone_button_pressed"));
+        lightBlock(blockModels, (BaseDirectionalLightBlock) ModRegistration.LIGHT_PANEL_BLOCK.get(),
                 modBlock("light_panel"), modBlock("light_panel_on"));
+
+        blockModels.registerSimpleItemModel(ModRegistration.VANILLA_SWITCH_BLOCK.get(), ResourceLocation.withDefaultNamespace("item/lever"));
+        blockModels.registerSimpleItemModel(ModRegistration.STONE_BUTTON_BLOCK.get(), ResourceLocation.withDefaultNamespace("block/stone_button_inventory"));
     }
 }

@@ -7,7 +7,7 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import com.suicidesquid.syncswitch.data.SwitchData;
-import com.suicidesquid.syncswitch.setup.Registration;
+import com.suicidesquid.syncswitch.setup.ModRegistration;
 import com.suicidesquid.syncswitch.tiles.Base.BaseChannelTile;
 
 import net.minecraft.core.BlockPos;
@@ -87,7 +87,7 @@ public class BaseSwitchBlock extends LeverBlock{
     private ItemStack createItem(String channel){
         ItemStack stack = new ItemStack(this, 1);
         if (channel != null){
-            stack.set(Registration.CHANNEL, channel);
+            stack.set(ModRegistration.CHANNEL, channel);
         }
         return stack;
     }

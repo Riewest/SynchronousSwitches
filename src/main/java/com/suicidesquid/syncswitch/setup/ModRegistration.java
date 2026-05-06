@@ -49,7 +49,7 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
-public class Registration {
+public class ModRegistration {
     private static final int LIGHT_LEVEL = 15;
 
     public static final DeferredRegister<DataComponentType<?>> COMPONENTS = DeferredRegister.createDataComponents(Registries.DATA_COMPONENT_TYPE, SynchronousSwitches.MODID);
@@ -97,23 +97,23 @@ public class Registration {
     public static final Supplier<BlockEntityType<ChannelInputTile>> CHANNEL_INPUT_BLOCK_BE = registerChannelBlockEntity("channel_input", CHANNEL_INPUT_BLOCK, ChannelInputTile::new);
     
     // Switches
-    public static final Supplier<Block> SWITCH_BLOCK = registerChannelBlock("switch_block", SwitchBlock::new, BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noCollission().noCollission());
+    public static final Supplier<Block> SWITCH_BLOCK = registerChannelBlock("switch_block", SwitchBlock::new, BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noCollision().noCollision());
     public static final Supplier<BlockEntityType<SwitchBlockTile>> SWITCH_BLOCK_BE = registerChannelBlockEntity("switch_block", SWITCH_BLOCK, SwitchBlockTile::new);
 
-    public static final Supplier<Block> BIG_BUTTON_BLOCK = registerChannelBlock("big_button", BigButtonBlock::new, BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noCollission().noCollission());
+    public static final Supplier<Block> BIG_BUTTON_BLOCK = registerChannelBlock("big_button", BigButtonBlock::new, BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noCollision().noCollision());
     public static final Supplier<BlockEntityType<BigButtonTile>> BIG_BUTTON_BLOCK_BE = registerChannelBlockEntity("big_button", BIG_BUTTON_BLOCK, BigButtonTile::new);
 
-    public static final Supplier<Block> ESTOP_BUTTON_BLOCK = registerChannelBlock("estop_button", EStopButtonBlock::new, BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noCollission().noCollission());
+    public static final Supplier<Block> ESTOP_BUTTON_BLOCK = registerChannelBlock("estop_button", EStopButtonBlock::new, BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noCollision().noCollision());
     public static final Supplier<BlockEntityType<EStopButtonTile>> ESTOP_BUTTON_BLOCK_BE = registerChannelBlockEntity("estop_button", ESTOP_BUTTON_BLOCK, EStopButtonTile::new);
 
-    public static final Supplier<Block> IO_SWITCH_BLOCK = registerChannelBlock("io_switch", IOSwitchBlock::new, BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noCollission().noCollission());
+    public static final Supplier<Block> IO_SWITCH_BLOCK = registerChannelBlock("io_switch", IOSwitchBlock::new, BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noCollision().noCollision());
     public static final Supplier<BlockEntityType<IOSwitchTile>> IO_SWITCH_BLOCK_BE = registerChannelBlockEntity("io_switch", IO_SWITCH_BLOCK, IOSwitchTile::new);
 
-    public static final Supplier<Block> VANILLA_SWITCH_BLOCK = registerChannelBlock("vanilla_switch_block", VanillaSwitchBlock::new, BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noCollission().noCollission());
+    public static final Supplier<Block> VANILLA_SWITCH_BLOCK = registerChannelBlock("vanilla_switch_block", VanillaSwitchBlock::new, BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noCollision().noCollision());
     public static final Supplier<BlockEntityType<VanillaSwitchBlockTile>> VANILLA_SWITCH_BLOCK_BE = registerChannelBlockEntity("vanilla_switch_block", VANILLA_SWITCH_BLOCK, VanillaSwitchBlockTile::new);
 
     // Buttons
-    public static final Supplier<Block> STONE_BUTTON_BLOCK = registerChannelBlock("stone_button_block", props -> new StoneButtonBlock(true, props), BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noCollission().noCollission());
+    public static final Supplier<Block> STONE_BUTTON_BLOCK = registerChannelBlock("stone_button_block", props -> new StoneButtonBlock(true, props), BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noCollision().noCollision());
     public static final Supplier<BlockEntityType<StoneButtonTile>> STONE_BUTTON_BLOCK_BE = registerChannelBlockEntity("stone_button_block", STONE_BUTTON_BLOCK, StoneButtonTile::new);
 
     // Lights

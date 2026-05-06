@@ -8,7 +8,7 @@ import net.neoforged.neoforge.common.data.BlockTagsProvider;
 import net.neoforged.neoforge.registries.DeferredHolder;
 
 import com.suicidesquid.syncswitch.SynchronousSwitches;
-import com.suicidesquid.syncswitch.setup.Registration;
+import com.suicidesquid.syncswitch.setup.ModRegistration;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -20,7 +20,7 @@ public class ModBlockTags extends BlockTagsProvider {
 
     @Override
     protected void addTags(HolderLookup.Provider provider) {
-        for (DeferredHolder<Block, ? extends Block> regBlock : Registration.BLOCKS.getEntries()) {
+        for (DeferredHolder<Block, ? extends Block> regBlock : ModRegistration.BLOCKS.getEntries()) {
             tag(BlockTags.MINEABLE_WITH_PICKAXE)
                 .add(regBlock.get());
             tag(BlockTags.MINEABLE_WITH_AXE)
