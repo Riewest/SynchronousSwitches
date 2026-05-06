@@ -3,9 +3,7 @@
   "category": "misc",
   "group": "syncswitch",
   "ingredients": [
-    {
-      "item": "syncswitch:io_switch"
-    }
+    "syncswitch:io_switch"
   ],
   "result": {
     "count": 1,

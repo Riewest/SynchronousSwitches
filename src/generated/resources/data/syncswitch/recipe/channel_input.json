@@ -3,15 +3,9 @@
   "category": "misc",
   "group": "syncswitch",
   "key": {
-    "E": {
-      "tag": "c:ender_pearls"
-    },
-    "R": {
-      "tag": "c:dusts/redstone"
-    },
-    "S": {
-      "tag": "c:stones"
-    }
+    "E": "#c:ender_pearls",
+    "R": "#c:dusts/redstone",
+    "S": "#c:stones"
   },
   "pattern": [
     "SRS",

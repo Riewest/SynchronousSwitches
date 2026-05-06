@@ -3,9 +3,7 @@
   "category": "misc",
   "group": "syncswitch",
   "key": {
-    "P": {
-      "item": "syncswitch:light_panel"
-    }
+    "P": "syncswitch:light_panel"
   },
   "pattern": [
     "PP",
