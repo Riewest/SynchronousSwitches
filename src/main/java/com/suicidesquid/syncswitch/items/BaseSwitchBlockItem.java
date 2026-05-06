@@ -11,7 +11,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -84,19 +83,19 @@ public class BaseSwitchBlockItem extends BlockItem{
     protected void toggleActive(Level level, Player player, String channel){}
 
     @Override
-    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+    public InteractionResult use(Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
         if(player.isCrouching()){
             if (stack.has(Registration.CHANNEL))
                 stack.remove(Registration.CHANNEL);
                 if(level.isClientSide)
                     player.displayClientMessage(Component.translatable(LangInit.REMOVE_CHANNEL), true);
-            return new InteractionResultHolder<ItemStack>(InteractionResult.SUCCESS, stack);
+            return InteractionResult.SUCCESS;
         }
         if (stack.has(Registration.CHANNEL)){
             toggleActive(level, player, stack.get(Registration.CHANNEL));
         }
-        return new InteractionResultHolder<ItemStack>(InteractionResult.SUCCESS, stack);
+        return InteractionResult.SUCCESS;
     }
 
 }

@@ -13,7 +13,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -70,7 +69,7 @@ public class BaseChannelBlock extends Block{
     }
 
     @Override
-    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+    protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         if (!level.isClientSide() && hand == InteractionHand.MAIN_HAND){
             BlockEntity tile = level.getBlockEntity(pos);
             if (tile instanceof BaseChannelTile){
@@ -78,7 +77,7 @@ public class BaseChannelBlock extends Block{
                 ItemStack held = player.getItemInHand(hand);
                 SwitchData switchData = SwitchData.get(level);
                 if(switchtile.processInteraction(held, player, switchData))
-                    return ItemInteractionResult.CONSUME;
+                    return InteractionResult.SUCCESS;
             }
         }
         return super.useItemOn(stack, state, level, pos, player, hand, hitResult);

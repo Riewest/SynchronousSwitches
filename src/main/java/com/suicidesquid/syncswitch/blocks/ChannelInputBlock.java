@@ -13,6 +13,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.redstone.Orientation;
 
 public class ChannelInputBlock extends BaseChannelBlock implements EntityBlock{
 
@@ -27,7 +28,7 @@ public class ChannelInputBlock extends BaseChannelBlock implements EntityBlock{
     }
 
     @Override
-    public void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving) {
+    public void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, @Nullable Orientation orientation, boolean isMoving) {
         if (level.isClientSide)
             return;
         BlockEntity be = level.getBlockEntity(pos);
