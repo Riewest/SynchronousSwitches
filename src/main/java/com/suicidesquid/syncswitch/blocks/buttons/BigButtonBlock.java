@@ -20,8 +20,8 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class BigButtonBlock extends BaseButtonBlock implements EntityBlock{
 
-    public BigButtonBlock(boolean bool, Properties properties) {
-        super(bool, properties);
+    public BigButtonBlock(Properties properties) {
+        super(properties);
     }
 
 	private static final VoxelShape DEFAULT_SHAPE = Block.box(1, 0, 1, 15, 2, 15);
@@ -39,12 +39,12 @@ public class BigButtonBlock extends BaseButtonBlock implements EntityBlock{
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return ModRegistration.BIG_BUTTON_BLOCK_BE.get().create(pos, state);
+        return ModRegistration.BIG_BUTTON_BLOCK.blockEntity().get().create(pos, state);
     }
 
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-        return type == ModRegistration.BIG_BUTTON_BLOCK_BE.get() ? BigButtonTile::tick : null;
+        return type == ModRegistration.BIG_BUTTON_BLOCK.blockEntity().get() ? BigButtonTile::tick : null;
     }
 
 }

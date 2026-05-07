@@ -3,7 +3,7 @@
   "category": "misc",
   "group": "syncswitch",
   "ingredients": [
-    "syncswitch:vanilla_switch_block"
+    "syncswitch:estop_button"
   ],
   "result": {
     "id": "syncswitch:io_switch"

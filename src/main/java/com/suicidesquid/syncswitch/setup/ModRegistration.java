@@ -1,5 +1,8 @@
 package com.suicidesquid.syncswitch.setup;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.function.ToIntFunction;
@@ -52,13 +55,19 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 public class ModRegistration {
     private static final int LIGHT_LEVEL = 15;
 
+    private static final List<BlockWithEntity<?, ?>> SWITCHES = new ArrayList<>();
+    public static List<BlockWithEntity<?, ?>> getSwitches() { return Collections.unmodifiableList(SWITCHES); }
+
+    private static final List<BlockWithEntity<?, ?>> BUTTONS = new ArrayList<>();
+    public static List<BlockWithEntity<?, ?>> getButtons() { return Collections.unmodifiableList(BUTTONS); }
+
+    private static final List<BlockWithEntity<?, ?>> LIGHTS = new ArrayList<>();
+    public static List<BlockWithEntity<?, ?>> getLights() { return Collections.unmodifiableList(LIGHTS); }
+
     public static final DeferredRegister<DataComponentType<?>> COMPONENTS = DeferredRegister.createDataComponents(Registries.DATA_COMPONENT_TYPE, SynchronousSwitches.MODID);
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(SynchronousSwitches.MODID);
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(SynchronousSwitches.MODID);
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(BuiltInRegistries.BLOCK_ENTITY_TYPE, SynchronousSwitches.MODID);
-
-    
-    
 
     public static void init(IEventBus modEventBus){
         COMPONENTS.register(modEventBus);
@@ -67,10 +76,50 @@ public class ModRegistration {
         BLOCK_ENTITIES.register(modEventBus);        
     }
 
+    public record BlockWithEntity<T extends Block, E extends BlockEntity>(
+        DeferredBlock<T> block,
+        Supplier<BlockEntityType<E>> blockEntity
+    ) implements Supplier<T> {
+        @Override
+        public T get() {
+            return block.get();
+        }
+    }
+
     private static <T extends Block> DeferredBlock<T> registerChannelBlock(String name, Function<BlockBehaviour.Properties, T> factory, BlockBehaviour.Properties props) {
         DeferredBlock<T> holder = BLOCKS.registerBlock(name, factory, () -> props);
         registerChannelBlockItem(name, holder);
         return holder;
+    }
+
+    public static <T extends Block, E extends BlockEntity> BlockWithEntity<T, E> registerChannelBlockWithEntity(String name, Function<BlockBehaviour.Properties, T> blockFactory, BlockBehaviour.Properties props, BlockEntitySupplier<E> beFactory) {
+        DeferredBlock<T> block = registerChannelBlock(name, blockFactory, props);
+        Supplier<BlockEntityType<E>> be = registerChannelBlockEntity(name, block, beFactory);
+        return new BlockWithEntity<>(block, be);
+    }
+    
+    public static <T extends Block, E extends BlockEntity> BlockWithEntity<T, E> registerSwitch(String name, Function<BlockBehaviour.Properties, T> blockFactory, BlockEntitySupplier<E> beFactory) {
+        DeferredBlock<T> block = registerChannelBlock(name, blockFactory, BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noCollision());
+        Supplier<BlockEntityType<E>> be = registerChannelBlockEntity(name, block, beFactory);
+        BlockWithEntity<T, E> entry = new BlockWithEntity<>(block, be);
+        SWITCHES.add(entry);
+        return entry;
+    }
+    
+    public static <T extends Block, E extends BlockEntity> BlockWithEntity<T, E> registerButton(String name, Function<BlockBehaviour.Properties, T> blockFactory, BlockEntitySupplier<E> beFactory) {
+        DeferredBlock<T> block = registerChannelBlock(name, blockFactory, BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noCollision());
+        Supplier<BlockEntityType<E>> be = registerChannelBlockEntity(name, block, beFactory);
+        BlockWithEntity<T, E> entry = new BlockWithEntity<>(block, be);
+        BUTTONS.add(entry);
+        return entry;
+    }
+    
+    public static <T extends Block, E extends BlockEntity> BlockWithEntity<T, E> registerLight(String name, Function<BlockBehaviour.Properties, T> blockFactory, BlockEntitySupplier<E> beFactory) {
+        DeferredBlock<T> block = registerChannelBlock(name, blockFactory, BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).lightLevel(getLightLevel()));
+        Supplier<BlockEntityType<E>> be = registerChannelBlockEntity(name, block, beFactory);
+        BlockWithEntity<T, E> entry = new BlockWithEntity<>(block, be);
+        LIGHTS.add(entry);
+        return entry;
     }
 
     public static BlockItem getBlockItem(Block block, Item.Properties props) {
@@ -90,37 +139,23 @@ public class ModRegistration {
     }
 
     // Channel Blocks
-    public static final Supplier<Block> CHANNEL_OUTPUT_BLOCK = registerChannelBlock("channel_output", ChannelOutputBlock::new, BlockBehaviour.Properties.ofFullCopy(Blocks.STONE));
-    public static final Supplier<BlockEntityType<ChannelOutputTile>> CHANNEL_OUTPUT_BLOCK_BE = registerChannelBlockEntity("channel_output", CHANNEL_OUTPUT_BLOCK, ChannelOutputTile::new);
-    
-    public static final Supplier<Block> CHANNEL_INPUT_BLOCK = registerChannelBlock("channel_input", ChannelInputBlock::new, BlockBehaviour.Properties.ofFullCopy(Blocks.STONE));
-    public static final Supplier<BlockEntityType<ChannelInputTile>> CHANNEL_INPUT_BLOCK_BE = registerChannelBlockEntity("channel_input", CHANNEL_INPUT_BLOCK, ChannelInputTile::new);
-    
+    public static final BlockWithEntity<ChannelOutputBlock, ChannelOutputTile> CHANNEL_OUTPUT_BLOCK = registerChannelBlockWithEntity("channel_output", ChannelOutputBlock::new, BlockBehaviour.Properties.ofFullCopy(Blocks.STONE), ChannelOutputTile::new);
+    public static final BlockWithEntity<ChannelInputBlock, ChannelInputTile> CHANNEL_INPUT_BLOCK = registerChannelBlockWithEntity("channel_input", ChannelInputBlock::new, BlockBehaviour.Properties.ofFullCopy(Blocks.STONE), ChannelInputTile::new);
+
     // Switches
-    public static final Supplier<Block> SWITCH_BLOCK = registerChannelBlock("switch_block", SwitchBlock::new, BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noCollision().noCollision());
-    public static final Supplier<BlockEntityType<SwitchBlockTile>> SWITCH_BLOCK_BE = registerChannelBlockEntity("switch_block", SWITCH_BLOCK, SwitchBlockTile::new);
-
-    public static final Supplier<Block> ESTOP_BUTTON_BLOCK = registerChannelBlock("estop_button", EStopButtonBlock::new, BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noCollision().noCollision());
-    public static final Supplier<BlockEntityType<EStopButtonTile>> ESTOP_BUTTON_BLOCK_BE = registerChannelBlockEntity("estop_button", ESTOP_BUTTON_BLOCK, EStopButtonTile::new);
-
-    public static final Supplier<Block> IO_SWITCH_BLOCK = registerChannelBlock("io_switch", IOSwitchBlock::new, BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noCollision().noCollision());
-    public static final Supplier<BlockEntityType<IOSwitchTile>> IO_SWITCH_BLOCK_BE = registerChannelBlockEntity("io_switch", IO_SWITCH_BLOCK, IOSwitchTile::new);
-
-    public static final Supplier<Block> VANILLA_SWITCH_BLOCK = registerChannelBlock("vanilla_switch_block", VanillaSwitchBlock::new, BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noCollision().noCollision());
-    public static final Supplier<BlockEntityType<VanillaSwitchBlockTile>> VANILLA_SWITCH_BLOCK_BE = registerChannelBlockEntity("vanilla_switch_block", VANILLA_SWITCH_BLOCK, VanillaSwitchBlockTile::new);
+    public static final BlockWithEntity<SwitchBlock, SwitchBlockTile> SWITCH_BLOCK = registerSwitch("switch_block", SwitchBlock::new, SwitchBlockTile::new);
+    public static final BlockWithEntity<EStopButtonBlock, EStopButtonTile> ESTOP_BUTTON_BLOCK = registerSwitch("estop_button", EStopButtonBlock::new, EStopButtonTile::new);
+    public static final BlockWithEntity<IOSwitchBlock, IOSwitchTile> IO_SWITCH_BLOCK = registerSwitch("io_switch", IOSwitchBlock::new, IOSwitchTile::new);
+    public static final BlockWithEntity<VanillaSwitchBlock, VanillaSwitchBlockTile> VANILLA_SWITCH_BLOCK = registerSwitch("vanilla_switch_block", VanillaSwitchBlock::new, VanillaSwitchBlockTile::new);
 
     // Buttons
-    public static final Supplier<Block> STONE_BUTTON_BLOCK = registerChannelBlock("stone_button_block", props -> new StoneButtonBlock(true, props), BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noCollision().noCollision());
-    public static final Supplier<BlockEntityType<StoneButtonTile>> STONE_BUTTON_BLOCK_BE = registerChannelBlockEntity("stone_button_block", STONE_BUTTON_BLOCK, StoneButtonTile::new);
-    public static final Supplier<Block> BIG_BUTTON_BLOCK = registerChannelBlock("big_button", props -> new BigButtonBlock(true, props), BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noCollision().noCollision());
-    public static final Supplier<BlockEntityType<BigButtonTile>> BIG_BUTTON_BLOCK_BE = registerChannelBlockEntity("big_button", BIG_BUTTON_BLOCK, BigButtonTile::new);
+    public static final BlockWithEntity<BigButtonBlock, BigButtonTile> BIG_BUTTON_BLOCK = registerButton("big_button", BigButtonBlock::new, BigButtonTile::new);
+    public static final BlockWithEntity<StoneButtonBlock, StoneButtonTile> STONE_BUTTON_BLOCK = registerButton("stone_button_block", StoneButtonBlock::new, StoneButtonTile::new);
+    
 
     // Lights
-    public static final Supplier<Block> LIGHT_BLOCK = registerChannelBlock("light_block", BaseLightBlock::new, BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).lightLevel(getLightLevel()));
-    public static final Supplier<BlockEntityType<LightBlockTile>> LIGHT_BLOCK_BE = registerChannelBlockEntity("light_block", LIGHT_BLOCK, LightBlockTile::new);
-
-    public static final Supplier<Block> LIGHT_PANEL_BLOCK = registerChannelBlock("light_panel", LightPanelBlock::new, BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).lightLevel(getLightLevel()));
-    public static final Supplier<BlockEntityType<LightPanelTile>> LIGHT_PANEL_BLOCK_BE = registerChannelBlockEntity("light_panel", LIGHT_PANEL_BLOCK, LightPanelTile::new);
+    public static final BlockWithEntity<BaseLightBlock, LightBlockTile> LIGHT_BLOCK = registerLight("light_block", BaseLightBlock::new, LightBlockTile::new);
+    public static final BlockWithEntity<LightPanelBlock, LightPanelTile> LIGHT_PANEL_BLOCK = registerLight("light_panel", LightPanelBlock::new, LightPanelTile::new);
 
     // Data Components
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<String>> CHANNEL = COMPONENTS.register("channel", () -> DataComponentType.<String>builder().persistent(Codec.STRING).networkSynchronized(ByteBufCodecs.STRING_UTF8).build());

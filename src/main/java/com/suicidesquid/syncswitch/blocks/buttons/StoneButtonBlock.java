@@ -20,19 +20,19 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class StoneButtonBlock extends BaseButtonBlock implements EntityBlock{
 
-    public StoneButtonBlock(boolean bool, Properties properties) {
-        super(bool, properties);
+    public StoneButtonBlock(Properties properties) {
+        super(properties);
     }
 
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return ModRegistration.STONE_BUTTON_BLOCK_BE.get().create(pos, state);
+        return ModRegistration.STONE_BUTTON_BLOCK.blockEntity().get().create(pos, state);
     }
 
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-        return type == ModRegistration.STONE_BUTTON_BLOCK_BE.get() ? StoneButtonTile::tick : null;
+        return type == ModRegistration.STONE_BUTTON_BLOCK.blockEntity().get() ? StoneButtonTile::tick : null;
     }
     
 }

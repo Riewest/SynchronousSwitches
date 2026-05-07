@@ -39,12 +39,12 @@ public class EStopButtonBlock extends BaseSwitchBlock implements EntityBlock{
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return ModRegistration.ESTOP_BUTTON_BLOCK_BE.get().create(pos, state);
+        return ModRegistration.ESTOP_BUTTON_BLOCK.blockEntity().get().create(pos, state);
     }
 
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-        return type == ModRegistration.ESTOP_BUTTON_BLOCK_BE.get() ? EStopButtonTile::tick : null;
+        return type == ModRegistration.ESTOP_BUTTON_BLOCK.blockEntity().get() ? EStopButtonTile::tick : null;
     }
 
 }

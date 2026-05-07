@@ -28,12 +28,12 @@ public class ChannelOutputBlock extends BaseChannelBlock implements EntityBlock{
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return ModRegistration.CHANNEL_OUTPUT_BLOCK_BE.get().create(pos, state);
+        return ModRegistration.CHANNEL_OUTPUT_BLOCK.blockEntity().get().create(pos, state);
     }
 
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-        return type == ModRegistration.CHANNEL_OUTPUT_BLOCK_BE.get() ? ChannelOutputTile::tick : null;
+        return type == ModRegistration.CHANNEL_OUTPUT_BLOCK.blockEntity().get() ? ChannelOutputTile::tick : null;
     }
 
     public int getSignal(BlockState state, BlockGetter blockGetter, BlockPos pos, Direction direction) {

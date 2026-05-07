@@ -9,7 +9,7 @@ import net.minecraft.world.level.block.state.BlockState;
 public class ChannelInputTile extends BaseChannelBlockTile{
 
     public ChannelInputTile(BlockPos pos, BlockState state) {
-        super(ModRegistration.CHANNEL_INPUT_BLOCK_BE.get(), pos, state);
+        super(ModRegistration.CHANNEL_INPUT_BLOCK.blockEntity().get(), pos, state);
     }
     
 }

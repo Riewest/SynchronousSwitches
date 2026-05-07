@@ -8,6 +8,6 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class SwitchBlockTile extends BaseChannelTile{
     public SwitchBlockTile(BlockPos pos, BlockState state) {
-        super(ModRegistration.SWITCH_BLOCK_BE.get(), pos, state);
+        super(ModRegistration.SWITCH_BLOCK.blockEntity().get(), pos, state);
     }
 }

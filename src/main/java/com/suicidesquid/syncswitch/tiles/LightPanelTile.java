@@ -11,7 +11,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class LightPanelTile extends BaseLightTile{
     public LightPanelTile(BlockPos pos, BlockState state) {
-        super(ModRegistration.LIGHT_PANEL_BLOCK_BE.get(), pos, state);
+        super(ModRegistration.LIGHT_PANEL_BLOCK.blockEntity().get(), pos, state);
     }
 
     @Override

@@ -36,12 +36,12 @@ public class SwitchBlock extends BaseSwitchBlock implements EntityBlock{
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return ModRegistration.SWITCH_BLOCK_BE.get().create(pos, state);
+        return ModRegistration.SWITCH_BLOCK.blockEntity().get().create(pos, state);
     }
 
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-        return type == ModRegistration.SWITCH_BLOCK_BE.get() ? SwitchBlockTile::tick : null;
+        return type == ModRegistration.SWITCH_BLOCK.blockEntity().get() ? SwitchBlockTile::tick : null;
     }
 
 }

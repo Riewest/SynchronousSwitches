@@ -1,5 +1,6 @@
 package com.suicidesquid.syncswitch.datagen;
 
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 import com.suicidesquid.syncswitch.SynchronousSwitches;
@@ -8,6 +9,7 @@ import com.suicidesquid.syncswitch.setup.ModRegistration;
 import net.minecraft.advancements.criterion.ItemPredicate;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.RecipeCategory;
@@ -27,6 +29,15 @@ public class ModRecipeProvider extends RecipeProvider {
 
     public ModRecipeProvider(HolderLookup.Provider registries, RecipeOutput output) {
         super(registries, output);
+    }
+
+    private void buildCycleRecipes(HolderGetter<Item> items, List<ModRegistration.BlockWithEntity<?, ?>> list, ItemLike firstItem) {
+        for (int i = 0; i < list.size() - 1; i++) {
+            cycleRecipe(items, list.get(i).get(), list.get(i + 1).get()).save(output);
+        }
+        String wrapKey = BuiltInRegistries.ITEM.getKey(firstItem.asItem()).getPath() + "_1";
+        cycleRecipe(items, list.get(list.size() - 1).get(), firstItem)
+            .save(output, ResourceKey.create(Registries.RECIPE, Identifier.fromNamespaceAndPath(SynchronousSwitches.MODID, wrapKey)));
     }
 
     private ShapelessRecipeBuilder cycleRecipe(HolderGetter<Item> items, ItemLike input, ItemLike outputItem) {
@@ -102,14 +113,10 @@ public class ModRecipeProvider extends RecipeProvider {
 
         
         // Switches
-        cycleRecipe(items, ModRegistration.SWITCH_BLOCK.get(), ModRegistration.VANILLA_SWITCH_BLOCK.get()).save(output);
-        cycleRecipe(items, ModRegistration.VANILLA_SWITCH_BLOCK.get(), ModRegistration.IO_SWITCH_BLOCK.get()).save(output);
-        cycleRecipe(items, ModRegistration.IO_SWITCH_BLOCK.get(), ModRegistration.ESTOP_BUTTON_BLOCK.get()).save(output);
-        cycleRecipe(items, ModRegistration.ESTOP_BUTTON_BLOCK.get(), ModRegistration.SWITCH_BLOCK.get()).save(output, ResourceKey.create(Registries.RECIPE, Identifier.fromNamespaceAndPath(SynchronousSwitches.MODID, "switch_block_1")));
+        buildCycleRecipes(items, ModRegistration.getSwitches(), ModRegistration.SWITCH_BLOCK.get());
 
         // Buttons
-        cycleRecipe(items, ModRegistration.BIG_BUTTON_BLOCK.get(), ModRegistration.STONE_BUTTON_BLOCK.get()).save(output);
-        cycleRecipe(items, ModRegistration.STONE_BUTTON_BLOCK.get(), ModRegistration.BIG_BUTTON_BLOCK.get()).save(output, ResourceKey.create(Registries.RECIPE, Identifier.fromNamespaceAndPath(SynchronousSwitches.MODID, "big_button_block_1")));
+        buildCycleRecipes(items, ModRegistration.getButtons(), ModRegistration.BIG_BUTTON_BLOCK.get());
     }
 
     public static class Runner extends RecipeProvider.Runner {

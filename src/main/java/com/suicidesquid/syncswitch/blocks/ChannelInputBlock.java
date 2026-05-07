@@ -24,7 +24,7 @@ public class ChannelInputBlock extends BaseChannelBlock implements EntityBlock{
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return ModRegistration.CHANNEL_INPUT_BLOCK_BE.get().create(pos, state);
+        return ModRegistration.CHANNEL_INPUT_BLOCK.blockEntity().get().create(pos, state);
     }
 
     @Override

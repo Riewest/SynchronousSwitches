@@ -35,12 +35,12 @@ public class IOSwitchBlock extends BaseSwitchBlock implements EntityBlock{
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return ModRegistration.IO_SWITCH_BLOCK_BE.get().create(pos, state);
+        return ModRegistration.IO_SWITCH_BLOCK.blockEntity().get().create(pos, state);
     }
 
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-        return type == ModRegistration.IO_SWITCH_BLOCK_BE.get() ? EStopButtonTile::tick : null;
+        return type == ModRegistration.IO_SWITCH_BLOCK.blockEntity().get() ? EStopButtonTile::tick : null;
     }
 
 }

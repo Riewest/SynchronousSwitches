@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "syncswitch:big_button_block_1"
+        "recipe": "syncswitch:big_button_1"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "syncswitch:big_button_block_1"
+      "syncswitch:big_button_1"
     ]
   }
 }
