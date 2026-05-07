@@ -3,12 +3,9 @@
   "category": "misc",
   "group": "syncswitch",
   "ingredients": [
-    {
-      "item": "syncswitch:switch_block"
-    }
+    "syncswitch:switch_block"
   ],
   "result": {
-    "count": 1,
     "id": "syncswitch:vanilla_switch_block"
   }
 }

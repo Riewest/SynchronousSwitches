@@ -3,10 +3,10 @@ package com.suicidesquid.syncswitch.blocks.base;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import com.suicidesquid.syncswitch.data.SwitchData;
-import com.suicidesquid.syncswitch.setup.Registration;
+import com.suicidesquid.syncswitch.setup.ModRegistration;
 import com.suicidesquid.syncswitch.tiles.Base.BaseChannelTile;
 
 import net.minecraft.core.BlockPos;
@@ -15,7 +15,6 @@ import net.minecraft.core.Direction.Axis;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -38,7 +37,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 public class BaseButtonBlock extends ButtonBlock{
     private static final int SHAPE_SCALAR = 16;
     protected BaseButtonBlock(boolean sensitive, Properties properties) {
-        super(BlockSetType.STONE, 20, BlockBehaviour.Properties.of().noCollission().strength(0.5F).pushReaction(PushReaction.DESTROY));
+        super(BlockSetType.STONE, 20, properties);
     }
 
     @Override
@@ -67,7 +66,7 @@ public class BaseButtonBlock extends ButtonBlock{
     private ItemStack createItem(String channel){
         ItemStack stack = new ItemStack(this, 1);
         if (channel != null){
-            stack.set(Registration.CHANNEL, channel);
+            stack.set(ModRegistration.CHANNEL, channel);
         }
         return stack;
     }
@@ -100,7 +99,7 @@ public class BaseButtonBlock extends ButtonBlock{
     }
 
     @Override
-    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+    protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         if (!world.isClientSide() && hand == InteractionHand.MAIN_HAND){
             BlockEntity tile = world.getBlockEntity(pos);
             if (tile instanceof BaseChannelTile){
@@ -108,7 +107,7 @@ public class BaseButtonBlock extends ButtonBlock{
                 ItemStack held = player.getItemInHand(hand);
                 SwitchData switchData = SwitchData.get(world);
                 if(switchtile.processInteraction(held, player, switchData))
-                    return ItemInteractionResult.CONSUME;
+                    return InteractionResult.SUCCESS;
                 if (!switchtile.hasChannel()){
                     return super.useItemOn(stack, state, world, pos, player, hand, hitResult);
                 } else {
@@ -118,7 +117,7 @@ public class BaseButtonBlock extends ButtonBlock{
                 }
             } 
                 
-            return ItemInteractionResult.CONSUME;
+            return InteractionResult.SUCCESS;
         }
         
 

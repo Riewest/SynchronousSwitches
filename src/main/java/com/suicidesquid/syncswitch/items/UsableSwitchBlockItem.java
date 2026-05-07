@@ -16,10 +16,10 @@ public class UsableSwitchBlockItem extends BaseSwitchBlockItem{
 
     @Override
     protected void toggleActive(Level level, Player player, String channel) {
-        if(!level.isClientSide){
+        if(!level.isClientSide()){
             SwitchData switchData = SwitchData.get(level);
             boolean newState = switchData.toggleActive(channel);
-            player.displayClientMessage(Component.translatable(LangInit.CHANNEL).append(Component.translatable(newState ? LangInit.ON : LangInit.OFF)), true);
+            player.sendOverlayMessage(Component.translatable(LangInit.CHANNEL).append(Component.translatable(newState ? LangInit.ON : LangInit.OFF)));
         }
     }
 }

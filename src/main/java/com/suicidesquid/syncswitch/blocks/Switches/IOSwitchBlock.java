@@ -1,9 +1,9 @@
 package com.suicidesquid.syncswitch.blocks.Switches;
 
-import javax.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import com.suicidesquid.syncswitch.blocks.base.BaseSwitchBlock;
-import com.suicidesquid.syncswitch.setup.Registration;
+import com.suicidesquid.syncswitch.setup.ModRegistration;
 import com.suicidesquid.syncswitch.tiles.Switches.EStopButtonTile;
 
 import net.minecraft.core.BlockPos;
@@ -35,12 +35,12 @@ public class IOSwitchBlock extends BaseSwitchBlock implements EntityBlock{
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return Registration.IO_SWITCH_BLOCK_BE.get().create(pos, state);
+        return ModRegistration.IO_SWITCH_BLOCK_BE.get().create(pos, state);
     }
 
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-        return type == Registration.IO_SWITCH_BLOCK_BE.get() ? EStopButtonTile::tick : null;
+        return type == ModRegistration.IO_SWITCH_BLOCK_BE.get() ? EStopButtonTile::tick : null;
     }
 
 }

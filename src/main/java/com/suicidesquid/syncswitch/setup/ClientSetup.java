@@ -8,7 +8,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 
 
-@EventBusSubscriber(modid = SynchronousSwitches.MODID, value = Dist.CLIENT, bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = SynchronousSwitches.MODID, value = Dist.CLIENT)
 public class ClientSetup {
     @SubscribeEvent
     public static void init(final FMLClientSetupEvent event) {

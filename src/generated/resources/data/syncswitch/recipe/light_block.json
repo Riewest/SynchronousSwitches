@@ -3,12 +3,8 @@
   "category": "misc",
   "group": "syncswitch",
   "key": {
-    "E": {
-      "tag": "c:ender_pearls"
-    },
-    "S": {
-      "item": "minecraft:sea_lantern"
-    }
+    "E": "#c:ender_pearls",
+    "S": "minecraft:sea_lantern"
   },
   "pattern": [
     " S ",

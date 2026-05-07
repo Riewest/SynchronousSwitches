@@ -3,9 +3,7 @@
   "category": "misc",
   "group": "syncswitch",
   "ingredients": [
-    {
-      "item": "syncswitch:light_block"
-    }
+    "syncswitch:light_block"
   ],
   "result": {
     "count": 4,

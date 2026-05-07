@@ -3,15 +3,9 @@
   "category": "misc",
   "group": "syncswitch",
   "key": {
-    "C": {
-      "tag": "c:stones"
-    },
-    "E": {
-      "tag": "c:ender_pearls"
-    },
-    "S": {
-      "tag": "c:rods/wooden"
-    }
+    "C": "#c:stones",
+    "E": "#c:ender_pearls",
+    "S": "#c:rods/wooden"
   },
   "pattern": [
     "E",
@@ -19,7 +13,6 @@
     "C"
   ],
   "result": {
-    "count": 1,
     "id": "syncswitch:switch_block"
   }
 }

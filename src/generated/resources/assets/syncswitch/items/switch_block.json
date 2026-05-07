@@ -1,0 +1,6 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "syncswitch:block/switch_block"
+  }
+}

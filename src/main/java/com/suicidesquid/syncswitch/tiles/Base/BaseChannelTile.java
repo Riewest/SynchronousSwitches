@@ -8,8 +8,8 @@ import com.suicidesquid.syncswitch.setup.LangInit;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -39,21 +39,21 @@ public class BaseChannelTile extends BlockEntity{
     }
     
     @Override
-    protected void saveAdditional(CompoundTag nbt, HolderLookup.Provider registries) {
-        nbt.putString("channel", this.channel);
-        nbt.putBoolean("redacted", this.redacted);
-        nbt.putBoolean("silent", this.silent);
-        nbt.putString("player", this.player);
-        super.saveAdditional(nbt, registries);
+    protected void saveAdditional(ValueOutput output) {
+        output.putString("channel", this.channel);
+        output.putBoolean("redacted", this.redacted);
+        output.putBoolean("silent", this.silent);
+        output.putString("player", this.player);
+        super.saveAdditional(output);
     }
 
     @Override
-    public void loadAdditional(CompoundTag nbt, HolderLookup.Provider registries) {
-        super.loadAdditional(nbt, registries);
-        this.channel = nbt.getString("channel");
-        this.redacted = nbt.getBoolean("redacted");
-        this.silent = nbt.getBoolean("silent");
-        this.player = nbt.getString("player");
+    public void loadAdditional(ValueInput input) {
+        super.loadAdditional(input);
+        this.channel = input.getStringOr("channel", NONE_CHANNEL);
+        this.redacted = input.getBooleanOr("redacted", false);
+        this.silent = input.getBooleanOr("silent", false);
+        this.player = input.getStringOr("player", "");
     }
 
     @Override
@@ -152,9 +152,9 @@ public class BaseChannelTile extends BlockEntity{
             return false;
         else if(player.isShiftKeyDown()) {
             if(this.hasChannel()){
-                player.displayClientMessage(Component.translatable(LangInit.CHANNEL).append(this.getChannelDisplay(player.getStringUUID())).append(" - ").append(Component.translatable(LangInit.ACTIVE)).append(String.valueOf(switchData.isActive(this.getChannel()))), true);
+                player.sendOverlayMessage(Component.translatable(LangInit.CHANNEL).append(this.getChannelDisplay(player.getStringUUID())).append(" - ").append(Component.translatable(LangInit.ACTIVE)).append(String.valueOf(switchData.isActive(this.getChannel()))));
             } else {
-                player.displayClientMessage(Component.translatable(LangInit.NO_CHANNEL), true);
+                player.sendOverlayMessage(Component.translatable(LangInit.NO_CHANNEL));
             }
             return true;
         }
@@ -164,25 +164,25 @@ public class BaseChannelTile extends BlockEntity{
         if (held.getItem() == Items.PAPER){
             String channel = held.getDisplayName().getString().replace("[", "").replace("]", "");
             this.setChannel(channel);
-            player.displayClientMessage(Component.translatable(LangInit.SET_CHANNEL).append(channel), true);
+            player.sendOverlayMessage(Component.translatable(LangInit.SET_CHANNEL).append(channel));
             interactionProcessed = true;
         } else if (held.getItem() == Items.INK_SAC){
             if (this.isRedacted()){
                 this.setRedacted(false);
-            player.displayClientMessage(Component.translatable(LangInit.UNREDACTED), true);
+            player.sendOverlayMessage(Component.translatable(LangInit.UNREDACTED));
             } else {
                 this.setRedacted(true);
-                player.displayClientMessage(Component.translatable(LangInit.SET_REDACTED), true);
+                player.sendOverlayMessage(Component.translatable(LangInit.SET_REDACTED));
             }
             interactionProcessed = true;
         } else if (held.getItem() == Items.WHITE_WOOL){
             this.toggleSilent();
             if (this.isSilent())
             {
-                player.displayClientMessage(Component.translatable(LangInit.SILENCING), true);
+                player.sendOverlayMessage(Component.translatable(LangInit.SILENCING));
             }
             else {
-                player.displayClientMessage(Component.translatable(LangInit.UNSILENCING), true);
+                player.sendOverlayMessage(Component.translatable(LangInit.UNSILENCING));
             }
             interactionProcessed = true;
         }

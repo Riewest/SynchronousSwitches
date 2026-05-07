@@ -7,7 +7,7 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import com.suicidesquid.syncswitch.data.SwitchData;
-import com.suicidesquid.syncswitch.setup.Registration;
+import com.suicidesquid.syncswitch.setup.ModRegistration;
 import com.suicidesquid.syncswitch.tiles.Base.BaseChannelTile;
 
 import net.minecraft.core.BlockPos;
@@ -16,7 +16,6 @@ import net.minecraft.core.Direction.Axis;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -80,7 +79,7 @@ public class BaseSwitchBlock extends LeverBlock{
     }
 
     @Override
-    public ItemStack getCloneItemStack(LevelReader pLevel, BlockPos pPos, BlockState pState) {
+    public ItemStack getCloneItemStack(LevelReader pLevel, BlockPos pPos, BlockState pState, boolean includeData, Player pPlayer) {
         BaseChannelTile tile = (BaseChannelTile) pLevel.getBlockEntity(pPos);
         return createItem(tile.getChannel());
     }
@@ -88,7 +87,7 @@ public class BaseSwitchBlock extends LeverBlock{
     private ItemStack createItem(String channel){
         ItemStack stack = new ItemStack(this, 1);
         if (channel != null){
-            stack.set(Registration.CHANNEL, channel);
+            stack.set(ModRegistration.CHANNEL, channel);
         }
         return stack;
     }
@@ -121,7 +120,7 @@ public class BaseSwitchBlock extends LeverBlock{
     }
 
     @Override
-    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+    protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if (!world.isClientSide() && hand == InteractionHand.MAIN_HAND){
             BlockEntity tile = world.getBlockEntity(pos);
             if (tile instanceof BaseChannelTile){
@@ -129,7 +128,7 @@ public class BaseSwitchBlock extends LeverBlock{
                 ItemStack held = player.getItemInHand(hand);
                 SwitchData switchData = SwitchData.get(world);
                 if(switchtile.processInteraction(held, player, switchData))
-                    return ItemInteractionResult.CONSUME;
+                    return InteractionResult.SUCCESS;
                 if (!switchtile.hasChannel() && held.isEmpty()){
                     return super.useItemOn(stack, state, world, pos, player, hand, hit);
                 } else {
@@ -139,7 +138,7 @@ public class BaseSwitchBlock extends LeverBlock{
                 }
             }
                 
-            return ItemInteractionResult.CONSUME;
+            return InteractionResult.SUCCESS;
         }
         
 

@@ -1,10 +1,10 @@
 package com.suicidesquid.syncswitch.blocks;
 
-import javax.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import com.suicidesquid.syncswitch.blocks.base.BaseChannelBlock;
 import com.suicidesquid.syncswitch.data.SwitchData;
-import com.suicidesquid.syncswitch.setup.Registration;
+import com.suicidesquid.syncswitch.setup.ModRegistration;
 import com.suicidesquid.syncswitch.tiles.ChannelInputTile;
 
 import net.minecraft.core.BlockPos;
@@ -13,6 +13,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.redstone.Orientation;
 
 public class ChannelInputBlock extends BaseChannelBlock implements EntityBlock{
 
@@ -23,12 +24,12 @@ public class ChannelInputBlock extends BaseChannelBlock implements EntityBlock{
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return Registration.CHANNEL_INPUT_BLOCK_BE.get().create(pos, state);
+        return ModRegistration.CHANNEL_INPUT_BLOCK_BE.get().create(pos, state);
     }
 
     @Override
-    public void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving) {
-        if (level.isClientSide)
+    public void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, @Nullable Orientation orientation, boolean isMoving) {
+        if (level.isClientSide())
             return;
         BlockEntity be = level.getBlockEntity(pos);
         if (be instanceof ChannelInputTile tile){

@@ -3,10 +3,10 @@ package com.suicidesquid.syncswitch.blocks.base;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import com.suicidesquid.syncswitch.data.SwitchData;
-import com.suicidesquid.syncswitch.setup.Registration;
+import com.suicidesquid.syncswitch.setup.ModRegistration;
 import com.suicidesquid.syncswitch.tiles.LightBlockTile;
 import com.suicidesquid.syncswitch.tiles.Base.BaseChannelTile;
 
@@ -14,7 +14,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -47,12 +46,12 @@ public class BaseLightBlock extends Block implements EntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return Registration.LIGHT_BLOCK_BE.get().create(pos, state);
+        return ModRegistration.LIGHT_BLOCK_BE.get().create(pos, state);
     }
 
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-        return type == Registration.LIGHT_BLOCK_BE.get() ? LightBlockTile::tick : null;
+        return type == ModRegistration.LIGHT_BLOCK_BE.get() ? LightBlockTile::tick : null;
     }
 
     @Override
@@ -92,7 +91,7 @@ public class BaseLightBlock extends Block implements EntityBlock {
     }
 
     @Override
-    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+    protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         if (!level.isClientSide() && hand == InteractionHand.MAIN_HAND){
             BlockEntity tile = level.getBlockEntity(pos);
             if (tile instanceof BaseChannelTile){
@@ -100,7 +99,7 @@ public class BaseLightBlock extends Block implements EntityBlock {
                 ItemStack held = player.getItemInHand(hand);
                 SwitchData switchData = SwitchData.get(level);
                 if(switchtile.processInteraction(held, player, switchData))
-                    return ItemInteractionResult.CONSUME;
+                    return InteractionResult.SUCCESS;
             }
         }
         return super.useItemOn(stack, state, level, pos, player, hand, hitResult);
@@ -117,7 +116,7 @@ public class BaseLightBlock extends Block implements EntityBlock {
     }
 
     @Override
-    public ItemStack getCloneItemStack(LevelReader pLevel, BlockPos pPos, BlockState pState) {
+    public ItemStack getCloneItemStack(LevelReader pLevel, BlockPos pPos, BlockState pState, boolean includeData, Player pPlayer) {
         BaseChannelTile tile = (BaseChannelTile) pLevel.getBlockEntity(pPos);
         return createItem(tile.getChannel());
     }
@@ -125,7 +124,7 @@ public class BaseLightBlock extends Block implements EntityBlock {
     private ItemStack createItem(String channel){
         ItemStack stack = new ItemStack(this, 1);
         if (channel != null){
-            stack.set(Registration.CHANNEL, channel);
+            stack.set(ModRegistration.CHANNEL, channel);
         }
         return stack;
     }

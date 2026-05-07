@@ -3,9 +3,10 @@
   "category": "misc",
   "group": "syncswitch",
   "ingredients": [
-    "syncswitch:vanilla_switch_block"
+    "minecraft:stone_button",
+    "#c:ender_pearls"
   ],
   "result": {
-    "id": "syncswitch:io_switch"
+    "id": "syncswitch:stone_button_block"
   }
 }

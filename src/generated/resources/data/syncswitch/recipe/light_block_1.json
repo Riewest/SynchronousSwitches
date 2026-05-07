@@ -3,16 +3,13 @@
   "category": "misc",
   "group": "syncswitch",
   "key": {
-    "P": {
-      "item": "syncswitch:light_panel"
-    }
+    "P": "syncswitch:light_panel"
   },
   "pattern": [
     "PP",
     "PP"
   ],
   "result": {
-    "count": 1,
     "id": "syncswitch:light_block"
   }
 }

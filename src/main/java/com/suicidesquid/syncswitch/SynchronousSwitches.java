@@ -3,7 +3,7 @@ package com.suicidesquid.syncswitch;
 import com.mojang.logging.LogUtils;
 import com.suicidesquid.syncswitch.setup.ClientSetup;
 import com.suicidesquid.syncswitch.setup.ModSetup;
-import com.suicidesquid.syncswitch.setup.Registration;
+import com.suicidesquid.syncswitch.setup.ModRegistration;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.item.CreativeModeTabs;
@@ -46,7 +46,7 @@ public class SynchronousSwitches {
     // Item.Properties().tab(CreativeModeTab.TAB_BUILDING_BLOCKS)));
 
     public SynchronousSwitches(IEventBus modEventBus, Dist dist) {
-        Registration.init(modEventBus);
+        ModRegistration.init(modEventBus);
 
         // Register 'ModSetup::init' to be called at mod setup time (server and client)
         modEventBus.addListener(ModSetup::init);
@@ -66,7 +66,7 @@ public class SynchronousSwitches {
 
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
         if (event.getTabKey() == CreativeModeTabs.REDSTONE_BLOCKS) {
-            for (DeferredHolder<Item, ? extends Item> regItem : Registration.ITEMS.getEntries()) {
+            for (DeferredHolder<Item, ? extends Item> regItem : ModRegistration.ITEMS.getEntries()) {
                 event.accept(regItem.get());
             }
         }
