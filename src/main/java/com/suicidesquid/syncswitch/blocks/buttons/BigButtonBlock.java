@@ -1,10 +1,10 @@
-package com.suicidesquid.syncswitch.blocks.Switches;
+package com.suicidesquid.syncswitch.blocks.buttons;
 
 import org.jspecify.annotations.Nullable;
 
-import com.suicidesquid.syncswitch.blocks.base.BaseSwitchBlock;
+import com.suicidesquid.syncswitch.blocks.base.BaseButtonBlock;
 import com.suicidesquid.syncswitch.setup.ModRegistration;
-import com.suicidesquid.syncswitch.tiles.Switches.BigButtonTile;
+import com.suicidesquid.syncswitch.tiles.Buttons.BigButtonTile;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
@@ -18,10 +18,10 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class BigButtonBlock extends BaseSwitchBlock implements EntityBlock{
+public class BigButtonBlock extends BaseButtonBlock implements EntityBlock{
 
-    public BigButtonBlock(Block.Properties properties) {
-        super(properties);
+    public BigButtonBlock(boolean bool, Properties properties) {
+        super(bool, properties);
     }
 
 	private static final VoxelShape DEFAULT_SHAPE = Block.box(1, 0, 1, 15, 2, 15);

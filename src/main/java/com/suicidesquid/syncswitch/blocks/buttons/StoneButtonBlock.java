@@ -22,20 +22,7 @@ public class StoneButtonBlock extends BaseButtonBlock implements EntityBlock{
 
     public StoneButtonBlock(boolean bool, Properties properties) {
         super(bool, properties);
-        //TODO Auto-generated constructor stub
     }
-
-    // private static final VoxelShape DEFAULT_SHAPE = Block.box(1, 0, 1, 15, 2, 15);
-	// private static final VoxelShape DEFAULT_SHAPE_ON = Block.box(1, 0, 1, 15, 1, 15);
-
-
-    // @Override
-	// public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
-
-	// 	if(state.getValue(POWERED))
-	// 		return determineShape(DEFAULT_SHAPE_ON, state);
-	// 	return determineShape(DEFAULT_SHAPE, state);
-	// }
 
     @Nullable
     @Override

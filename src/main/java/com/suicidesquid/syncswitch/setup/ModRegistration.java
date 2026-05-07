@@ -9,13 +9,13 @@ import com.suicidesquid.syncswitch.SynchronousSwitches;
 import com.suicidesquid.syncswitch.blocks.ChannelInputBlock;
 import com.suicidesquid.syncswitch.blocks.ChannelOutputBlock;
 import com.suicidesquid.syncswitch.blocks.LightPanelBlock;
-import com.suicidesquid.syncswitch.blocks.Switches.BigButtonBlock;
 import com.suicidesquid.syncswitch.blocks.Switches.EStopButtonBlock;
 import com.suicidesquid.syncswitch.blocks.Switches.IOSwitchBlock;
 import com.suicidesquid.syncswitch.blocks.Switches.SwitchBlock;
 import com.suicidesquid.syncswitch.blocks.Switches.VanillaSwitchBlock;
 import com.suicidesquid.syncswitch.blocks.base.BaseChannelBlock;
 import com.suicidesquid.syncswitch.blocks.base.BaseLightBlock;
+import com.suicidesquid.syncswitch.blocks.buttons.BigButtonBlock;
 import com.suicidesquid.syncswitch.blocks.buttons.StoneButtonBlock;
 import com.suicidesquid.syncswitch.items.BaseSwitchBlockItem;
 import com.suicidesquid.syncswitch.items.UsableSwitchBlockItem;
@@ -23,8 +23,8 @@ import com.suicidesquid.syncswitch.tiles.ChannelInputTile;
 import com.suicidesquid.syncswitch.tiles.ChannelOutputTile;
 import com.suicidesquid.syncswitch.tiles.LightBlockTile;
 import com.suicidesquid.syncswitch.tiles.LightPanelTile;
+import com.suicidesquid.syncswitch.tiles.Buttons.BigButtonTile;
 import com.suicidesquid.syncswitch.tiles.Buttons.StoneButtonTile;
-import com.suicidesquid.syncswitch.tiles.Switches.BigButtonTile;
 import com.suicidesquid.syncswitch.tiles.Switches.EStopButtonTile;
 import com.suicidesquid.syncswitch.tiles.Switches.IOSwitchTile;
 import com.suicidesquid.syncswitch.tiles.Switches.SwitchBlockTile;
@@ -100,9 +100,6 @@ public class ModRegistration {
     public static final Supplier<Block> SWITCH_BLOCK = registerChannelBlock("switch_block", SwitchBlock::new, BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noCollision().noCollision());
     public static final Supplier<BlockEntityType<SwitchBlockTile>> SWITCH_BLOCK_BE = registerChannelBlockEntity("switch_block", SWITCH_BLOCK, SwitchBlockTile::new);
 
-    public static final Supplier<Block> BIG_BUTTON_BLOCK = registerChannelBlock("big_button", BigButtonBlock::new, BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noCollision().noCollision());
-    public static final Supplier<BlockEntityType<BigButtonTile>> BIG_BUTTON_BLOCK_BE = registerChannelBlockEntity("big_button", BIG_BUTTON_BLOCK, BigButtonTile::new);
-
     public static final Supplier<Block> ESTOP_BUTTON_BLOCK = registerChannelBlock("estop_button", EStopButtonBlock::new, BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noCollision().noCollision());
     public static final Supplier<BlockEntityType<EStopButtonTile>> ESTOP_BUTTON_BLOCK_BE = registerChannelBlockEntity("estop_button", ESTOP_BUTTON_BLOCK, EStopButtonTile::new);
 
@@ -115,6 +112,8 @@ public class ModRegistration {
     // Buttons
     public static final Supplier<Block> STONE_BUTTON_BLOCK = registerChannelBlock("stone_button_block", props -> new StoneButtonBlock(true, props), BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noCollision().noCollision());
     public static final Supplier<BlockEntityType<StoneButtonTile>> STONE_BUTTON_BLOCK_BE = registerChannelBlockEntity("stone_button_block", STONE_BUTTON_BLOCK, StoneButtonTile::new);
+    public static final Supplier<Block> BIG_BUTTON_BLOCK = registerChannelBlock("big_button", props -> new BigButtonBlock(true, props), BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noCollision().noCollision());
+    public static final Supplier<BlockEntityType<BigButtonTile>> BIG_BUTTON_BLOCK_BE = registerChannelBlockEntity("big_button", BIG_BUTTON_BLOCK, BigButtonTile::new);
 
     // Lights
     public static final Supplier<Block> LIGHT_BLOCK = registerChannelBlock("light_block", BaseLightBlock::new, BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).lightLevel(getLightLevel()));
