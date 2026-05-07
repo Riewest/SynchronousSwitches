@@ -9,6 +9,8 @@ This mod adds "Synchronous Switches" which can be linked together via a channel.
     * IO Switch
     * E-Stop Button
     * Big Button (Looks like pressure plate)
+* Synchronous Stone Button
+    * *Only pulses when channel goes from Low to High*
 * Channel Output Block
 * Channel Input Block
 * Channel Light Block/Panel
