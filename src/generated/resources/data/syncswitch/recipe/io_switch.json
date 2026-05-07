@@ -6,7 +6,6 @@
     "syncswitch:vanilla_switch_block"
   ],
   "result": {
-    "count": 1,
     "id": "syncswitch:io_switch"
   }
 }

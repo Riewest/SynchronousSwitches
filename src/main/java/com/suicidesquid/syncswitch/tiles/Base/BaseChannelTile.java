@@ -152,9 +152,9 @@ public class BaseChannelTile extends BlockEntity{
             return false;
         else if(player.isShiftKeyDown()) {
             if(this.hasChannel()){
-                player.displayClientMessage(Component.translatable(LangInit.CHANNEL).append(this.getChannelDisplay(player.getStringUUID())).append(" - ").append(Component.translatable(LangInit.ACTIVE)).append(String.valueOf(switchData.isActive(this.getChannel()))), true);
+                player.sendOverlayMessage(Component.translatable(LangInit.CHANNEL).append(this.getChannelDisplay(player.getStringUUID())).append(" - ").append(Component.translatable(LangInit.ACTIVE)).append(String.valueOf(switchData.isActive(this.getChannel()))));
             } else {
-                player.displayClientMessage(Component.translatable(LangInit.NO_CHANNEL), true);
+                player.sendOverlayMessage(Component.translatable(LangInit.NO_CHANNEL));
             }
             return true;
         }
@@ -164,25 +164,25 @@ public class BaseChannelTile extends BlockEntity{
         if (held.getItem() == Items.PAPER){
             String channel = held.getDisplayName().getString().replace("[", "").replace("]", "");
             this.setChannel(channel);
-            player.displayClientMessage(Component.translatable(LangInit.SET_CHANNEL).append(channel), true);
+            player.sendOverlayMessage(Component.translatable(LangInit.SET_CHANNEL).append(channel));
             interactionProcessed = true;
         } else if (held.getItem() == Items.INK_SAC){
             if (this.isRedacted()){
                 this.setRedacted(false);
-            player.displayClientMessage(Component.translatable(LangInit.UNREDACTED), true);
+            player.sendOverlayMessage(Component.translatable(LangInit.UNREDACTED));
             } else {
                 this.setRedacted(true);
-                player.displayClientMessage(Component.translatable(LangInit.SET_REDACTED), true);
+                player.sendOverlayMessage(Component.translatable(LangInit.SET_REDACTED));
             }
             interactionProcessed = true;
         } else if (held.getItem() == Items.WHITE_WOOL){
             this.toggleSilent();
             if (this.isSilent())
             {
-                player.displayClientMessage(Component.translatable(LangInit.SILENCING), true);
+                player.sendOverlayMessage(Component.translatable(LangInit.SILENCING));
             }
             else {
-                player.displayClientMessage(Component.translatable(LangInit.UNSILENCING), true);
+                player.sendOverlayMessage(Component.translatable(LangInit.UNSILENCING));
             }
             interactionProcessed = true;
         }

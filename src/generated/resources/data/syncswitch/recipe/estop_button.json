@@ -6,7 +6,6 @@
     "syncswitch:io_switch"
   ],
   "result": {
-    "count": 1,
     "id": "syncswitch:estop_button"
   }
 }

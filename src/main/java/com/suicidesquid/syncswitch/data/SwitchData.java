@@ -7,15 +7,16 @@ import javax.annotation.Nonnull;
 
 import com.mojang.serialization.Codec;
 
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.saveddata.SavedData;
 import net.minecraft.world.level.saveddata.SavedDataType;
-import net.minecraft.world.level.storage.DimensionDataStorage;
+import net.minecraft.world.level.storage.SavedDataStorage;
 
 public class SwitchData extends SavedData {
     public static final SavedDataType<SwitchData> TYPE = new SavedDataType<>(
-        "switchdata",
+        Identifier.fromNamespaceAndPath("syncswitch", "switchdata"),
         SwitchData::new,
         Codec.unboundedMap(Codec.STRING, Codec.BOOL).xmap(
             map -> {
@@ -25,7 +26,7 @@ public class SwitchData extends SavedData {
             },
             data -> {
                 Map<String, Boolean> map = new HashMap<>();
-                data.switchMap.forEach((channel, state) -> map.put(channel, state.isActive()));
+                data.switchMap.forEach((channel, state) -> map.put(channel, Boolean.valueOf(state.isActive())));
                 return map;
             }
         )
@@ -42,7 +43,7 @@ public class SwitchData extends SavedData {
         if (level.isClientSide()) {
             throw new RuntimeException("Don't access this client-side!");
         }
-        DimensionDataStorage storage = ((ServerLevel) level).getDataStorage();
+        SavedDataStorage storage = ((ServerLevel) level).getDataStorage();
         return storage.computeIfAbsent(TYPE);
     }
 

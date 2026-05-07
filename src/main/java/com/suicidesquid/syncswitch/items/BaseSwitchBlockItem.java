@@ -73,7 +73,7 @@ public class BaseSwitchBlockItem extends BlockItem{
             if (!tile.isRedacted() || tile.isPlayer(player.getStringUUID())){
                 String channel = tile.getChannel();
                 stack.set(ModRegistration.CHANNEL, channel);
-                player.displayClientMessage(Component.translatable(LangInit.COPIED).append(channel), true);
+                player.sendOverlayMessage(Component.translatable(LangInit.COPIED).append(channel));
                 return InteractionResult.CONSUME;
             }
         }
@@ -89,7 +89,7 @@ public class BaseSwitchBlockItem extends BlockItem{
             if (stack.has(ModRegistration.CHANNEL))
                 stack.remove(ModRegistration.CHANNEL);
                 if(level.isClientSide())
-                    player.displayClientMessage(Component.translatable(LangInit.REMOVE_CHANNEL), true);
+                    player.sendOverlayMessage(Component.translatable(LangInit.REMOVE_CHANNEL));
             return InteractionResult.SUCCESS;
         }
         if (stack.has(ModRegistration.CHANNEL)){
