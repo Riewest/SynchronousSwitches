@@ -3,9 +3,9 @@
   "category": "misc",
   "group": "syncswitch",
   "ingredients": [
-    "syncswitch:big_button"
+    "syncswitch:stone_button_block"
   ],
   "result": {
-    "id": "syncswitch:stone_button_block"
+    "id": "syncswitch:big_button"
   }
 }

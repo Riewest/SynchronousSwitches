@@ -3,7 +3,7 @@
   "category": "misc",
   "group": "syncswitch",
   "ingredients": [
-    "syncswitch:big_button"
+    "syncswitch:estop_button"
   ],
   "result": {
     "id": "syncswitch:switch_block"

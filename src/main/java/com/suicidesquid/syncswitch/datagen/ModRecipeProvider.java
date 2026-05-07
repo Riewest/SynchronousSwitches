@@ -21,6 +21,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.ItemLike;
+import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.common.Tags;
 public class ModRecipeProvider extends RecipeProvider {
 
@@ -92,18 +93,23 @@ public class ModRecipeProvider extends RecipeProvider {
                                     .group(SynchronousSwitches.MODID)
                                     .save(output);
 
-        ShapelessRecipeBuilder.shapeless(items, RecipeCategory.MISC, ModRegistration.STONE_BUTTON_BLOCK.get())
+        ShapelessRecipeBuilder.shapeless(items, RecipeCategory.MISC, ModRegistration.BIG_BUTTON_BLOCK.get())
                                         .requires(Items.STONE_BUTTON)
                                         .requires(Tags.Items.ENDER_PEARLS)
                                         .unlockedBy("has_sync_switch", inventoryTrigger(ItemPredicate.Builder.item().of(items, ModRegistration.SWITCH_BLOCK.get()).build()))
                                         .group(SynchronousSwitches.MODID)
                                         .save(output);
 
+        
+        // Switches
         cycleRecipe(items, ModRegistration.SWITCH_BLOCK.get(), ModRegistration.VANILLA_SWITCH_BLOCK.get()).save(output);
         cycleRecipe(items, ModRegistration.VANILLA_SWITCH_BLOCK.get(), ModRegistration.IO_SWITCH_BLOCK.get()).save(output);
         cycleRecipe(items, ModRegistration.IO_SWITCH_BLOCK.get(), ModRegistration.ESTOP_BUTTON_BLOCK.get()).save(output);
-        cycleRecipe(items, ModRegistration.ESTOP_BUTTON_BLOCK.get(), ModRegistration.BIG_BUTTON_BLOCK.get()).save(output);
-        cycleRecipe(items, ModRegistration.BIG_BUTTON_BLOCK.get(), ModRegistration.SWITCH_BLOCK.get()).save(output, ResourceKey.create(Registries.RECIPE, Identifier.fromNamespaceAndPath(SynchronousSwitches.MODID, "switch_block_1")));
+        cycleRecipe(items, ModRegistration.ESTOP_BUTTON_BLOCK.get(), ModRegistration.SWITCH_BLOCK.get()).save(output, ResourceKey.create(Registries.RECIPE, Identifier.fromNamespaceAndPath(SynchronousSwitches.MODID, "switch_block_1")));
+
+        // Buttons
+        cycleRecipe(items, ModRegistration.BIG_BUTTON_BLOCK.get(), ModRegistration.STONE_BUTTON_BLOCK.get()).save(output);
+        cycleRecipe(items, ModRegistration.STONE_BUTTON_BLOCK.get(), ModRegistration.BIG_BUTTON_BLOCK.get()).save(output, ResourceKey.create(Registries.RECIPE, Identifier.fromNamespaceAndPath(SynchronousSwitches.MODID, "big_button_block_1")));
     }
 
     public static class Runner extends RecipeProvider.Runner {

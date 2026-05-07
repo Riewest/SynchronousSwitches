@@ -3,7 +3,8 @@
   "category": "misc",
   "group": "syncswitch",
   "ingredients": [
-    "syncswitch:estop_button"
+    "minecraft:stone_button",
+    "#c:ender_pearls"
   ],
   "result": {
     "id": "syncswitch:big_button"
