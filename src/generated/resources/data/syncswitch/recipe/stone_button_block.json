@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "syncswitch",
+  "ingredients": [
+    "minecraft:stone_button",
+    "#c:ender_pearls"
+  ],
+  "result": {
+    "id": "syncswitch:stone_button_block"
+  }
+}

@@ -92,6 +92,13 @@ public class ModRecipeProvider extends RecipeProvider {
                                     .group(SynchronousSwitches.MODID)
                                     .save(output);
 
+        ShapelessRecipeBuilder.shapeless(items, RecipeCategory.MISC, ModRegistration.STONE_BUTTON_BLOCK.get())
+                                        .requires(Items.STONE_BUTTON)
+                                        .requires(Tags.Items.ENDER_PEARLS)
+                                        .unlockedBy("has_sync_switch", inventoryTrigger(ItemPredicate.Builder.item().of(items, ModRegistration.SWITCH_BLOCK.get()).build()))
+                                        .group(SynchronousSwitches.MODID)
+                                        .save(output);
+
         cycleRecipe(items, ModRegistration.SWITCH_BLOCK.get(), ModRegistration.VANILLA_SWITCH_BLOCK.get()).save(output);
         cycleRecipe(items, ModRegistration.VANILLA_SWITCH_BLOCK.get(), ModRegistration.IO_SWITCH_BLOCK.get()).save(output);
         cycleRecipe(items, ModRegistration.IO_SWITCH_BLOCK.get(), ModRegistration.ESTOP_BUTTON_BLOCK.get()).save(output);

@@ -68,7 +68,7 @@ public class ModRegistration {
     }
 
     private static <T extends Block> DeferredBlock<T> registerChannelBlock(String name, Function<BlockBehaviour.Properties, T> factory, BlockBehaviour.Properties props) {
-        DeferredBlock<T> holder = BLOCKS.registerBlock(name, factory, props);
+        DeferredBlock<T> holder = BLOCKS.registerBlock(name, factory, () -> props);
         registerChannelBlockItem(name, holder);
         return holder;
     }
