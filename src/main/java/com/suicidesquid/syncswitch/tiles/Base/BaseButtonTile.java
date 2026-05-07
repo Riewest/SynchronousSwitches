@@ -19,20 +19,6 @@ public class BaseButtonTile extends BaseChannelTile{
         return false;
     }
 
-    // @Override
-    // public void onLoad() {
-    //     super.onLoad();
-    //     if (this.level == null || this.level.isClientSide()) {
-    //         return;
-    //     }
-
-    //     this.previousChannelCheck = this.hasChannel() ? SwitchData.get(this.level).isActive(this.getChannel()) : null;
-    //     BlockState state = this.getBlockState();
-    //     if (state.hasProperty(LeverBlock.POWERED) && state.getValue(LeverBlock.POWERED)) {
-    //         this.level.setBlockAndUpdate(this.worldPosition, state.setValue(LeverBlock.POWERED, false));
-    //     }
-    // }
-
     @Override
     protected void tick(Level level, BlockPos pos, BlockState state) {
         SwitchData switchData = SwitchData.get(level);
