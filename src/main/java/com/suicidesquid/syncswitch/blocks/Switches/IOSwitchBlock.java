@@ -4,7 +4,7 @@ import org.jspecify.annotations.Nullable;
 
 import com.suicidesquid.syncswitch.blocks.base.BaseSwitchBlock;
 import com.suicidesquid.syncswitch.setup.ModRegistration;
-import com.suicidesquid.syncswitch.tiles.Switches.EStopButtonTile;
+import com.suicidesquid.syncswitch.tiles.Base.BaseChannelTile;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
@@ -40,7 +40,7 @@ public class IOSwitchBlock extends BaseSwitchBlock implements EntityBlock{
 
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-        return type == ModRegistration.IO_SWITCH_BLOCK.blockEntity().get() ? EStopButtonTile::tick : null;
+        return type == ModRegistration.IO_SWITCH_BLOCK.blockEntity().get() ? BaseChannelTile::tick : null;
     }
 
 }

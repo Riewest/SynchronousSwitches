@@ -5,7 +5,7 @@ import org.jspecify.annotations.Nullable;
 import com.suicidesquid.syncswitch.blocks.base.BaseChannelBlock;
 import com.suicidesquid.syncswitch.data.SwitchData;
 import com.suicidesquid.syncswitch.setup.ModRegistration;
-import com.suicidesquid.syncswitch.tiles.ChannelInputTile;
+import com.suicidesquid.syncswitch.tiles.Base.BaseChannelTile;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
@@ -32,7 +32,7 @@ public class ChannelInputBlock extends BaseChannelBlock implements EntityBlock{
         if (level.isClientSide())
             return;
         BlockEntity be = level.getBlockEntity(pos);
-        if (be instanceof ChannelInputTile tile){
+        if (be instanceof BaseChannelTile tile){
             boolean flag = level.hasNeighborSignal(pos);
             SwitchData switchData = SwitchData.get(level);
             if (tile.hasChannel() && flag != switchData.isActive(tile.getChannel())) {

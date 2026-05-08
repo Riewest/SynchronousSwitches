@@ -7,7 +7,6 @@ import org.jspecify.annotations.Nullable;
 
 import com.suicidesquid.syncswitch.data.SwitchData;
 import com.suicidesquid.syncswitch.setup.ModRegistration;
-import com.suicidesquid.syncswitch.tiles.LightBlockTile;
 import com.suicidesquid.syncswitch.tiles.Base.BaseChannelTile;
 
 import net.minecraft.core.BlockPos;
@@ -51,7 +50,7 @@ public class BaseLightBlock extends Block implements EntityBlock {
 
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-        return type == ModRegistration.LIGHT_BLOCK.blockEntity().get() ? LightBlockTile::tick : null;
+        return type == ModRegistration.LIGHT_BLOCK.blockEntity().get() ? BaseChannelTile::tick : null;
     }
 
     @Override

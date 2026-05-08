@@ -4,7 +4,7 @@ import org.jspecify.annotations.Nullable;
 
 import com.suicidesquid.syncswitch.blocks.base.BaseButtonBlock;
 import com.suicidesquid.syncswitch.setup.ModRegistration;
-import com.suicidesquid.syncswitch.tiles.Buttons.BigButtonTile;
+import com.suicidesquid.syncswitch.tiles.Base.BaseChannelTile;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
@@ -44,7 +44,7 @@ public class BigButtonBlock extends BaseButtonBlock implements EntityBlock{
 
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-        return type == ModRegistration.BIG_BUTTON_BLOCK.blockEntity().get() ? BigButtonTile::tick : null;
+        return type == ModRegistration.BIG_BUTTON_BLOCK.blockEntity().get() ? BaseChannelTile::tick : null;
     }
 
 }

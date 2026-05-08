@@ -4,7 +4,7 @@ import javax.annotation.Nullable;
 
 import com.suicidesquid.syncswitch.blocks.base.BaseSwitchBlock;
 import com.suicidesquid.syncswitch.setup.ModRegistration;
-import com.suicidesquid.syncswitch.tiles.Switches.EStopButtonTile;
+import com.suicidesquid.syncswitch.tiles.Base.BaseChannelTile;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
@@ -44,7 +44,7 @@ public class EStopButtonBlock extends BaseSwitchBlock implements EntityBlock{
 
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-        return type == ModRegistration.ESTOP_BUTTON_BLOCK.blockEntity().get() ? EStopButtonTile::tick : null;
+        return type == ModRegistration.ESTOP_BUTTON_BLOCK.blockEntity().get() ? BaseChannelTile::tick : null;
     }
 
 }

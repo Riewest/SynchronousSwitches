@@ -4,7 +4,7 @@ import javax.annotation.Nullable;
 
 import com.suicidesquid.syncswitch.blocks.base.BaseChannelBlock;
 import com.suicidesquid.syncswitch.setup.ModRegistration;
-import com.suicidesquid.syncswitch.tiles.ChannelOutputTile;
+import com.suicidesquid.syncswitch.tiles.Base.BaseChannelTile;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -33,7 +33,7 @@ public class ChannelOutputBlock extends BaseChannelBlock implements EntityBlock{
 
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-        return type == ModRegistration.CHANNEL_OUTPUT_BLOCK.blockEntity().get() ? ChannelOutputTile::tick : null;
+        return type == ModRegistration.CHANNEL_OUTPUT_BLOCK.blockEntity().get() ? BaseChannelTile::tick : null;
     }
 
     public int getSignal(BlockState state, BlockGetter blockGetter, BlockPos pos, Direction direction) {
